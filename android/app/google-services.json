@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "56491583944",
+    "firebase_url": "https://uhuru-d4404.firebaseio.com",
+    "project_id": "uhuru-d4404",
+    "storage_bucket": "uhuru-d4404.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56491583944:android:642f21a85335b4ca1c38fd",
+        "android_client_info": {
+          "package_name": "anup.com.example.uhuru"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "56491583944-vte29ijk04kk41pf75otj5gcla81h7os.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeYsuTazqolmhNSdliyiG97y0O0mxg8AY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "56491583944-vte29ijk04kk41pf75otj5gcla81h7os.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
