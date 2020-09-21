@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:uhuru/screens/personal_home_screen.dart';
 import '../screens/apartment_list_screen.dart';
 import '../screens/saved_apartments_screen.dart';
 import '../screens/profile_screen.dart';
-import '../screens/home_screen.dart';
+
 
 class MainScreen extends StatefulWidget {
   @override
@@ -27,7 +28,7 @@ class _MainScreenState extends State<MainScreen> {
         // 'title': 'Saved Apartments',
       },
       {
-        'page': HomeScreen(),
+        'page': PersonalHomeScreen(),
         // 'title': 'Your Home',
       },
       {

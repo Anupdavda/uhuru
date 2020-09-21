@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 //import '../providers/amenities.dart';
 import '../providers/apartment_list.dart';
 //import '../providers/amenities_list.dart';
-import './amenities/amenities_grid.dart';
+//import './amenities/amenities_grid.dart';
 
 class ApartmentDetails extends StatelessWidget {
   // final bool showSelectedAmenities;
@@ -155,13 +155,13 @@ class ApartmentDetails extends StatelessWidget {
         //   ],
         //   crossAxisCount: 1,
         // ),
-        SliverGrid.count(
-          children: <Widget>[Padding(
-            padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-            child: AmenitiesGrid(),
-          )],
-          crossAxisCount: 1,
-        ),
+        // SliverGrid.count(
+        //   children: <Widget>[Padding(
+        //     padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+        //     child: AmenitiesGrid(),
+        //   )],
+        //   crossAxisCount: 1,
+        // ),
         SliverList(
           delegate: SliverChildListDelegate(
             [

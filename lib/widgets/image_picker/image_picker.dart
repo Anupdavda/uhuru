@@ -18,14 +18,13 @@
 //     final picker = ImagePicker();
 //     final pickedImage = await picker.getImage(
 //       source: ImageSource.camera,
-//       imageQuality: 50,
-//       maxWidth: 150,
+//        imageQuality: 80,
 //     );
 //     final pickedImageFile = File(pickedImage.path);
 //     setState(() {
 //       _pickedImage = pickedImageFile;
 //     });
-//       widget.imagePickFn(pickedImageFile);
+//     widget.imagePickFn(pickedImageFile);
 //   }
 
 //   @override
@@ -38,7 +37,7 @@
 //           decoration: BoxDecoration(
 //             border: Border.all(width: 1, color: Colors.grey),
 //           ),
-//           child: _pickedImage != null ? FileImage(_pickedImage) : null,
+//           child: _pickedImage != null ? Image.file((_pickedImage)) : null,
 //         ),
 //         FlatButton.icon(
 //           onPressed: _pickImage,

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
-//import 'package:intl/intl.dart';
-import './apartment.dart';
+import '../model/apartment.dart';
 
 class ApartmentList with ChangeNotifier {
   List<Apartment> _loadedApartment = [

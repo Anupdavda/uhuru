@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import '../providers/apartment.dart';
+import '../model/apartment.dart';
 import 'package:provider/provider.dart';
 import '../screens/apartment_detail_screen.dart';
-import '../providers/personal_home_list.dart';
 
 class ApartmentItem extends StatelessWidget {
   @override
@@ -24,25 +23,6 @@ class ApartmentItem extends StatelessWidget {
         },
         onDoubleTap: () {
           debugPrint('doubletapped');
-          
-          AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            title: Text('Remove Listing !!!'),
-            actions: <Widget>[
-              FlatButton(
-                  onPressed: () {
-                    Provider.of<PersonalHomeList>(context, listen: false)
-                        .removeListing(apartment.id);
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('REMOVE')),
-              FlatButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text('CANCEL')),
-            ],
-          );
         },
         child: Column(
           children: <Widget>[
