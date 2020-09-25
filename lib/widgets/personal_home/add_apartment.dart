@@ -5,7 +5,7 @@ import 'package:uhuru/model/personal_apartment.dart';
 import 'package:uhuru/providers/personal_apartment_list.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uhuru/screens/amenities_screen.dart';
-import '../../helper/apartment_api.dart';
+//import '../../helper/apartment_api.dart';
 
 import 'dart:io';
 
@@ -13,6 +13,7 @@ class AddApartment extends StatefulWidget {
   final bool isUpdating;
 
   AddApartment({@required this.isUpdating});
+//  AddApartment({Key key, @required this.personalApartment, @required this.isUpdating}) : super(key: key);
   static const routeName = '/add-apartment';
 
   @override
@@ -39,7 +40,8 @@ class _AddApartmentState extends State<AddApartment> {
     super.initState();
     PersonalHomeList personalHomeList =
         Provider.of<PersonalHomeList>(context, listen: false);
-    if (personalHomeList.currentApartment != null) {
+    if (personalHomeList.currentApartment != null &&
+        widget.isUpdating == true) {
       _currentApartment = personalHomeList.currentApartment;
     } else {
       _currentApartment = PersonalApartment();
@@ -112,7 +114,7 @@ class _AddApartmentState extends State<AddApartment> {
           FlatButton.icon(
             onPressed: _getLocalImage,
             icon: Icon(Icons.image),
-            label: Text('Edit Image'),
+            label: Text('Add Image'),
             textColor: Theme.of(context).primaryColor,
           ),
         ],
@@ -120,20 +122,30 @@ class _AddApartmentState extends State<AddApartment> {
     }
   }
 
-  _apartmentUploaded(PersonalApartment personalApartment) {
-    PersonalHomeList personalHomeList =
-        Provider.of<PersonalHomeList>(context, listen: false);
-    personalHomeList.addApartment(personalApartment);
-    Navigator.pop(context);
-    print('popped Successfully');
-  }
+  // _apartmentUploaded(PersonalApartment personalApartment) {
+  //   PersonalHomeList personalHomeList =
+  //       Provider.of<PersonalHomeList>(context, listen: false);
+  //   personalHomeList.addApartment(personalApartment);
+  // //  Navigator.pop(context);
+  //  // print('popped Successfully');
+  // }
 
   Future<void> _saveForm() async {
     final isValid = _form.currentState.validate();
     if (isValid) {
       _form.currentState.save();
-      uploadApartment(_currentApartment, widget.isUpdating, _apartmentImage,
-          _apartmentUploaded);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AmenitiesScreen(
+            _currentApartment,
+            _apartmentImage,
+            isUpdating: false,
+          ),
+        ),
+      );
+      // uploadApartment(_currentApartment, widget.isUpdating, _apartmentImage,
+      //     _apartmentUploaded);
       //  Navigator.of(context).pop();
       // print("_imageFile ${_apartmentImage.toString()}");
       // print("_imageUrl $_imageUrl");
@@ -473,8 +485,9 @@ class _AddApartmentState extends State<AddApartment> {
                     ),
                     color: Colors.greenAccent,
                     onPressed: () {
-                      Navigator.of(context)
-                          .pushNamed(AmenitiesScreen.routeName);
+                      _saveForm();
+                      // Navigator.of(context)
+                      //     .pushNamed(AmenitiesScreen.routeName);
                     },
                   ),
                 ),
@@ -482,20 +495,7 @@ class _AddApartmentState extends State<AddApartment> {
             ),
           ),
         ),
-        //   ],
       ),
-      // ),
-      // SliverGrid.count(
-      //   children: <Widget>[
-      //     Padding(
-      //       padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-      //       child: AmenitiesGrid(),
-      //     )
-      //   ],
-      //   crossAxisCount: 1,
-      // ),
-      //  ],
-      // ),
     );
   }
 }

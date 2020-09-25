@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
+//import 'package:uhuru/model/personal_apartment.dart';
 
 import 'package:uhuru/screens/personal_detail_screen.dart';
 
- import 'package:uhuru/helper/apartment_api.dart';
+import 'package:uhuru/helper/apartment_api.dart';
 import '../../providers/personal_apartment_list.dart';
 
 import 'package:uhuru/widgets/personal_home/add_apartment.dart';
@@ -20,7 +21,7 @@ class _PersonalApartmentItemState extends State<PersonalApartmentItem> {
   void initState() {
     PersonalHomeList personalApartmentList =
         Provider.of<PersonalHomeList>(context, listen: false);
-     getApartment(personalApartmentList);
+    getApartment(personalApartmentList);
     print('Length: ' +
         personalApartmentList.loadedPersonalApartment.length.toString());
     super.initState();
@@ -54,34 +55,33 @@ class _PersonalApartmentItemState extends State<PersonalApartmentItem> {
                 itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
                     value: personalApartments[i],
                     child: ListTile(
-                    leading: Image.network(personalApartments[i].imageUrl),
-                    trailing: IconButton(
-                        icon: Icon(Icons.delete, color: Colors.redAccent),
-                        onPressed: () async {
-                        }
-                       
+                      leading: Image.network(personalApartments[i].imageUrl),
+                      trailing: IconButton(
+                          icon: Icon(Icons.delete, color: Colors.redAccent),
+                          onPressed: () async {}),
+                      title: Text(
+                        personalApartments[i].price.toString().replaceAllMapped(
+                            new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                            (Match m) => '${m[1]},'),
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
-                    title: Text(
-                   personalApartments[i]. price.toString().replaceAllMapped(
-                          new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                          (Match m) => '${m[1]},'),
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
                       ),
-                    ),
-                    subtitle: Text(personalApartments[i].streetName +
-                        ", " +
-                       personalApartments[i].city +
-                        ", " +
-                        personalApartments[i].zipcode.toString()),
-                    onTap: () {
-                     personalHomeList.currentApartment = personalApartments[i];
-                Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) {
-                  return PersonalDetailScreen();
-                }));
-                    },
-                  )),
+                      subtitle: Text(personalApartments[i].streetName +
+                          ", " +
+                          personalApartments[i].city +
+                          ", " +
+                          personalApartments[i].zipcode.toString()),
+                      onTap: () {
+                        personalHomeList.currentApartment =
+                            personalApartments[i];
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (BuildContext context) {
+                          return PersonalDetailScreen();
+                        }));
+                      },
+                    )),
               ),
             );
           });
@@ -93,8 +93,11 @@ class AddHome extends StatelessWidget {
   const AddHome({
     Key key,
   }) : super(key: key);
+
+ 
   @override
   Widget build(BuildContext context) {
+  //  final personalApartment = new PersonalApartment();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -138,7 +141,16 @@ class AddHome extends StatelessWidget {
           ),
           color: Colors.redAccent,
           onPressed: () {
-            Navigator.of(context).pushNamed(AddApartment.routeName);
+            //  Navigator.of(context).pushNamed(AddApartment.routeName);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddApartment(
+               
+                  isUpdating: false,
+                ),
+              ),
+            );
           },
         ),
       ],

@@ -128,18 +128,26 @@ class PersonalDetailScreen extends StatelessWidget {
                   child: Text(loadedApartment.currentApartment.description)),
             ),
             SizedBox(height: 16),
-            GridView.count(
-              shrinkWrap: true,
-              padding: EdgeInsets.all(8),
-              crossAxisCount: 2,
-              childAspectRatio: 5 / 1,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 1,
-              children: loadedApartment.currentApartment.amenities
-                  .map((amenities) => Text(amenities))
-                  .toList(),
+            Container(
+              alignment: Alignment.topLeft,
+              child: Text("Amenities", textAlign: TextAlign.left),
             ),
-            SizedBox(height: 15),
+            SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+              child: GridView.count(
+                shrinkWrap: true,
+                // padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                crossAxisCount: 2,
+                childAspectRatio: 5 / 1,
+                crossAxisSpacing: 5,
+                mainAxisSpacing: 1,
+                children: loadedApartment.currentApartment.amenities
+                    .map((amenities) => Text(amenities))
+                    .toList(),
+              ),
+            ),
+            SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: RaisedButton(

@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:uhuru/helper/apartment_api.dart';
+import 'package:uhuru/model/personal_apartment.dart';
+import 'package:uhuru/providers/personal_apartment_list.dart';
+import 'dart:io';
 
 class AmenitiesScreen extends StatefulWidget {
   static const routeName = '/amenities-screen';
+
+  final PersonalApartment personalApartment;
+  final bool isUpdating;
+  final File imageFile;
+
+  AmenitiesScreen(this.personalApartment, this.imageFile,
+      {@required this.isUpdating});
+
   @override
   _AmenitiesScreenState createState() => _AmenitiesScreenState();
 }
@@ -13,7 +26,7 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
     'ceramic tiles': false,
     'carpet': false,
     'furnished': false,
-    'closed': false,
+    'closet': false,
     'elevator': false,
     'laundry': false,
     'security': false,
@@ -23,6 +36,20 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
   };
 
   List _amenitiesList = [];
+  PersonalApartment _currentApartment;
+
+  @override
+  void initState() {
+    super.initState();
+    PersonalHomeList personalHomeList =
+        Provider.of<PersonalHomeList>(context, listen: false);
+    if (personalHomeList.currentApartment != null) {
+      _currentApartment = personalHomeList.currentApartment;
+    } else {
+      _currentApartment = PersonalApartment();
+    }
+    _amenitiesList.addAll(_currentApartment.amenities);
+  }
 
   Widget _amenitiesCheckBoxList() {
     return Padding(
@@ -37,9 +64,9 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
               setState(() {
                 if (value) {
                   _amenities[key] = value;
-                  _amenitiesList.add(value);
+                  _amenitiesList.add(key);
                 } else {
-                  _amenitiesList.remove(value);
+                  _amenitiesList.remove(key);
                 }
               });
             },
@@ -47,6 +74,26 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
         }).toList(),
       ),
     );
+  }
+
+  _saveAmenities() {
+    _currentApartment = widget.personalApartment;
+    _currentApartment.amenities = _amenitiesList;
+  
+    
+    // uploadAmenities(_currentApartment);
+
+    uploadApartment(_currentApartment, widget.isUpdating, widget.imageFile,
+        _apartmentUploaded);
+    Navigator.of(context).popUntil((route) => route.isFirst);
+  }
+
+  _apartmentUploaded(PersonalApartment personalApartment) {
+    PersonalHomeList personalHomeList =
+        Provider.of<PersonalHomeList>(context, listen: false);
+    personalHomeList.addApartment(personalApartment);
+    //  Navigator.pop(context);
+    // print('popped Successfully');
   }
 
   @override
@@ -60,7 +107,7 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.save_alt, color: Colors.white),
-              onPressed: () {},
+              onPressed: _saveAmenities,
             ),
           ],
         ),

@@ -67,6 +67,22 @@ void _uploadNewApartment(PersonalApartment personalApartment, bool isUpdating,
   }
 }
 
+
+uploadAmenities(PersonalApartment personalApartment) async{
+   CollectionReference apartmentRef =
+      Firestore.instance.collection('apartments');
+
+    DocumentReference documentRef =
+        await apartmentRef.add(personalApartment.toMap());
+
+    personalApartment.id = documentRef.documentID;
+
+    print('uploaded apartment successfully: ${personalApartment.toString()}');
+
+    await documentRef.setData(personalApartment.toMap(), merge: true);
+  
+}
+
 deleteApartments(PersonalApartment personalApartment, Function apartmentDeleted) async{
 if(personalApartment.imageUrl != null){
   StorageReference storageReference =  await FirebaseStorage.instance.getReferenceFromUrl(personalApartment.imageUrl);

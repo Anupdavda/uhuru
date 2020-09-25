@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:uhuru/screens/amenities_screen.dart';
+//import 'package:uhuru/screens/amenities_screen.dart';
 import 'package:uhuru/screens/personal_detail_screen.dart';
 import './screens/main_screen.dart';
 import './screens/apartment_detail_screen.dart';
@@ -10,8 +10,7 @@ import './screens/auth_screen.dart';
 import './providers/apartment_list.dart';
 // import './providers/amenities_list.dart';
 import 'providers/personal_apartment_list.dart';
-import './widgets/personal_home/add_apartment.dart';
-
+//import './widgets/personal_home/add_apartment.dart';
 
 void main() {
   SystemChrome.setPreferredOrientations([
@@ -61,9 +60,9 @@ class MyApp extends StatelessWidget {
             }),
         routes: {
           ApartmentDetailScreen.routeName: (ctx) => ApartmentDetailScreen(),
-          AddApartment.routeName: (ctx) => AddApartment(isUpdating: false),
-         PersonalDetailScreen.routeName: (ctx) => PersonalDetailScreen(),
-          AmenitiesScreen.routeName: (ctx) => AmenitiesScreen(),
+     //     AddApartment.routeName: (ctx) => AddApartment(isUpdating: false),
+          PersonalDetailScreen.routeName: (ctx) => PersonalDetailScreen(),
+         // AmenitiesScreen.routeName: (ctx) => AmenitiesScreen(),
         },
       ),
     );
