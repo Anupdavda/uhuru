@@ -5,7 +5,7 @@ import 'package:uhuru/model/personal_apartment.dart';
 import 'package:uhuru/providers/personal_apartment_list.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uhuru/screens/amenities_screen.dart';
-//import '../../helper/apartment_api.dart';
+
 
 import 'dart:io';
 
@@ -13,7 +13,7 @@ class AddApartment extends StatefulWidget {
   final bool isUpdating;
 
   AddApartment({@required this.isUpdating});
-//  AddApartment({Key key, @required this.personalApartment, @required this.isUpdating}) : super(key: key);
+
   static const routeName = '/add-apartment';
 
   @override
@@ -24,7 +24,7 @@ class _AddApartmentState extends State<AddApartment> {
   File _apartmentImage;
   PersonalApartment _currentApartment;
   String _imageUrl;
-  //List _amenities = ['air condition', 'ceiling fan', 'ceramic tiles','carpet','wooden floor','furnished','closet','elevator','security','laundry','parking','swimming pool'];
+  
 
   final _form = GlobalKey<FormState>();
   final _areaFocusNode = FocusNode();
@@ -144,11 +144,6 @@ class _AddApartmentState extends State<AddApartment> {
           ),
         ),
       );
-      // uploadApartment(_currentApartment, widget.isUpdating, _apartmentImage,
-      //     _apartmentUploaded);
-      //  Navigator.of(context).pop();
-      // print("_imageFile ${_apartmentImage.toString()}");
-      // print("_imageUrl $_imageUrl");
     }
   }
 

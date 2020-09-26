@@ -124,29 +124,29 @@ class PersonalDetailScreen extends StatelessWidget {
             ),
             Container(
               padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-              child: Expanded(
-                  child: Text(loadedApartment.currentApartment.description)),
+              child: Text(loadedApartment.currentApartment.description),
             ),
             SizedBox(height: 16),
             Container(
               alignment: Alignment.topLeft,
+              padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
               child: Text("Amenities", textAlign: TextAlign.left),
             ),
             SizedBox(height: 16),
             Padding(
-              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+              padding: const EdgeInsets.fromLTRB(54,0,54,0),
               child: GridView.count(
                 shrinkWrap: true,
-                // padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
                 crossAxisCount: 2,
                 childAspectRatio: 5 / 1,
-                crossAxisSpacing: 5,
-                mainAxisSpacing: 1,
+                crossAxisSpacing: 80,
+                mainAxisSpacing: 10,
                 children: loadedApartment.currentApartment.amenities
                     .map((amenities) => Text(amenities))
                     .toList(),
               ),
             ),
+            //),
             SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.all(15.0),
@@ -163,6 +163,7 @@ class PersonalDetailScreen extends StatelessWidget {
           ],
         ),
       ),
+      // ),
     );
   }
 }
