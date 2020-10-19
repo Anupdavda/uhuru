@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 import '../model/personal_apartment.dart';
 import '../providers/personal_apartment_list.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -33,62 +34,47 @@ Future<void> getApartment(PersonalHomeList personalApartmentList) async {
       imageUrl: url);
 }
 
-void _uploadNewApartment(PersonalApartment personalApartment, bool isUpdating,
+_uploadNewApartment(PersonalApartment personalApartment, bool isUpdating,
     Function apartmentUploaded,
     {String imageUrl}) async {
   CollectionReference apartmentRef =
       Firestore.instance.collection('apartments');
-  if (imageUrl != null) {
-    personalApartment.imageUrl = imageUrl;
-  }
 
-  if (isUpdating) {
-    personalApartment.updatedAt = Timestamp.now();
+    if (isUpdating) {
+      personalApartment.updatedAt = Timestamp.now();
 
-    await apartmentRef
-        .document(personalApartment.id)
-        .updateData(personalApartment.toMap());
+      await apartmentRef
+          .document(personalApartment.id)
+          .updateData(personalApartment.toMap());
 
     apartmentUploaded(personalApartment);
     print('updated apartment with id: ${personalApartment.id}');
   } else {
     personalApartment.createdAt = Timestamp.now();
 
-    DocumentReference documentRef =
-        await apartmentRef.add(personalApartment.toMap());
+        DocumentReference documentRef =
+            await apartmentRef.add(personalApartment.toMap());
 
     personalApartment.id = documentRef.documentID;
+        print(
+            'uploaded apartment successfully: ${personalApartment.toString()}');
 
-    print('uploaded apartment successfully: ${personalApartment.toString()}');
+        await documentRef.setData(personalApartment.toMap(), merge: true);
+        apartmentUploaded(personalApartment);
+      }
+    }
 
-    await documentRef.setData(personalApartment.toMap(), merge: true);
-
-    apartmentUploaded(personalApartment);
-  }
-}
-
-
-uploadAmenities(PersonalApartment personalApartment) async{
-   CollectionReference apartmentRef =
-      Firestore.instance.collection('apartments');
-
-    DocumentReference documentRef =
-        await apartmentRef.add(personalApartment.toMap());
-
-    personalApartment.id = documentRef.documentID;
-
-    print('uploaded apartment successfully: ${personalApartment.toString()}');
-
-    await documentRef.setData(personalApartment.toMap(), merge: true);
-  
-}
-
-deleteApartments(PersonalApartment personalApartment, Function apartmentDeleted) async{
-if(personalApartment.imageUrl != null){
-  StorageReference storageReference =  await FirebaseStorage.instance.getReferenceFromUrl(personalApartment.imageUrl);
-  await storageReference.delete();
-  print('image deleted');
-}
-await Firestore.instance.collection('apartments').document(personalApartment.id).delete();
-apartmentDeleted(personalApartment);
+deleteApartments(
+    PersonalApartment personalApartment, Function apartmentDeleted) async {
+  // if (personalApartment.imageUrl != null) {
+  //   StorageReference storageReference = await FirebaseStorage.instance
+  //       .getReferenceFromUrl(personalApartment.imageUrl);
+  //   await storageReference.delete();
+  //   print('image deleted');
+  // }
+  // await Firestore.instance
+  //     .collection('apartments')
+  //     .document(personalApartment.id)
+  //     .delete();
+  // apartmentDeleted(personalApartment);
 }

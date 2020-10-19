@@ -26,7 +26,8 @@ dependencies:
   firebase_auth: ^0.16.1
   image_picker: ^0.6.7
   firebase_storage: ^3.1.6
-  
+  carousel_slider: ^2.3.1
+  multi_image_picker: ^4.7.14
   
   
 

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+//import 'package:uhuru/model/amenities.dart';
+
 
 class PersonalApartment with ChangeNotifier {
    String id;
@@ -18,7 +20,7 @@ class PersonalApartment with ChangeNotifier {
   Timestamp createdAt;
   Timestamp updatedAt;
   
-  // Map amenities = {
+  // Map _amenities = {
   //   'air_condition': Icon(Icons.ac_unit),
   //   'ceiling_fan': Icon(Icons.ac_unit),
   //   'ceramic_tiles': Icon(Icons.flag),
@@ -78,7 +80,7 @@ class PersonalApartment with ChangeNotifier {
       'zipcode': zipcode,
       'area': area,
       'amenities': amenities,
-      'createdAt': createdAt,
+     'createdAt': createdAt,
       'updatedAt': updatedAt
     };
 

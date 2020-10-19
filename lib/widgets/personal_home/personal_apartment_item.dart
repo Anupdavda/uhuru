@@ -55,7 +55,7 @@ class _PersonalApartmentItemState extends State<PersonalApartmentItem> {
                 itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
                     value: personalApartments[i],
                     child: ListTile(
-                      leading: Image.network(personalApartments[i].imageUrl),
+                    leading: Image.network(personalApartments[i].imageUrl),
                       trailing: IconButton(
                           icon: Icon(Icons.delete, color: Colors.redAccent),
                           onPressed: () async {}),
@@ -94,10 +94,9 @@ class AddHome extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
- 
   @override
   Widget build(BuildContext context) {
-  //  final personalApartment = new PersonalApartment();
+    //  final personalApartment = new PersonalApartment();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -146,7 +145,6 @@ class AddHome extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => AddApartment(
-               
                   isUpdating: false,
                 ),
               ),

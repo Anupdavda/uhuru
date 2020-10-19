@@ -78,22 +78,23 @@ class _MainScreenState extends State<MainScreen> {
             BottomNavigationBarItem(
               backgroundColor: Theme.of(context).accentColor,
               icon: Icon(Icons.search),
-              title: Text('Listings'),
+              // ignore: deprecated_member_use
+              label : 'Listings',
             ),
             BottomNavigationBarItem(
               backgroundColor: Theme.of(context).accentColor,
               icon: Icon(Icons.bookmark_border),
-              title: Text('Saved Homes'),
+              label : 'Saved Homes',
             ),
             BottomNavigationBarItem(
               backgroundColor: Theme.of(context).accentColor,
               icon: Icon(Icons.home),
-              title: Text('Your Home'),
+            label : 'Your Home',
             ),
             BottomNavigationBarItem(
               backgroundColor: Theme.of(context).accentColor,
               icon: Icon(Icons.person),
-              title: Text('Profile'),
+              label: 'Profile',
             ),
           ],
         ),

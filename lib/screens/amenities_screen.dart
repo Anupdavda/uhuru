@@ -57,7 +57,7 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
       child: ListView(
         shrinkWrap: false,
         children: _amenities.keys.map((String key) {
-          return new CheckboxListTile(
+          return  CheckboxListTile(
             title: Text(key),
             value: _amenities[key],
             onChanged: (bool value) {
@@ -66,6 +66,7 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
                   _amenities[key] = value;
                   _amenitiesList.add(key);
                 } else {
+                  _amenities[key] = value;
                   _amenitiesList.remove(key);
                 }
               });

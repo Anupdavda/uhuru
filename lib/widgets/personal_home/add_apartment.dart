@@ -6,7 +6,6 @@ import 'package:uhuru/providers/personal_apartment_list.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uhuru/screens/amenities_screen.dart';
 
-
 import 'dart:io';
 
 class AddApartment extends StatefulWidget {
@@ -21,10 +20,9 @@ class AddApartment extends StatefulWidget {
 }
 
 class _AddApartmentState extends State<AddApartment> {
-  File _apartmentImage;
+ File _apartmentImage;
   PersonalApartment _currentApartment;
   String _imageUrl;
-  
 
   final _form = GlobalKey<FormState>();
   final _areaFocusNode = FocusNode();
@@ -122,14 +120,6 @@ class _AddApartmentState extends State<AddApartment> {
     }
   }
 
-  // _apartmentUploaded(PersonalApartment personalApartment) {
-  //   PersonalHomeList personalHomeList =
-  //       Provider.of<PersonalHomeList>(context, listen: false);
-  //   personalHomeList.addApartment(personalApartment);
-  // //  Navigator.pop(context);
-  //  // print('popped Successfully');
-  // }
-
   Future<void> _saveForm() async {
     final isValid = _form.currentState.validate();
     if (isValid) {
@@ -139,8 +129,25 @@ class _AddApartmentState extends State<AddApartment> {
         MaterialPageRoute(
           builder: (context) => AmenitiesScreen(
             _currentApartment,
-            _apartmentImage,
+           _apartmentImage,
             isUpdating: false,
+          ),
+        ),
+      );
+    }
+  }
+
+  Future<void> _updatingForm() async {
+    final isValid = _form.currentState.validate();
+    if (isValid) {
+      _form.currentState.save();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AmenitiesScreen(
+            _currentApartment,
+            _apartmentImage,
+            isUpdating: true,
           ),
         ),
       );
@@ -192,10 +199,10 @@ class _AddApartmentState extends State<AddApartment> {
         if (value.isEmpty) {
           return 'Please enter a square-space.';
         }
-        if (int.tryParse(value) == null) {
+        if (double.tryParse(value) == null) {
           return 'Please enter a valid number.';
         }
-        if (int.parse(value) <= 0) {
+        if (double.parse(value) <= 0) {
           return 'Please enter a number greater than zero.';
         }
         return null;
@@ -254,10 +261,10 @@ class _AddApartmentState extends State<AddApartment> {
         if (value.isEmpty) {
           return 'Please enter valid number of bathrooms.';
         }
-        if (int.tryParse(value) == null) {
+        if (double.tryParse(value) == null) {
           return 'Please enter number of bathrooms.';
         }
-        if (int.parse(value) <= 0) {
+        if (double.parse(value) <= 0) {
           return 'Please enter a number greater than zero.';
         }
         return null;
@@ -342,10 +349,10 @@ class _AddApartmentState extends State<AddApartment> {
         if (value.isEmpty) {
           return 'Please enter valid Zipcode/P.O.Box.';
         }
-        if (int.tryParse(value) == null) {
+        if (double.tryParse(value) == null) {
           return 'Please enter valid Zipcode/P.O.Box.';
         }
-        if (int.parse(value) <= 0) {
+        if (double.parse(value) <= 0) {
           return 'Please enter a number greater than zero.';
         }
         return null;
@@ -394,20 +401,9 @@ class _AddApartmentState extends State<AddApartment> {
         child: AppBar(
           backgroundColor: Theme.of(context).accentColor,
           title: Text(widget.isUpdating ? 'Edit Apartment' : 'Add Apartment'),
-          // actions: <Widget>[
-          //   IconButton(
-          //     icon: Icon(Icons.save_alt, color: Colors.white),
-          //     onPressed: _saveForm,
-          //   ),
-          // ],
         ),
       ),
       body: SingleChildScrollView(
-        // CustomScrollView(
-        //   slivers: <Widget>[
-        //     SliverList(
-        //       delegate: SliverChildListDelegate(
-        //         [
         child: Padding(
           padding: EdgeInsets.all(8.0),
           child: Form(
@@ -480,9 +476,11 @@ class _AddApartmentState extends State<AddApartment> {
                     ),
                     color: Colors.greenAccent,
                     onPressed: () {
-                      _saveForm();
-                      // Navigator.of(context)
-                      //     .pushNamed(AmenitiesScreen.routeName);
+                      widget.isUpdating ? _updatingForm() : _saveForm();
+
+                      widget.isUpdating
+                          ? debugPrint('updated button pressed')
+                          : debugPrint('saved button pressed');
                     },
                   ),
                 ),
