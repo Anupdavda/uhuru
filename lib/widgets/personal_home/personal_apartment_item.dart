@@ -55,7 +55,7 @@ class _PersonalApartmentItemState extends State<PersonalApartmentItem> {
                 itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
                     value: personalApartments[i],
                     child: ListTile(
-                    leading: Image.network(personalApartments[i].imageUrl),
+                    leading: Image.network(personalApartments[i].imageUrl[0]),
                       trailing: IconButton(
                           icon: Icon(Icons.delete, color: Colors.redAccent),
                           onPressed: () async {}),

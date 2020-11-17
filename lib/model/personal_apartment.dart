@@ -8,7 +8,7 @@ class PersonalApartment with ChangeNotifier {
    String id;
    String description;
    double price;
-   String imageUrl;
+   List imageUrl = [];
    String streetName;
    int bedroom;
    double bathroom;

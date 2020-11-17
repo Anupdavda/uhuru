@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uhuru/helper/apartment_api.dart';
+//import 'package:uhuru/helper/apartment_api.dart';
 import 'package:uhuru/model/personal_apartment.dart';
 import 'package:uhuru/providers/personal_apartment_list.dart';
-import 'dart:io';
+import 'package:uhuru/screens/add_images.dart';
+//import 'dart:io';
 
 class AmenitiesScreen extends StatefulWidget {
   static const routeName = '/amenities-screen';
 
   final PersonalApartment personalApartment;
   final bool isUpdating;
-  final File imageFile;
+  // final File imageFile;
 
-  AmenitiesScreen(this.personalApartment, this.imageFile,
+  AmenitiesScreen(this.personalApartment,
+      //this.imageFile,
       {@required this.isUpdating});
 
   @override
@@ -57,7 +59,7 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
       child: ListView(
         shrinkWrap: false,
         children: _amenities.keys.map((String key) {
-          return  CheckboxListTile(
+          return CheckboxListTile(
             title: Text(key),
             value: _amenities[key],
             onChanged: (bool value) {
@@ -80,22 +82,30 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
   _saveAmenities() {
     _currentApartment = widget.personalApartment;
     _currentApartment.amenities = _amenitiesList;
-  
-    
-    // uploadAmenities(_currentApartment);
-
-    uploadApartment(_currentApartment, widget.isUpdating, widget.imageFile,
-        _apartmentUploaded);
-    Navigator.of(context).popUntil((route) => route.isFirst);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => AddImages(
+          _currentApartment,
+          isUpdating: false,
+        ),
+      ),
+    );
   }
 
-  _apartmentUploaded(PersonalApartment personalApartment) {
-    PersonalHomeList personalHomeList =
-        Provider.of<PersonalHomeList>(context, listen: false);
-    personalHomeList.addApartment(personalApartment);
-    //  Navigator.pop(context);
-    // print('popped Successfully');
-  }
+  // uploadAmenities(_currentApartment);
+
+  // uploadApartment(_currentApartment, widget.isUpdating, widget.imageFile,
+  //     _apartmentUploaded);
+  // Navigator.of(context).popUntil((route) => route.isFirst);
+
+  // _apartmentUploaded(PersonalApartment personalApartment) {
+  //   PersonalHomeList personalHomeList =
+  //       Provider.of<PersonalHomeList>(context, listen: false);
+  //   personalHomeList.addApartment(personalApartment);
+  //   //  Navigator.pop(context);
+  //   // print('popped Successfully');
+  // }
 
   @override
   Widget build(BuildContext context) {

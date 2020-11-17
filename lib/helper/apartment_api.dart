@@ -3,7 +3,7 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import '../model/personal_apartment.dart';
 import '../providers/personal_apartment_list.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'dart:io';
+//import 'dart:io';
 
 Future<void> getApartment(PersonalHomeList personalApartmentList) async {
   QuerySnapshot snapshot =
@@ -18,51 +18,76 @@ Future<void> getApartment(PersonalHomeList personalApartmentList) async {
   personalApartmentList.apartmentList = _loadedPersonalApartment;
 }
 
- uploadApartment(PersonalApartment personalApartment, bool isUpdating,
-    File imageFile, Function apartmentUploaded) async {
-  final ref =
-      FirebaseStorage.instance // adds reference to the storage in firebase
-          .ref()
-          .child('apartment_images')
-          .child(Timestamp.now().toString() + '.jpg');
-  await ref.putFile(imageFile).onComplete;
+uploadApartment(PersonalApartment personalApartment, bool isUpdating,
+    List<Asset> images, Function apartmentUploaded) async {
+  List<String> _imageUrlList;
 
-  String url = await ref.getDownloadURL();
-  personalApartment.imageUrl = url;
+  // final ref =
+  //     FirebaseStorage.instance // adds reference to the storage in firebase
+  //         .ref()
+  //         .child('apartment_images')
+  //         .child(Timestamp.now().toString() + '.jpg');
+  // await ref.putFile(imageFile).onComplete;
 
-  _uploadNewApartment(personalApartment, isUpdating, apartmentUploaded,
-      imageUrl: url);
+  // String url = await ref.getDownloadURL();
+  // _imageUrlList.add(url);
+  // personalApartment.imageUrl = _imageUrlList;
+
+  // _uploadNewApartment(personalApartment, isUpdating, apartmentUploaded,
+  //     imageUrl: url);
+
+  for(var imageFile in images){
+ final ref = FirebaseStorage.instance
+        .ref()
+        .child('apartment_images')
+        .child(Timestamp.now().toString() + '.jpg');
+    StorageUploadTask uploadTask =
+        ref.putData((await imageFile.getByteData()).buffer.asUint8List());
+    StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
+    String url = await storageTaskSnapshot.ref.getDownloadURL();
+    _imageUrlList.add(url);
+  
+    personalApartment.imageUrl = _imageUrlList;
+
+    _uploadNewApartment(personalApartment, isUpdating, apartmentUploaded,
+        imageUrl: _imageUrlList);
+
+    return url;
+  }
+
+   
+  
 }
 
 _uploadNewApartment(PersonalApartment personalApartment, bool isUpdating,
     Function apartmentUploaded,
-    {String imageUrl}) async {
+    {List imageUrl}) async {
   CollectionReference apartmentRef =
       Firestore.instance.collection('apartments');
 
-    if (isUpdating) {
-      personalApartment.updatedAt = Timestamp.now();
+  if (isUpdating) {
+    personalApartment.updatedAt = Timestamp.now();
 
-      await apartmentRef
-          .document(personalApartment.id)
-          .updateData(personalApartment.toMap());
+    await apartmentRef
+        .document(personalApartment.id)
+        .updateData(personalApartment.toMap());
 
     apartmentUploaded(personalApartment);
     print('updated apartment with id: ${personalApartment.id}');
   } else {
     personalApartment.createdAt = Timestamp.now();
 
-        DocumentReference documentRef =
-            await apartmentRef.add(personalApartment.toMap());
+    DocumentReference documentRef =
+        await apartmentRef.add(personalApartment.toMap());
 
     personalApartment.id = documentRef.documentID;
-        print(
-            'uploaded apartment successfully: ${personalApartment.toString()}');
 
-        await documentRef.setData(personalApartment.toMap(), merge: true);
-        apartmentUploaded(personalApartment);
-      }
-    }
+    print('uploaded apartment successfully: ${personalApartment.toString()}');
+
+    await documentRef.setData(personalApartment.toMap(), merge: true);
+    apartmentUploaded(personalApartment);
+  }
+}
 
 deleteApartments(
     PersonalApartment personalApartment, Function apartmentDeleted) async {

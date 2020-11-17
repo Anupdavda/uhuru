@@ -194,7 +194,7 @@ class PersonalDetailScreen extends StatelessWidget {
             //       crossAxisSpacing: 20,
             //       mainAxisSpacing: 10,
             //     ),
-            //     // crossAxisCount: 2,
+            //     // crossAxisCount: 2,`
             //     // childAspectRatio: 5 / 1,
             //     // crossAxisSpacing: 80,
             //     // mainAxisSpacing: 10,

@@ -3,10 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:uhuru/model/personal_apartment.dart';
 import 'package:uhuru/providers/personal_apartment_list.dart';
-import 'package:image_picker/image_picker.dart';
+//import 'package:image_picker/image_picker.dart';
 import 'package:uhuru/screens/amenities_screen.dart';
 
-import 'dart:io';
+//import 'dart:io';
 
 class AddApartment extends StatefulWidget {
   final bool isUpdating;
@@ -20,9 +20,9 @@ class AddApartment extends StatefulWidget {
 }
 
 class _AddApartmentState extends State<AddApartment> {
- File _apartmentImage;
+ //File _apartmentImage;
   PersonalApartment _currentApartment;
-  String _imageUrl;
+ // String _imageUrl;
 
   final _form = GlobalKey<FormState>();
   final _areaFocusNode = FocusNode();
@@ -49,76 +49,76 @@ class _AddApartmentState extends State<AddApartment> {
       _currentApartment.bedroom = 0;
       _currentApartment.zipcode = 0.0;
     }
-    _imageUrl = _currentApartment.imageUrl;
+    //_imageUrl = _currentApartment.imageUrl;
   }
 
-  _getLocalImage() async {
-    final picker = ImagePicker();
-    final pickedImage = await picker.getImage(
-      source: ImageSource.camera,
-      imageQuality: 50,
-    );
-    final pickedImageFile = File(pickedImage.path);
-    setState(() {
-      _apartmentImage = pickedImageFile;
-    });
-  }
+  // _getLocalImage() async {
+  //   final picker = ImagePicker();
+  //   final pickedImage = await picker.getImage(
+  //     source: ImageSource.camera,
+  //     imageQuality: 50,
+  //   );
+  //   final pickedImageFile = File(pickedImage.path);
+  //   setState(() {
+  //     _apartmentImage = pickedImageFile;
+  //   });
+  // }
 
-  _showImage() {
-    if (_apartmentImage != null) {
-      print('showing image from local camera');
-      return Column(
-        children: [
-          Container(
-            width: 150,
-            height: 100,
-            decoration: BoxDecoration(
-              border: Border.all(width: 1, color: Colors.grey),
-            ),
-            child: Image.file(_apartmentImage),
-          ),
-          FlatButton.icon(
-            onPressed: _getLocalImage,
-            icon: Icon(Icons.image),
-            label: Text('Add Image'),
-            textColor: Theme.of(context).primaryColor,
-          ),
-        ],
-      );
-    } else if (_imageUrl != null) {
-      print('showing image from url');
-      return Column(
-        children: [
-          Container(
-            width: 150,
-            height: 100,
-            decoration: BoxDecoration(
-              border: Border.all(width: 1, color: Colors.grey),
-            ),
-            child: Image.network(_imageUrl),
-          ),
-          FlatButton.icon(
-            onPressed: _getLocalImage,
-            icon: Icon(Icons.image),
-            label: Text('Edit Image'),
-            textColor: Theme.of(context).primaryColor,
-          ),
-        ],
-      );
-    } else if (_apartmentImage == null && _imageUrl == null) {
-      return Column(
-        children: [
-          Center(child: Text('Add Image')),
-          FlatButton.icon(
-            onPressed: _getLocalImage,
-            icon: Icon(Icons.image),
-            label: Text('Add Image'),
-            textColor: Theme.of(context).primaryColor,
-          ),
-        ],
-      );
-    }
-  }
+  // _showImage() {
+  //   if (_apartmentImage != null) {
+  //     print('showing image from local camera');
+  //     return Column(
+  //       children: [
+  //         Container(
+  //           width: 150,
+  //           height: 100,
+  //           decoration: BoxDecoration(
+  //             border: Border.all(width: 1, color: Colors.grey),
+  //           ),
+  //           child: Image.file(_apartmentImage),
+  //         ),
+  //         FlatButton.icon(
+  //           onPressed: _getLocalImage,
+  //           icon: Icon(Icons.image),
+  //           label: Text('Add Image'),
+  //           textColor: Theme.of(context).primaryColor,
+  //         ),
+  //       ],
+  //     );
+  //   } else if (_imageUrl != null) {
+  //     print('showing image from url');
+  //     return Column(
+  //       children: [
+  //         Container(
+  //           width: 150,
+  //           height: 100,
+  //           decoration: BoxDecoration(
+  //             border: Border.all(width: 1, color: Colors.grey),
+  //           ),
+  //           child: Image.network(_imageUrl),
+  //         ),
+  //         FlatButton.icon(
+  //           onPressed: _getLocalImage,
+  //           icon: Icon(Icons.image),
+  //           label: Text('Edit Image'),
+  //           textColor: Theme.of(context).primaryColor,
+  //         ),
+  //       ],
+  //     );
+  //   } else if (_apartmentImage == null && _imageUrl == null) {
+  //     return Column(
+  //       children: [
+  //         Center(child: Text('Add Image')),
+  //         FlatButton.icon(
+  //           onPressed: _getLocalImage,
+  //           icon: Icon(Icons.image),
+  //           label: Text('Add Image'),
+  //           textColor: Theme.of(context).primaryColor,
+  //         ),
+  //       ],
+  //     );
+  //   }
+  // }
 
   Future<void> _saveForm() async {
     final isValid = _form.currentState.validate();
@@ -129,7 +129,7 @@ class _AddApartmentState extends State<AddApartment> {
         MaterialPageRoute(
           builder: (context) => AmenitiesScreen(
             _currentApartment,
-           _apartmentImage,
+         //  _apartmentImage,
             isUpdating: false,
           ),
         ),
@@ -146,7 +146,7 @@ class _AddApartmentState extends State<AddApartment> {
         MaterialPageRoute(
           builder: (context) => AmenitiesScreen(
             _currentApartment,
-            _apartmentImage,
+          //  _apartmentImage,
             isUpdating: true,
           ),
         ),
@@ -411,7 +411,7 @@ class _AddApartmentState extends State<AddApartment> {
             child: Column(
               children: <Widget>[
                 // UserImagePicker(_pickedImage),
-                _showImage(),
+                //_showImage(),
                 Container(
                   alignment: Alignment.topLeft,
                   child: Text("Details", textAlign: TextAlign.left),
