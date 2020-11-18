@@ -16,7 +16,7 @@ class _ImageCarouselState extends State<ImageCarousel> {
     PersonalHomeList loadedApartment =
         Provider.of<PersonalHomeList>(context, listen: true);
 
-    List imageList = [loadedApartment.currentApartment.imageUrl];
+    List imageList = loadedApartment.currentApartment.imageUrl;
 
     List<T> map<T>(List list, Function handler) {
       List<T> result = [];

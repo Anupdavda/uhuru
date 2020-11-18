@@ -23,7 +23,7 @@ class AddImages extends StatefulWidget {
 class _AddImagesState extends State<AddImages> {
   List<Asset> images = List<Asset>();
   List imageUrls = [];
-  String _error = 'No Error Dectected';
+  //String _error = 'No Error Dectected';
   PersonalApartment _currentApartment;
 
   @override
@@ -72,7 +72,7 @@ class _AddImagesState extends State<AddImages> {
         ),
       );
     } on Exception catch (e) {
-      _error = e.toString();
+   //   _error = e.toString();
     }
     if (!mounted) return;
     setState(() {
@@ -153,8 +153,6 @@ class _AddImagesState extends State<AddImages> {
   }
 
   _saveImages() {
-    // uploadImageFiles(_currentApartment);
-
     // uploadApartment(
     //     _currentApartment, widget.isUpdating, images, _apartmentUploaded);
     uploadImages();
@@ -175,13 +173,7 @@ class _AddImagesState extends State<AddImages> {
                 onPressed: () {
                   _saveImages();
                   Navigator.of(context).popUntil((route) => route.isFirst);
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => AddImages(
-                  //               _currentApartment,
-                  //               isUpdating: false,
-                  //             )));
+          
                 }),
           ],
         ),
