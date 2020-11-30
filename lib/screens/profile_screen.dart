@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+
 import '../widgets/profile/profile.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -9,6 +11,9 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Profile());
+    return Scaffold(
+      body: 
+     Profile(),
+    );
   }
 }

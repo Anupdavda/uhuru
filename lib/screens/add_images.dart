@@ -23,7 +23,7 @@ class AddImages extends StatefulWidget {
 class _AddImagesState extends State<AddImages> {
   List<Asset> images = List<Asset>();
   List imageUrls = [];
-  //String _error = 'No Error Dectected';
+  String _error = 'No Error Dectected';
   PersonalApartment _currentApartment;
 
   @override
@@ -72,7 +72,7 @@ class _AddImagesState extends State<AddImages> {
         ),
       );
     } on Exception catch (e) {
-   //   _error = e.toString();
+      _error = e.toString();
     }
     if (!mounted) return;
     setState(() {
@@ -87,7 +87,7 @@ class _AddImagesState extends State<AddImages> {
     setState(() {
       images = resultList;
       // _currentApartment.imageUrl = images;
-      // _error = error;
+      //_error = error;
     });
   }
 

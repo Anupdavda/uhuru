@@ -9,22 +9,7 @@ import 'package:provider/provider.dart';
 
 class PersonalDetailScreen extends StatelessWidget {
   static const routeName = '/personal-apartment-detail';
-  // List<Amenity> _amenity = [
-  //   Amenity(name: 'Air Condition', icon: Icons.ac_unit, isSelected: false),
-  //   Amenity(name: 'Ceiling Fan', icon: Icons.ac_unit, isSelected: false),
-  //   Amenity(name: 'Ceramic Tiles', icon: Icons.traffic, isSelected: false),
-  //   Amenity(name: 'Carpet', icon: Icons.casino, isSelected: false),
-  //   Amenity(name: 'Furnished', icon: Icons.shopping_cart, isSelected: false),
-  //   Amenity(name: 'Closet', icon: Icons.cake, isSelected: false),
-  //   Amenity(name: 'Elevator', icon: Icons.equalizer, isSelected: false),
-  //   Amenity(name: 'Laundary', icon: Icons.laptop_mac, isSelected: false),
-  //   Amenity(name: 'Security', icon: Icons.security, isSelected: false),
-  //   Amenity(name: 'Parking', icon: Icons.local_parking, isSelected: false),
-  //   Amenity(
-  //       name: 'Swimming Pool', icon: Icons.local_airport, isSelected: false),
-  //   Amenity(
-  //       name: 'Hardwood Floor', icon: Icons.local_florist, isSelected: false),
-  // ];
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -62,37 +47,10 @@ class PersonalDetailScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            ImageCarousel(),
-            // Container(
-            //  // padding: EdgeInsets.all(3),
-            //   height: 300,
+            ImageCarousel(
+           
 
-            //   //   child: ClipRRect(
-            //   //     borderRadius: BorderRadius.circular(10.0),
-            //   //     child: Image.network(loadedApartment.currentApartment.imageUrl,
-            //   //         height: 250, width: double.infinity, fit: BoxFit.cover),
-            //   //   ),
-            //   child: CarouselSlider.builder(
-            //     itemCount: _apartmentImages.length,
-            //     itemBuilder: (context, i) {
-            //       return Container(
-            //         child: Center(
-            //           child: Image.network(
-            //             loadedApartment.currentApartment.imageUrl,
-            //             fit: BoxFit.cover,
-            //             height: 300,
-            //              width: double.infinity,
-            //           ),
-            //         ),
-            //       );
-            //     },
-            //     options: CarouselOptions(
-            //       autoPlay: false,
-            //       aspectRatio: 2.0,
-            //       enlargeCenterPage: false,
-            //     ),
-            //   ),
-            // ),
+            ),
             SizedBox(
               height: 10,
             ),

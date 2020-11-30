@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
 import 'package:uhuru/providers/personal_apartment_list.dart';
+import 'package:uhuru/widgets/image_gallery/photo_gallery_detail.dart';
 
 class ImageCarousel extends StatefulWidget {
   @override
@@ -10,6 +11,14 @@ class ImageCarousel extends StatefulWidget {
 
 class _ImageCarouselState extends State<ImageCarousel> {
   int _current = 0;
+
+  PageController _pageController;
+
+  @override
+  void initState() {
+    _pageController = PageController(initialPage: _current);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +45,19 @@ class _ImageCarouselState extends State<ImageCarousel> {
                   return Container(
                     width: MediaQuery.of(context).size.width,
                     margin: EdgeInsets.symmetric(horizontal: 1.0),
-                    child: Image.network(imageUrl, fit: BoxFit.fill),
+                    child: Ink(
+                      child: InkWell(
+                        child: Image.network(imageUrl, fit: BoxFit.fill),
+                        onTap: () => Navigator.of(context).push(
+                          MaterialPageRoute(builder: (BuildContext context) {
+                            return PhotoGalleryDetail(
+                              currentIndex: _current,
+                              imagePaths: imageList,
+                            );
+                          }),
+                        ),
+                      ),
+                    ),
                   );
                 },
               );
@@ -49,6 +70,7 @@ class _ImageCarouselState extends State<ImageCarousel> {
                 setState(() {
                   _current = index;
                 });
+                _pageController.jumpToPage(index);
               },
             ),
           ),
