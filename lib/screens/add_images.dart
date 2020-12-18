@@ -34,7 +34,21 @@ class _AddImagesState extends State<AddImages> {
     if (personalHomeList.currentApartment != null) {
       _currentApartment = personalHomeList.currentApartment;
     } else {
-      _currentApartment = PersonalApartment();
+      _currentApartment = PersonalApartment(
+        id: '',
+        amenities:  widget.personalApartment.amenities,
+        area:  widget.personalApartment.area,
+        bathroom:  widget.personalApartment.bathroom,
+        bedroom:  widget.personalApartment.bedroom,
+        city:  widget.personalApartment.city,
+       
+        description:  widget.personalApartment.description,
+        imageUrl:  widget.personalApartment.imageUrl,
+        price:  widget.personalApartment.price,
+        streetName:  widget.personalApartment.streetName,
+       
+        zipcode:  widget.personalApartment.zipcode,
+      );
     }
     imageUrls.addAll(_currentApartment.imageUrl);
   }
@@ -139,7 +153,8 @@ class _AddImagesState extends State<AddImages> {
           });
         }
       }).catchError((err) {
-        print(err);
+        _error = err;
+        print(_error);
       });
     }
   }

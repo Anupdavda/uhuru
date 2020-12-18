@@ -1,12 +1,38 @@
 import 'package:flutter/material.dart';
-import '../model/apartment.dart';
+import 'package:uhuru/model/personal_apartment.dart';
 import 'package:provider/provider.dart';
-import '../screens/apartment_detail_screen.dart';
 
-class ApartmentItem extends StatelessWidget {
+class ApartmentCard extends StatelessWidget {
+  // final String id;
+  // final String description;
+  // final double price;
+  // final List imageUrl;
+  // final String streetName;
+  // final int bedroom;
+  // final double bathroom;
+  // final String city;
+  // final double zipcode;
+  // final double area;
+  // final List amenities;
+
+  // const ApartmentItem(
+  //     this.id,
+  //     this.description,
+  //     this.price,
+  //     this.imageUrl,
+  //     this.streetName,
+  //     this.bedroom,
+  //     this.bathroom,
+  //     this.city,
+  //     this.zipcode,
+  //     this.area,
+  //     this.amenities,
+  //     {Key key})
+  //     : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final apartment = Provider.of<Apartment>(context, listen: false);
+    final apartment = Provider.of<PersonalApartment>(context, listen: false);
 
     return Card(
       shape: RoundedRectangleBorder(
@@ -16,20 +42,22 @@ class ApartmentItem extends StatelessWidget {
       margin: EdgeInsets.all(4),
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed(
-            ApartmentDetailScreen.routeName,
-            arguments: apartment.id,
-          );
+          // Navigator.of(context).pushNamed(
+          //   PersonalDetailScreen.routeName,
+          //   arguments: apartment.id,
+          // );
         },
         onDoubleTap: () {
           debugPrint('doubletapped');
         },
+       
         child: Column(
           children: <Widget>[
             ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
               child: Image.network(
-                apartment.imageUrl,
+                //  imageUrl[0],
+                apartment.imageUrl[0],
                 height: 250,
                 width: double.infinity,
                 fit: BoxFit.cover,
@@ -52,6 +80,7 @@ class ApartmentItem extends StatelessWidget {
                             width: 6,
                           ),
                           Text(
+                            // apartment.price.toString()
                             apartment.price.toString().replaceAllMapped(
                                 new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
                                 (Match m) => '${m[1]},'),
@@ -65,20 +94,22 @@ class ApartmentItem extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           Text(apartment.bedroom.toString() +
+                              //  bedroom.toString() +
                               " bd | " +
                               apartment.bathroom.toString() +
+                              //  bathroom.toString() +
                               " ba | " +
                               apartment.area.toString() +
+                              //area.toString() +
                               " sq-ft"),
-                          //Text(apartment.description),
                         ],
                       ),
                       Row(
                         children: <Widget>[
-                          Consumer<Apartment>(
+                          Consumer<PersonalApartment>(
                             builder: (ctx, product, _) => IconButton(
                               icon: Icon(
-                                apartment.isFavorite
+                                apartment.isFavorite 
                                     ? Icons.bookmark
                                     : Icons.bookmark_border,
                               ),
@@ -104,10 +135,14 @@ class ApartmentItem extends StatelessWidget {
                         width: 6,
                       ),
                       Text(apartment.streetName +
-                          ", " +
-                          apartment.city +
-                          ", " +
-                          apartment.zipcode.toString()),
+                              //  streetName +
+                              ", " +
+                              apartment.city +
+                              // city +
+                              ", " +
+                              apartment.zipcode.toString()
+                          //   zipcode.toString()
+                          ),
                     ],
                   ),
                 ],

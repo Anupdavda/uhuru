@@ -34,10 +34,11 @@ class _ImageCarouselState extends State<ImageCarousel> {
       }
       return result;
     }
-
     return Container(
+      
       child: Column(
         children: [
+       
           CarouselSlider(
             items: imageList.map((imageUrl) {
               return Builder(
@@ -63,6 +64,7 @@ class _ImageCarouselState extends State<ImageCarousel> {
               );
             }).toList(),
             options: CarouselOptions(
+              
               initialPage: 0,
               autoPlay: false,
               viewportFraction: 1.0,

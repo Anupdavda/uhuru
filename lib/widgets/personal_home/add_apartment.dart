@@ -1,3 +1,4 @@
+//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -20,9 +21,9 @@ class AddApartment extends StatefulWidget {
 }
 
 class _AddApartmentState extends State<AddApartment> {
- //File _apartmentImage;
+  //File _apartmentImage;
   PersonalApartment _currentApartment;
- // String _imageUrl;
+  // String _imageUrl;
 
   final _form = GlobalKey<FormState>();
   final _areaFocusNode = FocusNode();
@@ -41,84 +42,29 @@ class _AddApartmentState extends State<AddApartment> {
     if (personalHomeList.currentApartment != null &&
         widget.isUpdating == true) {
       _currentApartment = personalHomeList.currentApartment;
-    } else {
-      _currentApartment = PersonalApartment();
-      _currentApartment.price = 0.0;
-      _currentApartment.area = 0;
-      _currentApartment.bathroom = 0.0;
-      _currentApartment.bedroom = 0;
-      _currentApartment.zipcode = 0.0;
     }
-    //_imageUrl = _currentApartment.imageUrl;
+     else {
+      _currentApartment = PersonalApartment(
+        id: '',
+        amenities: [],
+        area: 0.0,
+        bathroom: 0.0,
+        bedroom: 0,
+        city: '',
+        
+        description: '',
+        imageUrl: [],
+        price: 0.0,
+        streetName: '',
+       
+        zipcode: 0.0,
+      );
+     
+    }
+  
   }
-
-  // _getLocalImage() async {
-  //   final picker = ImagePicker();
-  //   final pickedImage = await picker.getImage(
-  //     source: ImageSource.camera,
-  //     imageQuality: 50,
-  //   );
-  //   final pickedImageFile = File(pickedImage.path);
-  //   setState(() {
-  //     _apartmentImage = pickedImageFile;
-  //   });
-  // }
-
-  // _showImage() {
-  //   if (_apartmentImage != null) {
-  //     print('showing image from local camera');
-  //     return Column(
-  //       children: [
-  //         Container(
-  //           width: 150,
-  //           height: 100,
-  //           decoration: BoxDecoration(
-  //             border: Border.all(width: 1, color: Colors.grey),
-  //           ),
-  //           child: Image.file(_apartmentImage),
-  //         ),
-  //         FlatButton.icon(
-  //           onPressed: _getLocalImage,
-  //           icon: Icon(Icons.image),
-  //           label: Text('Add Image'),
-  //           textColor: Theme.of(context).primaryColor,
-  //         ),
-  //       ],
-  //     );
-  //   } else if (_imageUrl != null) {
-  //     print('showing image from url');
-  //     return Column(
-  //       children: [
-  //         Container(
-  //           width: 150,
-  //           height: 100,
-  //           decoration: BoxDecoration(
-  //             border: Border.all(width: 1, color: Colors.grey),
-  //           ),
-  //           child: Image.network(_imageUrl),
-  //         ),
-  //         FlatButton.icon(
-  //           onPressed: _getLocalImage,
-  //           icon: Icon(Icons.image),
-  //           label: Text('Edit Image'),
-  //           textColor: Theme.of(context).primaryColor,
-  //         ),
-  //       ],
-  //     );
-  //   } else if (_apartmentImage == null && _imageUrl == null) {
-  //     return Column(
-  //       children: [
-  //         Center(child: Text('Add Image')),
-  //         FlatButton.icon(
-  //           onPressed: _getLocalImage,
-  //           icon: Icon(Icons.image),
-  //           label: Text('Add Image'),
-  //           textColor: Theme.of(context).primaryColor,
-  //         ),
-  //       ],
-  //     );
-  //   }
-  // }
+  
+ 
 
   Future<void> _saveForm() async {
     final isValid = _form.currentState.validate();
@@ -129,7 +75,7 @@ class _AddApartmentState extends State<AddApartment> {
         MaterialPageRoute(
           builder: (context) => AmenitiesScreen(
             _currentApartment,
-         //  _apartmentImage,
+            //  _apartmentImage,
             isUpdating: false,
           ),
         ),
@@ -146,7 +92,7 @@ class _AddApartmentState extends State<AddApartment> {
         MaterialPageRoute(
           builder: (context) => AmenitiesScreen(
             _currentApartment,
-          //  _apartmentImage,
+            //  _apartmentImage,
             isUpdating: true,
           ),
         ),
@@ -156,7 +102,8 @@ class _AddApartmentState extends State<AddApartment> {
 
   Widget _priceTextFormField() {
     return TextFormField(
-      initialValue: _currentApartment.price.toString(),
+      initialValue:  //_initValues['price'],
+      _currentApartment.price.toString(),
       keyboardType: TextInputType.number,
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -187,7 +134,8 @@ class _AddApartmentState extends State<AddApartment> {
 
   Widget _areaTextFormField() {
     return TextFormField(
-      initialValue: _currentApartment.area.toString(),
+      initialValue:// _initValues['area'],
+       _currentApartment.area.toString(),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         labelText: 'Sqaure-Space',
@@ -218,7 +166,8 @@ class _AddApartmentState extends State<AddApartment> {
 
   Widget _bedroomTextFormField() {
     return TextFormField(
-      initialValue: _currentApartment.bedroom.toString(),
+      initialValue://  _initValues['bedroom'],
+      _currentApartment.bedroom.toString(),
       keyboardType: TextInputType.number,
       textInputAction: TextInputAction.next,
       focusNode: _bedroomFocusNode,
@@ -249,7 +198,8 @@ class _AddApartmentState extends State<AddApartment> {
 
   Widget _bathroomTextFormField() {
     return TextFormField(
-      initialValue: _currentApartment.bathroom.toString(),
+      initialValue:// _initValues['bathroom'],
+      _currentApartment.bathroom.toString(),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         labelText: 'Bathrooms',
@@ -280,7 +230,8 @@ class _AddApartmentState extends State<AddApartment> {
 
   Widget _cityTextFormField() {
     return TextFormField(
-      initialValue: _currentApartment.city,
+      initialValue: //_initValues['city'],
+       _currentApartment.city,
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -309,7 +260,8 @@ class _AddApartmentState extends State<AddApartment> {
 
   Widget _streetnameTextFormField() {
     return TextFormField(
-      initialValue: _currentApartment.streetName,
+      initialValue:// _initValues['streetName'],
+      _currentApartment.streetName,
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -338,7 +290,8 @@ class _AddApartmentState extends State<AddApartment> {
 
   Widget _zipcodeTextFormField() {
     return TextFormField(
-      initialValue: _currentApartment.zipcode.toString(),
+      initialValue: //_initValues['zipcode'],
+      _currentApartment.zipcode.toString(),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         labelText: 'Zip Code/P.O.Box',
@@ -369,7 +322,8 @@ class _AddApartmentState extends State<AddApartment> {
 
   Widget _descriptionTextFormField() {
     return TextFormField(
-      initialValue: _currentApartment.description,
+      initialValue:// _initValues['description'],
+      _currentApartment.description,
       textInputAction: TextInputAction.done,
       maxLines: null,
       decoration: InputDecoration(

@@ -48,9 +48,22 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
     if (personalHomeList.currentApartment != null) {
       _currentApartment = personalHomeList.currentApartment;
     } else {
-      _currentApartment = PersonalApartment();
+      _currentApartment = PersonalApartment( id: '',
+        amenities: [],
+        area: widget.personalApartment.area,
+        bathroom:  widget.personalApartment.bathroom,
+        bedroom:  widget.personalApartment.bedroom,
+        city:  widget.personalApartment.city,
+       
+        description:  widget.personalApartment.description,
+        imageUrl: [],
+        price:  widget.personalApartment.price,
+        streetName:  widget.personalApartment.streetName,
+        
+        zipcode:  widget.personalApartment.zipcode,);
+        
     }
-    _amenitiesList.addAll(_currentApartment.amenities);
+   _amenitiesList.addAll(_currentApartment.amenities);
   }
 
   Widget _amenitiesCheckBoxList() {

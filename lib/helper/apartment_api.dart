@@ -11,8 +11,26 @@ Future<void> getApartment(PersonalHomeList personalApartmentList) async {
 
   List<PersonalApartment> _loadedPersonalApartment = [];
   snapshot.documents.forEach((result) {
-    PersonalApartment personalApartment =
-        PersonalApartment.fromMap(result.data);
+    // PersonalApartment personalApartment =
+    //     PersonalApartment.fromMap(result.data);
+
+   
+ 
+    PersonalApartment personalApartment = new PersonalApartment(
+    id:  result.data['id'],
+      
+     
+     
+      
+     
+      
+      
+     
+      
+     
+    
+       amenities:  result.data['amenities'], area: result.data['area'], bathroom: result.data['bathroom'], bedroom:  result.data['bedroom'],city: result.data['city'], createdAt: result.data['createdAt'], description: result.data['description'], imageUrl:  result.data['imageUrl'], price:  result.data['price'], streetName:result.data['streetName'], updatedAt: result.data['updatedAt'], zipcode:   result.data['zipcode'],
+    );
     _loadedPersonalApartment.add(personalApartment);
   });
   personalApartmentList.apartmentList = _loadedPersonalApartment;
@@ -36,8 +54,8 @@ uploadApartment(PersonalApartment personalApartment, bool isUpdating,
   // _uploadNewApartment(personalApartment, isUpdating, apartmentUploaded,
   //     imageUrl: url);
 
-  for(var imageFile in images){
- final ref = FirebaseStorage.instance
+  for (var imageFile in images) {
+    final ref = FirebaseStorage.instance
         .ref()
         .child('apartment_images')
         .child(Timestamp.now().toString() + '.jpg');
@@ -46,7 +64,7 @@ uploadApartment(PersonalApartment personalApartment, bool isUpdating,
     StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
     String url = await storageTaskSnapshot.ref.getDownloadURL();
     _imageUrlList.add(url);
-  
+
     personalApartment.imageUrl = _imageUrlList;
 
     _uploadNewApartment(personalApartment, isUpdating, apartmentUploaded,
@@ -54,9 +72,6 @@ uploadApartment(PersonalApartment personalApartment, bool isUpdating,
 
     return url;
   }
-
-   
-  
 }
 
 _uploadNewApartment(PersonalApartment personalApartment, bool isUpdating,

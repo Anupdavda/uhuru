@@ -10,9 +10,17 @@ import 'package:provider/provider.dart';
 class PersonalDetailScreen extends StatelessWidget {
   static const routeName = '/personal-apartment-detail';
  
-
   @override
   Widget build(BuildContext context) {
+
+ // final productId =
+    //     ModalRoute.of(context).settings.arguments as String; // is the id!
+
+    // final loadedApartment = Provider.of<ApartmentList>(
+    //   context,
+    //   listen: false,
+    // ).findById(productId);
+
     PersonalHomeList loadedApartment =
         Provider.of<PersonalHomeList>(context, listen: true);
 
@@ -47,10 +55,7 @@ class PersonalDetailScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            ImageCarousel(
-           
-
-            ),
+            ImageCarousel(),
             SizedBox(
               height: 10,
             ),
