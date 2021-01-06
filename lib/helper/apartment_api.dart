@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:flutter/material.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import '../model/personal_apartment.dart';
 import '../providers/personal_apartment_list.dart';
@@ -11,25 +12,20 @@ Future<void> getApartment(PersonalHomeList personalApartmentList) async {
 
   List<PersonalApartment> _loadedPersonalApartment = [];
   snapshot.documents.forEach((result) {
-    // PersonalApartment personalApartment =
-    //     PersonalApartment.fromMap(result.data);
-
-   
- 
     PersonalApartment personalApartment = new PersonalApartment(
-    id:  result.data['id'],
-      
-     
-     
-      
-     
-      
-      
-     
-      
-     
-    
-       amenities:  result.data['amenities'], area: result.data['area'], bathroom: result.data['bathroom'], bedroom:  result.data['bedroom'],city: result.data['city'], createdAt: result.data['createdAt'], description: result.data['description'], imageUrl:  result.data['imageUrl'], price:  result.data['price'], streetName:result.data['streetName'], updatedAt: result.data['updatedAt'], zipcode:   result.data['zipcode'],
+      id: result.data['id'],
+      amenities: result.data['amenities'],
+      area: result.data['area'],
+      bathroom: result.data['bathroom'],
+      bedroom: result.data['bedroom'],
+      city: result.data['city'],
+      createdAt: result.data['createdAt'],
+      description: result.data['description'],
+      imageUrl: result.data['imageUrl'],
+      price: result.data['price'],
+      streetName: result.data['streetName'],
+      updatedAt: result.data['updatedAt'],
+      zipcode: result.data['zipcode'],
     );
     _loadedPersonalApartment.add(personalApartment);
   });
@@ -106,15 +102,17 @@ _uploadNewApartment(PersonalApartment personalApartment, bool isUpdating,
 
 deleteApartments(
     PersonalApartment personalApartment, Function apartmentDeleted) async {
-  // if (personalApartment.imageUrl != null) {
-  //   StorageReference storageReference = await FirebaseStorage.instance
-  //       .getReferenceFromUrl(personalApartment.imageUrl);
-  //   await storageReference.delete();
-  //   print('image deleted');
-  // }
-  // await Firestore.instance
-  //     .collection('apartments')
-  //     .document(personalApartment.id)
-  //     .delete();
-  // apartmentDeleted(personalApartment);
+  if (personalApartment.imageUrl != null) {
+    for (int i = 0; i < personalApartment.imageUrl.length; i++) {
+      StorageReference storageReference = await FirebaseStorage.instance
+          .getReferenceFromUrl(personalApartment.imageUrl[i]);
+      await storageReference.delete();
+      print('images deleted');
+    }
+  }
+  await Firestore.instance
+      .collection('apartments')
+      .document(personalApartment.id)
+      .delete();
+  apartmentDeleted(personalApartment);
 }

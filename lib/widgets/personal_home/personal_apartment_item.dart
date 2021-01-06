@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:uhuru/model/personal_apartment.dart';
 //import 'package:uhuru/model/personal_apartment.dart';
 
 import 'package:uhuru/screens/personal_detail_screen.dart';
@@ -40,6 +41,10 @@ class _PersonalApartmentItemState extends State<PersonalApartmentItem> {
     PersonalHomeList personalHomeList = Provider.of<PersonalHomeList>(context);
     final personalApartments = personalHomeList.loadedPersonalApartment;
 
+    _apartmentDeleted(PersonalApartment personalApartment) {
+      personalHomeList.deleteApartment(personalApartment);
+    }
+
     if (personalApartments.length == 0) {
       return AddHome();
     } else {
@@ -55,10 +60,13 @@ class _PersonalApartmentItemState extends State<PersonalApartmentItem> {
                 itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
                     value: personalApartments[i],
                     child: ListTile(
-                    leading: Image.network(personalApartments[i].imageUrl[0]),
+                      leading: Image.network(personalApartments[i].imageUrl[0]),
                       trailing: IconButton(
                           icon: Icon(Icons.delete, color: Colors.redAccent),
-                          onPressed: () async {}),
+                          onPressed: () {
+                            deleteApartments(
+                                personalApartments[i], _apartmentDeleted);
+                          }),
                       title: Text(
                         personalApartments[i].price.toString().replaceAllMapped(
                             new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
@@ -78,7 +86,9 @@ class _PersonalApartmentItemState extends State<PersonalApartmentItem> {
                             personalApartments[i];
                         Navigator.of(context).push(
                             MaterialPageRoute(builder: (BuildContext context) {
-                          return PersonalDetailScreen();
+                          return PersonalDetailScreen(
+                             personalApartments[i].id == futureSnapshot.data.uid,
+                          );
                         }));
                       },
                     )),

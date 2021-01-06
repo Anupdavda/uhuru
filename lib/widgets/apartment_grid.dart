@@ -7,7 +7,7 @@ import 'package:uhuru/screens/personal_detail_screen.dart';
 import '../widgets/apartment_card.dart';
 //import '../providers/apartment_list.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
- import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ApartmentGrid extends StatefulWidget {
   @override
@@ -26,15 +26,6 @@ class _ApartmentGridState extends State<ApartmentGrid> {
 
   @override
   Widget build(BuildContext context) {
-    // final apartmentData = Provider.of<ApartmentList>(context);
-    // final apartment = apartmentData.loadedApartment;
-    //  final productId =
-    //     ModalRoute.of(context).settings.arguments as String; // is the id!
-    //  final loadedApartments = Provider.of<ApartmentList>(
-    //   context,
-    //   listen: false,
-    // ).findById(productId);
-
     final PersonalHomeList personalHomeList =
         Provider.of<PersonalHomeList>(context);
     final personalApartments = personalHomeList.loadedPersonalApartment;
@@ -55,14 +46,16 @@ class _ApartmentGridState extends State<ApartmentGrid> {
                   value: personalApartments[i],
                   child: GestureDetector(
                       child: ApartmentCard(
-                        
+                          personalApartments[i].id == futureSnapshot.data.uid,
                       ),
                       onTap: () {
-                          personalHomeList.currentApartment =
+                        personalHomeList.currentApartment =
                             personalApartments[i];
                         Navigator.of(context).push(
                             MaterialPageRoute(builder: (BuildContext context) {
-                          return PersonalDetailScreen();
+                          return PersonalDetailScreen(
+                             personalApartments[i].id == futureSnapshot.data.uid,
+                          );
                         }));
                       }),
                 ),

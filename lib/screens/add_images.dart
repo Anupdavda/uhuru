@@ -36,18 +36,16 @@ class _AddImagesState extends State<AddImages> {
     } else {
       _currentApartment = PersonalApartment(
         id: '',
-        amenities:  widget.personalApartment.amenities,
-        area:  widget.personalApartment.area,
-        bathroom:  widget.personalApartment.bathroom,
-        bedroom:  widget.personalApartment.bedroom,
-        city:  widget.personalApartment.city,
-       
-        description:  widget.personalApartment.description,
-        imageUrl:  widget.personalApartment.imageUrl,
-        price:  widget.personalApartment.price,
-        streetName:  widget.personalApartment.streetName,
-       
-        zipcode:  widget.personalApartment.zipcode,
+        amenities: widget.personalApartment.amenities,
+        area: widget.personalApartment.area,
+        bathroom: widget.personalApartment.bathroom,
+        bedroom: widget.personalApartment.bedroom,
+        city: widget.personalApartment.city,
+        description: widget.personalApartment.description,
+        imageUrl: widget.personalApartment.imageUrl,
+        price: widget.personalApartment.price,
+        streetName: widget.personalApartment.streetName,
+        zipcode: widget.personalApartment.zipcode,
       );
     }
     imageUrls.addAll(_currentApartment.imageUrl);
@@ -118,23 +116,40 @@ class _AddImagesState extends State<AddImages> {
     return storageTaskSnapshot.ref.getDownloadURL();
   }
 
-  void uploadImages() async {
-    for (var imageFile in images) {
-      postImage(imageFile).then((downloadUrl) async {
-        imageUrls.add(downloadUrl.toString());
-        if (imageUrls.length == images.length) {
-          CollectionReference apartmentRef =
-              Firestore.instance.collection('apartments');
-          if (widget.isUpdating) {
-            _currentApartment.updatedAt = Timestamp.now();
+  uploadImages() async {
+    CollectionReference apartmentRef =
+        Firestore.instance.collection('apartments');
+    if (widget.isUpdating) {
+      // if (_currentApartment.imageUrl != null) {
+      //   // for (int i = 0; i < _currentApartment.imageUrl.length; i++) {
+      //   //   StorageReference storageReference = await FirebaseStorage.instance
+      //   //       .getReferenceFromUrl(_currentApartment.imageUrl[i]);
+      //   //   await storageReference.delete();
 
-            await apartmentRef
-                .document(_currentApartment.id)
-                .updateData(_currentApartment.toMap());
+      //   //   print('images deleted');
+      //   // }
+      // }
+      for (var imageFile in images) {
+        postImage(imageFile).then((downloadUrl) async {
+          imageUrls.add(downloadUrl.toString());
 
-            _apartmentUploaded(_currentApartment);
-            print('updated apartment with id: ${_currentApartment.id}');
-          } else {
+          _currentApartment = widget.personalApartment;
+          _currentApartment.updatedAt = Timestamp.now();
+
+          _currentApartment.imageUrl = imageUrls;
+          await apartmentRef
+              .document(_currentApartment.id)
+              .updateData(_currentApartment.toMap());
+          debugPrint('updated apartment with id: ${_currentApartment.id}');
+        });
+      }
+
+      _apartmentUploaded(_currentApartment);
+    } else {
+      for (var imageFile in images) {
+        postImage(imageFile).then((downloadUrl) async {
+          imageUrls.add(downloadUrl.toString());
+          if (imageUrls.length == images.length) {
             _currentApartment = widget.personalApartment;
             _currentApartment.createdAt = Timestamp.now();
 
@@ -143,19 +158,19 @@ class _AddImagesState extends State<AddImages> {
             _currentApartment.id = documentRef.documentID;
             _currentApartment.imageUrl = imageUrls;
             await documentRef.setData(_currentApartment.toMap(), merge: true);
-            _apartmentUploaded(_currentApartment);
-            print(
+            debugPrint(
                 'uploaded apartment successfully: ${_currentApartment.toString()}');
+            _apartmentUploaded(_currentApartment);
           }
           setState(() {
             images = [];
             imageUrls = [];
           });
-        }
-      }).catchError((err) {
-        _error = err;
-        print(_error);
-      });
+        }).catchError((err) {
+          _error = err;
+          print(_error);
+        });
+      }
     }
   }
 
@@ -163,15 +178,14 @@ class _AddImagesState extends State<AddImages> {
     PersonalHomeList personalHomeList =
         Provider.of<PersonalHomeList>(context, listen: false);
     personalHomeList.addApartment(personalApartment);
-    Navigator.pop(context);
-    print('popped Successfully');
+    Navigator.of(context).popUntil((route) => route.isFirst);
+    debugPrint('popped Successfully');
   }
 
   _saveImages() {
     // uploadApartment(
     //     _currentApartment, widget.isUpdating, images, _apartmentUploaded);
     uploadImages();
-    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 
   @override
@@ -187,8 +201,6 @@ class _AddImagesState extends State<AddImages> {
                 icon: Icon(Icons.save_alt, color: Colors.white),
                 onPressed: () {
                   _saveImages();
-                  Navigator.of(context).popUntil((route) => route.isFirst);
-          
                 }),
           ],
         ),

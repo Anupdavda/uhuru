@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:uhuru/model/personal_apartment.dart';
 import 'package:provider/provider.dart';
+//import 'package:uhuru/screens/personal_detail_screen.dart';
 
 class ApartmentCard extends StatelessWidget {
-  // final String id;
+  //  final String id;
   // final String description;
   // final double price;
   // final List imageUrl;
@@ -14,21 +15,23 @@ class ApartmentCard extends StatelessWidget {
   // final double zipcode;
   // final double area;
   // final List amenities;
+  final bool isMe;
 
-  // const ApartmentItem(
-  //     this.id,
-  //     this.description,
-  //     this.price,
-  //     this.imageUrl,
-  //     this.streetName,
-  //     this.bedroom,
-  //     this.bathroom,
-  //     this.city,
-  //     this.zipcode,
-  //     this.area,
-  //     this.amenities,
-  //     {Key key})
-  //     : super(key: key);
+  const ApartmentCard(
+      // this.id,
+      // this.description,
+      // this.price,
+      // this.imageUrl,
+      // this.streetName,
+      // this.bedroom,
+      // this.bathroom,
+      // this.city,
+      // this.zipcode,
+      // this.area,
+      // this.amenities,
+      this.isMe,
+      {Key key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,15 +45,11 @@ class ApartmentCard extends StatelessWidget {
       margin: EdgeInsets.all(4),
       child: GestureDetector(
         onTap: () {
-          // Navigator.of(context).pushNamed(
-          //   PersonalDetailScreen.routeName,
-          //   arguments: apartment.id,
-          // );
+          // Navigator.of(context)
+          //     .push(MaterialPageRoute(builder: (BuildContext context) {
+          //   return PersonalDetailScreen();
+          // }));
         },
-        onDoubleTap: () {
-          debugPrint('doubletapped');
-        },
-       
         child: Column(
           children: <Widget>[
             ClipRRect(
@@ -106,10 +105,10 @@ class ApartmentCard extends StatelessWidget {
                       ),
                       Row(
                         children: <Widget>[
-                          Consumer<PersonalApartment>(
+                           !isMe ?  Consumer<PersonalApartment>(
                             builder: (ctx, product, _) => IconButton(
                               icon: Icon(
-                                apartment.isFavorite 
+                                apartment.isFavorite
                                     ? Icons.bookmark
                                     : Icons.bookmark_border,
                               ),
@@ -118,7 +117,8 @@ class ApartmentCard extends StatelessWidget {
                                 apartment.toggleFavoriteStatus();
                               },
                             ),
-                          ),
+                          )  : Container(),
+                         
                           SizedBox(
                             width: 6,
                           ),

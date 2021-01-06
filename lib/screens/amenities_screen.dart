@@ -47,23 +47,23 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
         Provider.of<PersonalHomeList>(context, listen: false);
     if (personalHomeList.currentApartment != null) {
       _currentApartment = personalHomeList.currentApartment;
+      
     } else {
-      _currentApartment = PersonalApartment( id: '',
+      _currentApartment = PersonalApartment(
+        id: '',
         amenities: [],
         area: widget.personalApartment.area,
-        bathroom:  widget.personalApartment.bathroom,
-        bedroom:  widget.personalApartment.bedroom,
-        city:  widget.personalApartment.city,
-       
-        description:  widget.personalApartment.description,
+        bathroom: widget.personalApartment.bathroom,
+        bedroom: widget.personalApartment.bedroom,
+        city: widget.personalApartment.city,
+        description: widget.personalApartment.description,
         imageUrl: [],
-        price:  widget.personalApartment.price,
-        streetName:  widget.personalApartment.streetName,
-        
-        zipcode:  widget.personalApartment.zipcode,);
-        
+        price: widget.personalApartment.price,
+        streetName: widget.personalApartment.streetName,
+        zipcode: widget.personalApartment.zipcode,
+      );
     }
-   _amenitiesList.addAll(_currentApartment.amenities);
+    _amenitiesList.addAll(_currentApartment.amenities);
   }
 
   Widget _amenitiesCheckBoxList() {
@@ -95,15 +95,30 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
   _saveAmenities() {
     _currentApartment = widget.personalApartment;
     _currentApartment.amenities = _amenitiesList;
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => AddImages(
-          _currentApartment,
-          isUpdating: false,
+    widget.isUpdating
+        ? debugPrint('updated button pressed')
+        : debugPrint('saved button pressed');
+    if (widget.isUpdating) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AddImages(
+            _currentApartment,
+            isUpdating: true,
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AddImages(
+            _currentApartment,
+            isUpdating: false,
+          ),
+        ),
+      );
+    }
   }
 
   // uploadAmenities(_currentApartment);

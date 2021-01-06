@@ -1,32 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:uhuru/widgets/image_carousel.dart';
-//import 'package:uhuru/model/amenities.dart';
-//import 'package:uhuru/widgets/amenities/amenities_grid.dart';
 import 'package:uhuru/widgets/personal_home/add_apartment.dart';
 import 'package:uhuru/providers/personal_apartment_list.dart';
-//import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
 
 class PersonalDetailScreen extends StatelessWidget {
   static const routeName = '/personal-apartment-detail';
+
+  final bool isMe;
+
  
+  const PersonalDetailScreen(
+    
+      this.isMe,
+      {Key key})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-
- // final productId =
-    //     ModalRoute.of(context).settings.arguments as String; // is the id!
-
-    // final loadedApartment = Provider.of<ApartmentList>(
-    //   context,
-    //   listen: false,
-    // ).findById(productId);
-
     PersonalHomeList loadedApartment =
         Provider.of<PersonalHomeList>(context, listen: true);
-
-    // List<Image> _apartmentImages = [
-    //   Image.network(loadedApartment.currentApartment.imageUrl)
-    // ];
 
     return Scaffold(
       appBar: PreferredSize(
@@ -44,6 +37,7 @@ class PersonalDetailScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (BuildContext context) {
                     return AddApartment(
                       isUpdating: true,
+                      
                     );
                   }),
                 );
@@ -139,34 +133,6 @@ class PersonalDetailScreen extends StatelessWidget {
               child: Text("Amenities", textAlign: TextAlign.left),
             ),
             SizedBox(height: 16),
-            // Padding(
-            //   padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
-            //   child: GridView.builder(
-            //     itemCount: _amenity.length,
-            //     itemBuilder: (context, index) => Row(
-            //       children: [
-            //         Icon(_amenity[index].icon),
-            //         SizedBox(width: 10),
-            //         Text(_amenity[index].name),
-            //       ],
-            //     ),
-            //     shrinkWrap: true,
-            //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            //       crossAxisCount: 2,
-            //       childAspectRatio: 5 / 1,
-            //       crossAxisSpacing: 20,
-            //       mainAxisSpacing: 10,
-            //     ),
-            //     // crossAxisCount: 2,`
-            //     // childAspectRatio: 5 / 1,
-            //     // crossAxisSpacing: 80,
-            //     // mainAxisSpacing: 10,
-            //     // children: loadedApartment.currentApartment.amenities
-            //     //     .map((amenities) => Text(amenities))
-            //     //     .toList(),
-            //   ),
-            //   //   ),
-            // ),
             Padding(
               padding: const EdgeInsets.fromLTRB(54, 0, 54, 0),
               child: GridView.count(
@@ -181,6 +147,7 @@ class PersonalDetailScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 16),
+            isMe ? Container() :
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: RaisedButton(

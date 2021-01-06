@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 
 import '../model/personal_apartment.dart';
@@ -11,7 +10,7 @@ class PersonalHomeList with ChangeNotifier {
     return [..._loadedPersonalApartment];
   }
 
-   PersonalApartment get currentApartment => _currentApartment;
+  PersonalApartment get currentApartment => _currentApartment;
 
   set apartmentList(List<PersonalApartment> personalApartment) {
     _loadedPersonalApartment = personalApartment;
@@ -29,21 +28,20 @@ class PersonalHomeList with ChangeNotifier {
         .toList();
   }
 
-
-  
+  deleteApartment(PersonalApartment personalApartment) {
+    _loadedPersonalApartment.removeWhere(
+        (_loadedApartment) => _loadedApartment.id == personalApartment.id);
+    notifyListeners();
+  }
 
   // PersonalApartment findById(String id) {
   //   return _loadedPersonalApartment
   //       .firstWhere((loadedApartment) => loadedApartment.id == id);
   // }
 
- 
-
   void addApartment(PersonalApartment apartment) {
     _loadedPersonalApartment.add(apartment);
 
     notifyListeners();
   }
-
- 
 }

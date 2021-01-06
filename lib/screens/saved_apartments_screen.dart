@@ -23,7 +23,9 @@ class SavedApartmentScreen extends StatelessWidget {
         itemCount: savedApartment.length,
         itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
           value: savedApartment[i],
-          child: ApartmentCard(),
+          child: ApartmentCard(
+             savedApartment[i].id !=   savedApartment[i].id ,
+          ),
         ),
       );
     }
