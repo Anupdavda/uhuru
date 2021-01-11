@@ -1,28 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-//import 'package:uhuru/helper/apartment_api.dart';
 import 'package:uhuru/model/personal_apartment.dart';
 import 'package:uhuru/providers/personal_apartment_list.dart';
 import 'package:uhuru/screens/add_images.dart';
-//import 'dart:io';
 
 class AmenitiesScreen extends StatefulWidget {
   static const routeName = '/amenities-screen';
 
   final PersonalApartment personalApartment;
   final bool isUpdating;
-  // final File imageFile;
 
-  AmenitiesScreen(this.personalApartment,
-      //this.imageFile,
-      {@required this.isUpdating});
+  AmenitiesScreen(this.personalApartment, {@required this.isUpdating});
 
   @override
   _AmenitiesScreenState createState() => _AmenitiesScreenState();
 }
 
 class _AmenitiesScreenState extends State<AmenitiesScreen> {
-  Map<String, bool> _amenities = {
+  Map<String, dynamic> _amenities = {
     'air condition': false,
     'ceiling fan': false,
     'ceramic tiles': false,
@@ -37,7 +32,6 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
     'hardwoodFloor': false,
   };
 
-  List _amenitiesList = [];
   PersonalApartment _currentApartment;
 
   @override
@@ -47,11 +41,10 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
         Provider.of<PersonalHomeList>(context, listen: false);
     if (personalHomeList.currentApartment != null) {
       _currentApartment = personalHomeList.currentApartment;
-      
     } else {
       _currentApartment = PersonalApartment(
         id: '',
-        amenities: [],
+        amenities: _amenities,
         area: widget.personalApartment.area,
         bathroom: widget.personalApartment.bathroom,
         bedroom: widget.personalApartment.bedroom,
@@ -63,7 +56,6 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
         zipcode: widget.personalApartment.zipcode,
       );
     }
-    _amenitiesList.addAll(_currentApartment.amenities);
   }
 
   Widget _amenitiesCheckBoxList() {
@@ -71,18 +63,25 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
       child: ListView(
         shrinkWrap: false,
-        children: _amenities.keys.map((String key) {
+        children: _currentApartment.amenities.keys.map((String key) {
           return CheckboxListTile(
             title: Text(key),
-            value: _amenities[key],
+            value: widget.isUpdating
+                ? _currentApartment.amenities[key]
+                : _amenities[key],
             onChanged: (bool value) {
               setState(() {
-                if (value) {
+                if (value && !widget.isUpdating) {
                   _amenities[key] = value;
-                  _amenitiesList.add(key);
+                  _amenities.update(key, (value) => value);
+                  debugPrint(_amenities['parking'].toString());
+                  debugPrint(_amenities.keys.toString());
+                  debugPrint(_amenities.values.toString());
                 } else {
-                  _amenities[key] = value;
-                  _amenitiesList.remove(key);
+                  _currentApartment.amenities[key] = value;
+                  _currentApartment.amenities.update(key, (value) => value);
+                  debugPrint(_currentApartment.amenities.keys.toString());
+                  debugPrint(_currentApartment.amenities.values.toString());
                 }
               });
             },
@@ -94,7 +93,8 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
 
   _saveAmenities() {
     _currentApartment = widget.personalApartment;
-    _currentApartment.amenities = _amenitiesList;
+    _currentApartment.amenities =
+        widget.isUpdating ? _currentApartment.amenities : _amenities;
     widget.isUpdating
         ? debugPrint('updated button pressed')
         : debugPrint('saved button pressed');
@@ -120,20 +120,6 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
       );
     }
   }
-
-  // uploadAmenities(_currentApartment);
-
-  // uploadApartment(_currentApartment, widget.isUpdating, widget.imageFile,
-  //     _apartmentUploaded);
-  // Navigator.of(context).popUntil((route) => route.isFirst);
-
-  // _apartmentUploaded(PersonalApartment personalApartment) {
-  //   PersonalHomeList personalHomeList =
-  //       Provider.of<PersonalHomeList>(context, listen: false);
-  //   personalHomeList.addApartment(personalApartment);
-  //   //  Navigator.pop(context);
-  //   // print('popped Successfully');
-  // }
 
   @override
   Widget build(BuildContext context) {

@@ -147,29 +147,33 @@ class _AddImagesState extends State<AddImages> {
       _apartmentUploaded(_currentApartment);
     } else {
       for (var imageFile in images) {
-        postImage(imageFile).then((downloadUrl) async {
-          imageUrls.add(downloadUrl.toString());
-          if (imageUrls.length == images.length) {
-            _currentApartment = widget.personalApartment;
-            _currentApartment.createdAt = Timestamp.now();
+        try {
+          postImage(imageFile).then((downloadUrl) async {
+            imageUrls.add(downloadUrl.toString());
+            if (imageUrls.length == images.length) {
+              _currentApartment = widget.personalApartment;
+              _currentApartment.createdAt = Timestamp.now();
 
-            DocumentReference documentRef =
-                await apartmentRef.add(_currentApartment.toMap());
-            _currentApartment.id = documentRef.documentID;
-            _currentApartment.imageUrl = imageUrls;
-            await documentRef.setData(_currentApartment.toMap(), merge: true);
-            debugPrint(
-                'uploaded apartment successfully: ${_currentApartment.toString()}');
-            _apartmentUploaded(_currentApartment);
-          }
-          setState(() {
-            images = [];
-            imageUrls = [];
+              DocumentReference documentRef =
+                  await apartmentRef.add(_currentApartment.toMap());
+              _currentApartment.id = documentRef.documentID;
+              _currentApartment.imageUrl = imageUrls;
+              await documentRef.setData(_currentApartment.toMap(), merge: true);
+              debugPrint(
+                  'uploaded apartment successfully: ${_currentApartment.toString()}');
+              _apartmentUploaded(_currentApartment);
+            }
+            setState(() {
+              images = [];
+              imageUrls = [];
+            });
+          }).catchError((err) {
+            _error = err;
+            print(_error);
           });
-        }).catchError((err) {
-          _error = err;
-          print(_error);
-        });
+        } catch (error) {
+          print(error);
+        }
       }
     }
   }

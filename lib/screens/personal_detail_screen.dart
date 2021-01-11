@@ -9,12 +9,7 @@ class PersonalDetailScreen extends StatelessWidget {
 
   final bool isMe;
 
- 
-  const PersonalDetailScreen(
-    
-      this.isMe,
-      {Key key})
-      : super(key: key);
+  const PersonalDetailScreen(this.isMe, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +32,6 @@ class PersonalDetailScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (BuildContext context) {
                     return AddApartment(
                       isUpdating: true,
-                      
                     );
                   }),
                 );
@@ -136,30 +130,34 @@ class PersonalDetailScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(54, 0, 54, 0),
               child: GridView.count(
-                shrinkWrap: true,
-                crossAxisCount: 2,
-                childAspectRatio: 5 / 1,
-                crossAxisSpacing: 80,
-                mainAxisSpacing: 10,
-                children: loadedApartment.currentApartment.amenities
-                    .map((amenities) => Text(amenities))
-                    .toList(),
+                  shrinkWrap: true,
+                  crossAxisCount: 2,
+                  childAspectRatio: 5 / 1,
+                  crossAxisSpacing: 80,
+                  mainAxisSpacing: 10,
+
+                  //   children: loadedApartment.currentApartment.amenities
+                  //       .map((amenities) => Text(amenities))
+                  //       .toList(),
               ),
+
+                  
             ),
             SizedBox(height: 16),
-            isMe ? Container() :
-            Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: RaisedButton(
-                child: Text('Contact Seller',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                    )),
-                color: Colors.blue,
-                onPressed: () {},
-              ),
-            ),
+            isMe
+                ? Container()
+                : Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: RaisedButton(
+                      child: Text('Contact Seller',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          )),
+                      color: Colors.blue,
+                      onPressed: () {},
+                    ),
+                  ),
           ],
         ),
       ),

@@ -14,7 +14,7 @@ class PersonalApartment with ChangeNotifier {
   String city;
   double zipcode;
   double area;
-  List amenities = [];
+  Map<String, dynamic> amenities ;
   Timestamp createdAt;
   Timestamp updatedAt;
   bool isFavorite;

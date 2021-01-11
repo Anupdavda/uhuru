@@ -46,7 +46,7 @@ class _AddApartmentState extends State<AddApartment> {
      else {
       _currentApartment = PersonalApartment(
         id: '',
-        amenities: [],
+        amenities: _amenities ,
         area: 0.0,
         bathroom: 0.0,
         bedroom: 0,
@@ -63,6 +63,21 @@ class _AddApartmentState extends State<AddApartment> {
     }
   
   }
+
+   Map<String, bool> _amenities = {
+    'air condition': false,
+    'ceiling fan': false,
+    'ceramic tiles': false,
+    'carpet': false,
+    'furnished': false,
+    'closet': false,
+    'elevator': false,
+    'laundry': false,
+    'security': false,
+    'parking': false,
+    'swimmingPool': false,
+    'hardwoodFloor': false,
+  };
   
  
 
