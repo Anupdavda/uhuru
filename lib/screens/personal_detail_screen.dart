@@ -16,6 +16,19 @@ class PersonalDetailScreen extends StatelessWidget {
     PersonalHomeList loadedApartment =
         Provider.of<PersonalHomeList>(context, listen: true);
 
+    final _amenities = loadedApartment.currentApartment.amenities;
+    var _amenitiesKeys = _amenities.keys.toList();
+    var _amenitiesValues = _amenities.values.toList();
+    List _trueAmenitiesValues = [];
+    List _trueAmenitiesKeys = [];
+
+    for (int i = 0; i < _amenitiesValues.length; i++) {
+      if (_amenitiesValues[i] == true) {
+        _trueAmenitiesValues.add(_amenitiesValues[i]);
+        _trueAmenitiesKeys.add(_amenitiesKeys[i]);
+      }
+    }
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
@@ -135,13 +148,8 @@ class PersonalDetailScreen extends StatelessWidget {
                   childAspectRatio: 5 / 1,
                   crossAxisSpacing: 80,
                   mainAxisSpacing: 10,
-
-                  //   children: loadedApartment.currentApartment.amenities
-                  //       .map((amenities) => Text(amenities))
-                  //       .toList(),
-              ),
-
-                  
+                  children: List.generate(_trueAmenitiesKeys.length,
+                      (index) => Text(_trueAmenitiesKeys[index]))),
             ),
             SizedBox(height: 16),
             isMe

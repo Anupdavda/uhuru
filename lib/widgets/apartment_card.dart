@@ -54,13 +54,23 @@ class ApartmentCard extends StatelessWidget {
           children: <Widget>[
             ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
-              child: Image.network(
-                //  imageUrl[0],
-                apartment.imageUrl[0],
-                height: 250,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
+              child: apartment.imageUrl.isEmpty
+                  ? Container(
+                      child: Center(
+                          child: Text(
+                        'No Images',
+                        style: TextStyle(color: Colors.white, fontSize: 20.0),
+                      )),
+                      height: 250,
+                      width: double.infinity,
+                      color: Colors.black54)
+                  : Image.network(
+                      //  imageUrl[0],
+                      apartment.imageUrl[0],
+                      height: 250,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
             ),
             Padding(
               padding: EdgeInsets.all(5),
@@ -105,20 +115,21 @@ class ApartmentCard extends StatelessWidget {
                       ),
                       Row(
                         children: <Widget>[
-                           !isMe ?  Consumer<PersonalApartment>(
-                            builder: (ctx, product, _) => IconButton(
-                              icon: Icon(
-                                apartment.isFavorite
-                                    ? Icons.bookmark
-                                    : Icons.bookmark_border,
-                              ),
-                              color: Colors.redAccent,
-                              onPressed: () {
-                                apartment.toggleFavoriteStatus();
-                              },
-                            ),
-                          )  : Container(),
-                         
+                          !isMe
+                              ? Consumer<PersonalApartment>(
+                                  builder: (ctx, product, _) => IconButton(
+                                    icon: Icon(
+                                      apartment.isFavorite
+                                          ? Icons.bookmark
+                                          : Icons.bookmark_border,
+                                    ),
+                                    color: Colors.redAccent,
+                                    onPressed: () {
+                                      apartment.toggleFavoriteStatus();
+                                    },
+                                  ),
+                                )
+                              : Container(),
                           SizedBox(
                             width: 6,
                           ),

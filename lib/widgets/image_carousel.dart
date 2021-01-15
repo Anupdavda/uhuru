@@ -34,63 +34,75 @@ class _ImageCarouselState extends State<ImageCarousel> {
       }
       return result;
     }
-    return Container(
-      
-      child: Column(
-        children: [
-       
-          CarouselSlider(
-            items: imageList.map((imageUrl) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Container(
-                    width: MediaQuery.of(context).size.width,
-                    margin: EdgeInsets.symmetric(horizontal: 1.0),
-                    child: Ink(
-                      child: InkWell(
-                        child: Image.network(imageUrl, fit: BoxFit.fill),
-                        onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(builder: (BuildContext context) {
-                            return PhotoGalleryDetail(
-                              currentIndex: _current,
-                              imagePaths: imageList,
-                            );
-                          }),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              );
-            }).toList(),
-            options: CarouselOptions(
-              
-              initialPage: 0,
-              autoPlay: false,
-              viewportFraction: 1.0,
-              onPageChanged: (index, reason) {
-                setState(() {
-                  _current = index;
-                });
-                _pageController.jumpToPage(index);
-              },
+
+    return imageList.isEmpty
+        ? Container(
+            child: Center(
+                child: Text(
+              'No Images',
+              style: TextStyle(color: Colors.white, fontSize: 20.0),
+            )),
+            height: 250,
+            width: double.infinity,
+            color: Colors.black54)
+        : Container(
+            child: Column(
+              children: [
+                CarouselSlider(
+                  items: imageList.map((imageUrl) {
+                    return Builder(
+                      builder: (BuildContext context) {
+                        return Container(
+                          width: MediaQuery.of(context).size.width,
+                          margin: EdgeInsets.symmetric(horizontal: 1.0),
+                          child: Ink(
+                            child: InkWell(
+                              child: Image.network(imageUrl, fit: BoxFit.fill),
+                              onTap: () => Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) {
+                                  return PhotoGalleryDetail(
+                                    currentIndex: _current,
+                                    imagePaths: imageList,
+                                  );
+                                }),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }).toList(),
+                  options: CarouselOptions(
+                    initialPage: 0,
+                    autoPlay: false,
+                    viewportFraction: 1.0,
+                    onPageChanged: (index, reason) {
+                      setState(() {
+                        _current = index;
+                      });
+                      _pageController.jumpToPage(index);
+                    },
+                  ),
+                ),
+                SizedBox(height: 10),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: map<Widget>(imageList, (index, imageUrl) {
+                      return Container(
+                        width: 10.0,
+                        height: 10.0,
+                        margin: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 2.0),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: _current == index
+                                ? Colors.black
+                                : Colors.black54),
+                      );
+                    })),
+              ],
             ),
-          ),
-          SizedBox(height: 10),
-          Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: map<Widget>(imageList, (index, imageUrl) {
-                return Container(
-                  width: 10.0,
-                  height: 10.0,
-                  margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: _current == index ? Colors.black : Colors.black54),
-                );
-              })),
-        ],
-      ),
-    );
+          );
   }
 }

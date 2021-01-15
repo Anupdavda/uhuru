@@ -28,16 +28,9 @@ class _PersonalApartmentItemState extends State<PersonalApartmentItem> {
     super.initState();
   }
 
-  // deleteApartment(PersonalApartment personalApartment) {
-  //   // PersonalHomeList personalHomeList = Provider.of<PersonalHomeList>(context);
-  //   // personalHomeList.deleteApartment(personalApartment);
-  //   Provider.of<PersonalHomeList>(context,listen:false).deleteApartments(id, personalApartment);
-  // }
-
   @override
   Widget build(BuildContext context) {
-    // final personalApartment =
-    //     Provider.of<PersonalApartment>(context, listen: false);
+  
     PersonalHomeList personalHomeList = Provider.of<PersonalHomeList>(context);
     final personalApartments = personalHomeList.loadedPersonalApartment;
 
@@ -60,7 +53,7 @@ class _PersonalApartmentItemState extends State<PersonalApartmentItem> {
                 itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
                     value: personalApartments[i],
                     child: ListTile(
-                      leading: Image.network(personalApartments[i].imageUrl[0]),
+                      leading:  personalApartments[i].imageUrl.isEmpty ? CircleAvatar(backgroundColor: Colors.blueAccent): CircleAvatar(backgroundImage: NetworkImage(personalApartments[i].imageUrl[0])),
                       trailing: IconButton(
                           icon: Icon(Icons.delete, color: Colors.redAccent),
                           onPressed: () {

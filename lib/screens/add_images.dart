@@ -120,60 +120,80 @@ class _AddImagesState extends State<AddImages> {
     CollectionReference apartmentRef =
         Firestore.instance.collection('apartments');
     if (widget.isUpdating) {
-      // if (_currentApartment.imageUrl != null) {
-      //   // for (int i = 0; i < _currentApartment.imageUrl.length; i++) {
-      //   //   StorageReference storageReference = await FirebaseStorage.instance
-      //   //       .getReferenceFromUrl(_currentApartment.imageUrl[i]);
-      //   //   await storageReference.delete();
-
-      //   //   print('images deleted');
-      //   // }
-      // }
-      for (var imageFile in images) {
-        postImage(imageFile).then((downloadUrl) async {
-          imageUrls.add(downloadUrl.toString());
-
-          _currentApartment = widget.personalApartment;
-          _currentApartment.updatedAt = Timestamp.now();
-
-          _currentApartment.imageUrl = imageUrls;
-          await apartmentRef
-              .document(_currentApartment.id)
-              .updateData(_currentApartment.toMap());
-          debugPrint('updated apartment with id: ${_currentApartment.id}');
-        });
-      }
-
-      _apartmentUploaded(_currentApartment);
-    } else {
-      for (var imageFile in images) {
-        try {
+      if (images.isNotEmpty) {
+        for (var imageFile in images) {
           postImage(imageFile).then((downloadUrl) async {
             imageUrls.add(downloadUrl.toString());
-            if (imageUrls.length == images.length) {
-              _currentApartment = widget.personalApartment;
-              _currentApartment.createdAt = Timestamp.now();
 
-              DocumentReference documentRef =
-                  await apartmentRef.add(_currentApartment.toMap());
-              _currentApartment.id = documentRef.documentID;
-              _currentApartment.imageUrl = imageUrls;
-              await documentRef.setData(_currentApartment.toMap(), merge: true);
-              debugPrint(
-                  'uploaded apartment successfully: ${_currentApartment.toString()}');
-              _apartmentUploaded(_currentApartment);
-            }
-            setState(() {
-              images = [];
-              imageUrls = [];
-            });
-          }).catchError((err) {
-            _error = err;
-            print(_error);
+            _currentApartment = widget.personalApartment;
+            _currentApartment.updatedAt = Timestamp.now();
+
+            _currentApartment.imageUrl = imageUrls;
+            await apartmentRef
+                .document(_currentApartment.id)
+                .updateData(_currentApartment.toMap());
+            debugPrint('updated apartment with id: ${_currentApartment.id}');
           });
-        } catch (error) {
-          print(error);
         }
+
+        _apartmentUploaded(_currentApartment);
+      } else {
+        _currentApartment = widget.personalApartment;
+        _currentApartment.updatedAt = Timestamp.now();
+
+        _currentApartment.imageUrl = imageUrls;
+        await apartmentRef
+            .document(_currentApartment.id)
+            .updateData(_currentApartment.toMap());
+        debugPrint('updated apartment with id: ${_currentApartment.id}');
+        debugPrint('Skipping ImageUpload');
+        _apartmentUploaded(_currentApartment);
+      }
+    } else {
+      if (images.isNotEmpty) {
+        for (var imageFile in images) {
+          try {
+            postImage(imageFile).then((downloadUrl) async {
+              imageUrls.add(downloadUrl.toString());
+              if (imageUrls.length == images.length) {
+                _currentApartment = widget.personalApartment;
+                _currentApartment.createdAt = Timestamp.now();
+
+                DocumentReference documentRef =
+                    await apartmentRef.add(_currentApartment.toMap());
+                _currentApartment.id = documentRef.documentID;
+                _currentApartment.imageUrl = imageUrls;
+                await documentRef.setData(_currentApartment.toMap(),
+                    merge: true);
+                debugPrint(
+                    'uploaded apartment successfully: ${_currentApartment.toString()}');
+                _apartmentUploaded(_currentApartment);
+              }
+              setState(() {
+                images = [];
+                imageUrls = [];
+              });
+            }).catchError((err) {
+              _error = err;
+              print(_error);
+            });
+          } catch (error) {
+            print(error);
+          }
+        }
+      } else {
+        _currentApartment = widget.personalApartment;
+        _currentApartment.createdAt = Timestamp.now();
+
+        DocumentReference documentRef =
+            await apartmentRef.add(_currentApartment.toMap());
+        _currentApartment.id = documentRef.documentID;
+        _currentApartment.imageUrl = imageUrls;
+        await documentRef.setData(_currentApartment.toMap(), merge: true);
+        debugPrint(
+            'uploaded apartment successfully: ${_currentApartment.toString()}');
+        debugPrint('Skipping ImageUpload');
+        _apartmentUploaded(_currentApartment);
       }
     }
   }
@@ -187,8 +207,6 @@ class _AddImagesState extends State<AddImages> {
   }
 
   _saveImages() {
-    // uploadApartment(
-    //     _currentApartment, widget.isUpdating, images, _apartmentUploaded);
     uploadImages();
   }
 
