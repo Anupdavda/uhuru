@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:uhuru/model/personal_apartment.dart';
-import 'package:uhuru/providers/personal_apartment_list.dart';
+import 'package:uhuru/provider/personal_apartment_list.dart';
 //import 'package:image_picker/image_picker.dart';
 import 'package:uhuru/screens/amenities_screen.dart';
 

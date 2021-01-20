@@ -160,34 +160,7 @@ class ApartmentDetails extends StatelessWidget {
               child: Text("Amenities", textAlign: TextAlign.left),
             ),
             SizedBox(height: 16),
-            // Padding(
-            //   padding: const EdgeInsets.fromLTRB(40, 0, 40, 0),
-            //   child: GridView.builder(
-            //     itemCount: _amenity.length,
-            //     itemBuilder: (context, index) => Row(
-            //       children: [
-            //         Icon(_amenity[index].icon),
-            //         SizedBox(width: 10),
-            //         Text(_amenity[index].name),
-            //       ],
-            //     ),
-            //     shrinkWrap: true,
-            //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            //       crossAxisCount: 2,
-            //       childAspectRatio: 5 / 1,
-            //       crossAxisSpacing: 20,
-            //       mainAxisSpacing: 10,
-            //     ),
-            //     // crossAxisCount: 2,`
-            //     // childAspectRatio: 5 / 1,
-            //     // crossAxisSpacing: 80,
-            //     // mainAxisSpacing: 10,
-            //     // children: loadedApartment.currentApartment.amenities
-            //     //     .map((amenities) => Text(amenities))
-            //     //     .toList(),
-            //   ),
-            //   //   ),
-            // ),
+           
             Padding(
               padding: const EdgeInsets.fromLTRB(54, 0, 54, 0),
               child: GridView.count(

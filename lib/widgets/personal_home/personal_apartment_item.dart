@@ -8,7 +8,7 @@ import 'package:uhuru/model/personal_apartment.dart';
 import 'package:uhuru/screens/personal_detail_screen.dart';
 
 import 'package:uhuru/helper/apartment_api.dart';
-import '../../providers/personal_apartment_list.dart';
+import '../../provider/personal_apartment_list.dart';
 
 import 'package:uhuru/widgets/personal_home/add_apartment.dart';
 
@@ -53,7 +53,8 @@ class _PersonalApartmentItemState extends State<PersonalApartmentItem> {
                 itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
                     value: personalApartments[i],
                     child: ListTile(
-                      leading:  personalApartments[i].imageUrl.isEmpty ? CircleAvatar(backgroundColor: Colors.blueAccent): CircleAvatar(backgroundImage: NetworkImage(personalApartments[i].imageUrl[0])),
+                      leading:  personalApartments[i].imageUrl.isEmpty ? CircleAvatar(backgroundColor: Colors.blueAccent): 
+                      CircleAvatar(backgroundImage: NetworkImage(personalApartments[i].imageUrl[0])),
                       trailing: IconButton(
                           icon: Icon(Icons.delete, color: Colors.redAccent),
                           onPressed: () {

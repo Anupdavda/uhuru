@@ -8,7 +8,7 @@ import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:provider/provider.dart';
 //import 'package:uhuru/helper/apartment_api.dart';
 import 'package:uhuru/model/personal_apartment.dart';
-import 'package:uhuru/providers/personal_apartment_list.dart';
+import 'package:uhuru/provider/personal_apartment_list.dart';
 
 class AddImages extends StatefulWidget {
   final PersonalApartment personalApartment;
@@ -116,71 +116,59 @@ class _AddImagesState extends State<AddImages> {
     return storageTaskSnapshot.ref.getDownloadURL();
   }
 
-  uploadImages() async {
+  
+  void uploadImages() async {
     CollectionReference apartmentRef =
         Firestore.instance.collection('apartments');
-    if (widget.isUpdating) {
-      if (images.isNotEmpty) {
-        for (var imageFile in images) {
-          postImage(imageFile).then((downloadUrl) async {
-            imageUrls.add(downloadUrl.toString());
+    if (images.isNotEmpty) {
+      for (var imageFile in images) {
+        postImage(imageFile).then((downloadUrl) async {
+          imageUrls.add(downloadUrl.toString());
 
-            _currentApartment = widget.personalApartment;
-            _currentApartment.updatedAt = Timestamp.now();
+          if (imageUrls.length == images.length) {
+            if (widget.isUpdating) {
+              _currentApartment.updatedAt = Timestamp.now();
+              _currentApartment.imageUrl = imageUrls;
 
-            _currentApartment.imageUrl = imageUrls;
-            await apartmentRef
-                .document(_currentApartment.id)
-                .updateData(_currentApartment.toMap());
-            debugPrint('updated apartment with id: ${_currentApartment.id}');
-          });
-        }
+              await apartmentRef
+                  .document(_currentApartment.id)
+                  .updateData(_currentApartment.toMap());
 
-        _apartmentUploaded(_currentApartment);
-      } else {
-        _currentApartment = widget.personalApartment;
+              _apartmentUploaded(_currentApartment);
+              print('updated apartment with id: ${_currentApartment.id}');
+            } else {
+              _currentApartment = widget.personalApartment;
+              _currentApartment.createdAt = Timestamp.now();
+
+              DocumentReference documentRef =
+                  await apartmentRef.add(_currentApartment.toMap());
+              _currentApartment.id = documentRef.documentID;
+              _currentApartment.imageUrl = imageUrls;
+              await documentRef.setData(_currentApartment.toMap(), merge: true);
+              _apartmentUploaded(_currentApartment);
+              print(
+                  'uploaded apartment successfully: ${_currentApartment.toString()}');
+            }
+            setState(() {
+              images = [];
+              imageUrls = [];
+            });
+          }
+        }).catchError((err) {
+          _error = err;
+          print(_error);
+        });
+      }
+    } else {
+      if (widget.isUpdating) {
         _currentApartment.updatedAt = Timestamp.now();
 
-        _currentApartment.imageUrl = imageUrls;
         await apartmentRef
             .document(_currentApartment.id)
             .updateData(_currentApartment.toMap());
-        debugPrint('updated apartment with id: ${_currentApartment.id}');
-        debugPrint('Skipping ImageUpload');
-        _apartmentUploaded(_currentApartment);
-      }
-    } else {
-      if (images.isNotEmpty) {
-        for (var imageFile in images) {
-          try {
-            postImage(imageFile).then((downloadUrl) async {
-              imageUrls.add(downloadUrl.toString());
-              if (imageUrls.length == images.length) {
-                _currentApartment = widget.personalApartment;
-                _currentApartment.createdAt = Timestamp.now();
 
-                DocumentReference documentRef =
-                    await apartmentRef.add(_currentApartment.toMap());
-                _currentApartment.id = documentRef.documentID;
-                _currentApartment.imageUrl = imageUrls;
-                await documentRef.setData(_currentApartment.toMap(),
-                    merge: true);
-                debugPrint(
-                    'uploaded apartment successfully: ${_currentApartment.toString()}');
-                _apartmentUploaded(_currentApartment);
-              }
-              setState(() {
-                images = [];
-                imageUrls = [];
-              });
-            }).catchError((err) {
-              _error = err;
-              print(_error);
-            });
-          } catch (error) {
-            print(error);
-          }
-        }
+        _apartmentUploaded(_currentApartment);
+        print('updated apartment with id: ${_currentApartment.id}');
       } else {
         _currentApartment = widget.personalApartment;
         _currentApartment.createdAt = Timestamp.now();
@@ -188,11 +176,8 @@ class _AddImagesState extends State<AddImages> {
         DocumentReference documentRef =
             await apartmentRef.add(_currentApartment.toMap());
         _currentApartment.id = documentRef.documentID;
-        _currentApartment.imageUrl = imageUrls;
+
         await documentRef.setData(_currentApartment.toMap(), merge: true);
-        debugPrint(
-            'uploaded apartment successfully: ${_currentApartment.toString()}');
-        debugPrint('Skipping ImageUpload');
         _apartmentUploaded(_currentApartment);
       }
     }

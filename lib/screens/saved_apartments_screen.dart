@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:uhuru/providers/personal_apartment_list.dart';
+import 'package:uhuru/provider/personal_apartment_list.dart';
 //import '../providers/apartment_list.dart';
 import '../widgets/apartment_card.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uhuru/widgets/image_carousel.dart';
 import 'package:uhuru/widgets/personal_home/add_apartment.dart';
-import 'package:uhuru/providers/personal_apartment_list.dart';
+import 'package:uhuru/provider/personal_apartment_list.dart';
 import 'package:provider/provider.dart';
 
 class PersonalDetailScreen extends StatelessWidget {

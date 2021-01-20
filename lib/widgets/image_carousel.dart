@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
-import 'package:uhuru/providers/personal_apartment_list.dart';
+import 'package:uhuru/provider/personal_apartment_list.dart';
 import 'package:uhuru/widgets/image_gallery/photo_gallery_detail.dart';
 
 class ImageCarousel extends StatefulWidget {

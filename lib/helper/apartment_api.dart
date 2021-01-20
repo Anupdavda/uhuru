@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'package:flutter/material.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import '../model/personal_apartment.dart';
-import '../providers/personal_apartment_list.dart';
+import '../provider/personal_apartment_list.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 //import 'dart:io';
 
@@ -107,12 +107,19 @@ deleteApartments(
       StorageReference storageReference = await FirebaseStorage.instance
           .getReferenceFromUrl(personalApartment.imageUrl[i]);
       await storageReference.delete();
-      print('images deleted');
     }
+  } else {
+    Firestore.instance
+        .collection('apartments')
+        .document(personalApartment.id)
+        .delete();
+    apartmentDeleted(personalApartment);
   }
-  await Firestore.instance
+
+  Firestore.instance
       .collection('apartments')
       .document(personalApartment.id)
       .delete();
   apartmentDeleted(personalApartment);
+  print('images deleted');
 }

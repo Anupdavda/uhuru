@@ -2,7 +2,7 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:uhuru/helper/apartment_api.dart';
-import 'package:uhuru/providers/personal_apartment_list.dart';
+import 'package:uhuru/provider/personal_apartment_list.dart';
 import 'package:uhuru/screens/personal_detail_screen.dart';
 import '../widgets/apartment_card.dart';
 //import '../providers/apartment_list.dart';
@@ -46,7 +46,7 @@ class _ApartmentGridState extends State<ApartmentGrid> {
                   value: personalApartments[i],
                   child: GestureDetector(
                       child: ApartmentCard(
-                          personalApartments[i].id == futureSnapshot.data.uid,
+                        personalApartments[i].id == futureSnapshot.data.uid,
                       ),
                       onTap: () {
                         personalHomeList.currentApartment =
@@ -54,7 +54,7 @@ class _ApartmentGridState extends State<ApartmentGrid> {
                         Navigator.of(context).push(
                             MaterialPageRoute(builder: (BuildContext context) {
                           return PersonalDetailScreen(
-                             personalApartments[i].id == futureSnapshot.data.uid,
+                            personalApartments[i].id == futureSnapshot.data.uid,
                           );
                         }));
                       }),
@@ -63,55 +63,5 @@ class _ApartmentGridState extends State<ApartmentGrid> {
             );
           });
     }
-
-    // return ListView.builder(
-    //   itemCount: apartment.length,
-    //   itemBuilder: (ctx, i) =>  ChangeNotifierProvider.value(
-    //       value: apartment[i],
-    //       child: ApartmentCard(
-
-    //       ),
-    //     ),
-
-    // );
-
-    // return FutureBuilder(
-    //     future: FirebaseAuth.instance.currentUser(),
-    //     builder: (context, futureSnapshot) {
-    //       if (futureSnapshot.connectionState == ConnectionState.waiting) {
-    //         return Center(child: CircularProgressIndicator());
-    //       }
-    //       return StreamBuilder(
-    //           stream: Firestore.instance
-    //               .collection('apartments')
-    //               // .orderBy('createdAt', descending: true)
-    //               .snapshots(),
-    //           builder: (ctx, apartmentSnapshot) {
-    //             if (!apartmentSnapshot.hasData) return Text('Loading');
-    //             // if (apartmentSnapshot.connectionState == ConnectionState.waiting) {
-    //             //   return Center(child: CircularProgressIndicator());
-    //             // }
-    //             final apartmentDocs = apartmentSnapshot.data.documents;
-
-    //             return ListView.builder(
-    //               reverse: true,
-    //               itemCount: apartmentDocs.length,
-    //               itemBuilder: (ctx, index) => ApartmentItem(
-    //                 apartmentDocs[index]['id'],
-    //                 apartmentDocs[index]['description'],
-    //                 apartmentDocs[index]['price'],
-    //                 apartmentDocs[index]['imageUrl'],
-    //                 apartmentDocs[index]['streetName'],
-    //                 apartmentDocs[index]['bedroom'],
-    //                 apartmentDocs[index]['bathroom'],
-    //                 apartmentDocs[index]['city'],
-    //                 apartmentDocs[index]['zipcode'],
-    //                 apartmentDocs[index]['area'],
-    //                 apartmentDocs[index]['amenities'],
-    //                 key: ValueKey(apartmentDocs[index].documentID),
-    //               ),
-    //             );
-    //           });
-    //     });
   }
 }
