@@ -7,9 +7,10 @@ import 'package:provider/provider.dart';
 class PersonalDetailScreen extends StatelessWidget {
   static const routeName = '/personal-apartment-detail';
 
-  final bool isMe;
+ final bool isMe;
 
-  const PersonalDetailScreen(this.isMe, {Key key}) : super(key: key);
+  const PersonalDetailScreen(this.isMe,
+   {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class PersonalDetailScreen extends StatelessWidget {
     var _amenitiesValues = _amenities.values.toList();
     List _trueAmenitiesValues = [];
     List _trueAmenitiesKeys = [];
-
+  
     for (int i = 0; i < _amenitiesValues.length; i++) {
       if (_amenitiesValues[i] == true) {
         _trueAmenitiesValues.add(_amenitiesValues[i]);
@@ -156,13 +157,14 @@ class PersonalDetailScreen extends StatelessWidget {
                 ? Container()
                 : Padding(
                     padding: const EdgeInsets.all(15.0),
-                    child: RaisedButton(
+                    child: ElevatedButton(
                       child: Text('Contact Seller',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,
                           )),
-                      color: Colors.blue,
+                          style: TextButton.styleFrom(primary: Theme.of(context).primaryColor),
+                     
                       onPressed: () {},
                     ),
                   ),

@@ -36,6 +36,7 @@ class ApartmentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final apartment = Provider.of<PersonalApartment>(context, listen: false);
+   // bool isMe = true;
 
     return Card(
       shape: RoundedRectangleBorder(
@@ -43,13 +44,7 @@ class ApartmentCard extends StatelessWidget {
       ),
       elevation: 8,
       margin: EdgeInsets.all(4),
-      child: GestureDetector(
-        onTap: () {
-          // Navigator.of(context)
-          //     .push(MaterialPageRoute(builder: (BuildContext context) {
-          //   return PersonalDetailScreen();
-          // }));
-        },
+      
         child: Column(
           children: <Widget>[
             ClipRRect(
@@ -160,8 +155,8 @@ class ApartmentCard extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
+        
+      )
     );
   }
 }

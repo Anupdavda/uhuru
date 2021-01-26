@@ -21,22 +21,22 @@ class _AuthScreenState extends State<AuthScreen> {
     bool isLogin,
     BuildContext ctx,
   ) async {
-    AuthResult authResult;
+    UserCredential userCredential;
     try {
       setState(() {
         _isLoading = true;
       });
       if (isLogin) {
-        authResult = await _auth.signInWithEmailAndPassword(
+        userCredential = await _auth.signInWithEmailAndPassword(
             email: email, password: password);
       } else {
-        authResult = await _auth.createUserWithEmailAndPassword(
+        userCredential = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
 
-        await Firestore.instance
+        await FirebaseFirestore.instance
             .collection('users')
-            .document(authResult.user.uid)
-            .setData({
+            .doc(userCredential.user.uid)
+            .set({
           'username': username,
           'email': email,
         });

@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
@@ -8,11 +9,13 @@ import './screens/auth_screen.dart';
 import 'provider/personal_apartment_list.dart';
 
 
-void main() {
+void main()async {
+   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitUp,
   ]);
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -46,7 +49,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
         home: StreamBuilder(
-            stream: FirebaseAuth.instance.onAuthStateChanged,
+            stream: FirebaseAuth.instance.authStateChanges(),
             builder: (ctx, userSnapshot) {
               if (userSnapshot.hasData) {
                 return MainScreen();

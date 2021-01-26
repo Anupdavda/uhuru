@@ -435,7 +435,7 @@ class _AddApartmentState extends State<AddApartment> {
                 SizedBox(height: 16.0),
                 Container(
                   alignment: Alignment.bottomRight,
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     child: Text(
                       'Next',
                       style: TextStyle(
@@ -443,7 +443,8 @@ class _AddApartmentState extends State<AddApartment> {
                         fontSize: 20,
                       ),
                     ),
-                    color: Colors.greenAccent,
+                     style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
+                    
                     onPressed: () {
                       widget.isUpdating ? _updatingForm() : _saveForm();
 

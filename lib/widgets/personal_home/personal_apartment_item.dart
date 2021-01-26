@@ -33,6 +33,8 @@ class _PersonalApartmentItemState extends State<PersonalApartmentItem> {
   
     PersonalHomeList personalHomeList = Provider.of<PersonalHomeList>(context);
     final personalApartments = personalHomeList.loadedPersonalApartment;
+    var user = FirebaseAuth.instance.currentUser;
+
 
     _apartmentDeleted(PersonalApartment personalApartment) {
       personalHomeList.deleteApartment(personalApartment);
@@ -41,12 +43,8 @@ class _PersonalApartmentItemState extends State<PersonalApartmentItem> {
     if (personalApartments.length == 0) {
       return AddHome();
     } else {
-      return FutureBuilder(
-          future: FirebaseAuth.instance.currentUser(),
-          builder: (context, futureSnapshot) {
-            if (futureSnapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            }
+      
+      
             return Consumer<PersonalHomeList>(
               builder: (context, apartmentData, _) => ListView.builder(
                 itemCount: personalApartments.length,
@@ -81,14 +79,14 @@ class _PersonalApartmentItemState extends State<PersonalApartmentItem> {
                         Navigator.of(context).push(
                             MaterialPageRoute(builder: (BuildContext context) {
                           return PersonalDetailScreen(
-                             personalApartments[i].id == futureSnapshot.data.uid,
+                             personalApartments[i].id == user.uid,
                           );
                         }));
                       },
                     )),
               ),
             );
-          });
+        
     }
   }
 }
@@ -100,7 +98,7 @@ class AddHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //  final personalApartment = new PersonalApartment();
+  
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -132,8 +130,8 @@ class AddHome extends StatelessWidget {
         SizedBox(
           height: 15,
         ),
-        RaisedButton(
-          elevation: 10,
+        ElevatedButton(
+          //elevation: 10,
           child: Text(
             'Add your House',
             style: TextStyle(
@@ -142,7 +140,8 @@ class AddHome extends StatelessWidget {
               fontSize: 20,
             ),
           ),
-          color: Colors.redAccent,
+          style: ElevatedButton.styleFrom(primary:Colors.redAccent),
+        
           onPressed: () {
             //  Navigator.of(context).pushNamed(AddApartment.routeName);
             Navigator.push(

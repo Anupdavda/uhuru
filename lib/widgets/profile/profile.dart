@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Profile extends StatefulWidget {
@@ -110,7 +111,23 @@ class _ProfileState extends State<Profile> {
                         });
                       }),
                   Text('Read and accept terms and agreements'),
+                  SizedBox(height: 16.0),
                 ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: ElevatedButton(
+                  child: Text('Logout',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                      )),
+                      style: ElevatedButton.styleFrom(primary: Colors.blue),
+                 
+                  onPressed: () {
+                    FirebaseAuth.instance.signOut();
+                  },
+                ),
               ),
             ],
           )

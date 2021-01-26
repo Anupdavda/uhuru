@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uhuru/screens/personal_home_screen.dart';
 import '../screens/apartment_list_screen.dart';
@@ -56,9 +56,9 @@ class _MainScreenState extends State<MainScreen> {
           elevation: 10,
           actions: [
             IconButton(
-              icon: Icon(Icons.exit_to_app),
+              icon: Icon(Icons.sort_rounded),
               onPressed: () {
-                FirebaseAuth.instance.signOut();
+               
               },
             )
           ],

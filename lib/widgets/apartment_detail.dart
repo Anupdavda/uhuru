@@ -179,13 +179,14 @@ class ApartmentDetails extends StatelessWidget {
             SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.all(15.0),
-              child: RaisedButton(
+              child: ElevatedButton(
                 child: Text('Contact Seller',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
                     )),
-                color: Colors.blue,
+                     style: ElevatedButton.styleFrom(primary:Colors.blue),
+               
                 onPressed: () {},
               ),
             ),

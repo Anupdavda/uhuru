@@ -109,23 +109,26 @@ class _PhotoGalleryDetailState extends State<PhotoGalleryDetail> {
 
   deleteSelectedPicture() async {
     PersonalHomeList loadedApartment =
-        Provider.of<PersonalHomeList>(context, listen: true);
+        Provider.of<PersonalHomeList>(context, listen: false);
     List imageList = loadedApartment.currentApartment.imageUrl;
     try {
       if (widget.imagePaths[_currentIndex] == imageList[_currentIndex]) {
         debugPrint(imageList[_currentIndex].toString());
 
-        Firestore.instance
+        FirebaseFirestore.instance
             .collection('apartments')
-            .document(loadedApartment.currentApartment.id)
-            .updateData({
+            .doc(loadedApartment.currentApartment.id)
+            .update({
           'imageUrl': FieldValue.arrayRemove([imageList[_currentIndex]])
         }).then((_) {
           print("success!");
         });
 
-        StorageReference storageReference = await FirebaseStorage.instance
-            .getReferenceFromUrl(imageList[_currentIndex]);
+        // Reference storageReference =  FirebaseStorage.instance
+        //     .ref(imageList[_currentIndex]);
+          Reference storageReference =  FirebaseStorage.instance
+          .ref().child('apartment_images').child(imageList[_currentIndex]);
+            
         await storageReference.delete();
         debugPrint('Image removed from the storage');
         imageCache.clear();

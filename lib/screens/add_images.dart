@@ -21,7 +21,7 @@ class AddImages extends StatefulWidget {
 }
 
 class _AddImagesState extends State<AddImages> {
-  List<Asset> images = List<Asset>();
+  List<Asset> images = [];
   List imageUrls = [];
   String _error = 'No Error Dectected';
   PersonalApartment _currentApartment;
@@ -66,7 +66,7 @@ class _AddImagesState extends State<AddImages> {
   }
 
   Future<void> loadAssets() async {
-    List<Asset> resultList = List<Asset>();
+    List<Asset> resultList = [];
     //String error = 'No Error Dectected';
 
     try {
@@ -106,11 +106,11 @@ class _AddImagesState extends State<AddImages> {
   Future<dynamic> postImage(Asset imageFile) async {
     final ref = FirebaseStorage.instance
         .ref()
-        .child('apartment_images')
+        .child('/apartment_images')
         .child(Timestamp.now().toString() + '.jpg');
-    StorageUploadTask uploadTask =
+    UploadTask uploadTask =
         ref.putData((await imageFile.getByteData()).buffer.asUint8List());
-    StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
+    TaskSnapshot storageTaskSnapshot = await uploadTask;
     debugPrint("Images Uploaded to the database");
     print(storageTaskSnapshot.ref.getDownloadURL());
     return storageTaskSnapshot.ref.getDownloadURL();
@@ -119,7 +119,7 @@ class _AddImagesState extends State<AddImages> {
   
   void uploadImages() async {
     CollectionReference apartmentRef =
-        Firestore.instance.collection('apartments');
+        FirebaseFirestore.instance.collection('apartments');
     if (images.isNotEmpty) {
       for (var imageFile in images) {
         postImage(imageFile).then((downloadUrl) async {
@@ -131,8 +131,8 @@ class _AddImagesState extends State<AddImages> {
               _currentApartment.imageUrl = imageUrls;
 
               await apartmentRef
-                  .document(_currentApartment.id)
-                  .updateData(_currentApartment.toMap());
+                  .doc(_currentApartment.id)
+                  .update(_currentApartment.toMap());
 
               _apartmentUploaded(_currentApartment);
               print('updated apartment with id: ${_currentApartment.id}');
@@ -142,9 +142,9 @@ class _AddImagesState extends State<AddImages> {
 
               DocumentReference documentRef =
                   await apartmentRef.add(_currentApartment.toMap());
-              _currentApartment.id = documentRef.documentID;
+              _currentApartment.id = documentRef.id;
               _currentApartment.imageUrl = imageUrls;
-              await documentRef.setData(_currentApartment.toMap(), merge: true);
+              await documentRef.set(_currentApartment.toMap(), SetOptions(merge:true));
               _apartmentUploaded(_currentApartment);
               print(
                   'uploaded apartment successfully: ${_currentApartment.toString()}');
@@ -164,8 +164,8 @@ class _AddImagesState extends State<AddImages> {
         _currentApartment.updatedAt = Timestamp.now();
 
         await apartmentRef
-            .document(_currentApartment.id)
-            .updateData(_currentApartment.toMap());
+            .doc(_currentApartment.id)
+            .update(_currentApartment.toMap());
 
         _apartmentUploaded(_currentApartment);
         print('updated apartment with id: ${_currentApartment.id}');
@@ -175,9 +175,9 @@ class _AddImagesState extends State<AddImages> {
 
         DocumentReference documentRef =
             await apartmentRef.add(_currentApartment.toMap());
-        _currentApartment.id = documentRef.documentID;
+        _currentApartment.id = documentRef.id;
 
-        await documentRef.setData(_currentApartment.toMap(), merge: true);
+        await documentRef.set(_currentApartment.toMap(),SetOptions( merge: true));
         _apartmentUploaded(_currentApartment);
       }
     }
@@ -215,7 +215,7 @@ class _AddImagesState extends State<AddImages> {
       body: Column(
         children: <Widget>[
           Center(child: Text('Add your apartment images.')),
-          RaisedButton(
+          ElevatedButton(
             child: Text("Pick images"),
             onPressed: loadAssets,
           ),

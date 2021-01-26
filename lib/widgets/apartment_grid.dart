@@ -1,4 +1,4 @@
-//import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:uhuru/helper/apartment_api.dart';
@@ -7,7 +7,7 @@ import 'package:uhuru/screens/personal_detail_screen.dart';
 import '../widgets/apartment_card.dart';
 //import '../providers/apartment_list.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 
 class ApartmentGrid extends StatefulWidget {
   @override
@@ -29,16 +29,12 @@ class _ApartmentGridState extends State<ApartmentGrid> {
     final PersonalHomeList personalHomeList =
         Provider.of<PersonalHomeList>(context);
     final personalApartments = personalHomeList.loadedPersonalApartment;
+    var user = FirebaseAuth.instance.currentUser;
 
     if (personalApartments.length == 0) {
       return Center(child: CircularProgressIndicator());
     } else {
-      return FutureBuilder(
-          future: FirebaseAuth.instance.currentUser(),
-          builder: (context, futureSnapshot) {
-            if (futureSnapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            }
+   
             return Consumer<PersonalHomeList>(
               builder: (context, apartmentData, _) => ListView.builder(
                 itemCount: personalApartments.length,
@@ -46,7 +42,7 @@ class _ApartmentGridState extends State<ApartmentGrid> {
                   value: personalApartments[i],
                   child: GestureDetector(
                       child: ApartmentCard(
-                        personalApartments[i].id == futureSnapshot.data.uid,
+                        personalApartments[i].id == user.uid,
                       ),
                       onTap: () {
                         personalHomeList.currentApartment =
@@ -54,14 +50,14 @@ class _ApartmentGridState extends State<ApartmentGrid> {
                         Navigator.of(context).push(
                             MaterialPageRoute(builder: (BuildContext context) {
                           return PersonalDetailScreen(
-                            personalApartments[i].id == futureSnapshot.data.uid,
+                            personalApartments[i].id == user.uid,
                           );
                         }));
                       }),
                 ),
               ),
             );
-          });
+       
     }
   }
 }
