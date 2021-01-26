@@ -91,25 +91,40 @@ deleteApartments(
     PersonalApartment personalApartment, Function apartmentDeleted) async {
   if (personalApartment.imageUrl != null) {
     for (int i = 0; i < personalApartment.imageUrl.length; i++) {
-      Reference storageReference = FirebaseStorage.instance
-          .ref()
-          .child('/apartment_images')
-          .child(personalApartment.imageUrl[i]);
+      String fileName =
+          personalApartment.imageUrl[i].replaceAll("/o/images%2F", "*");
+      fileName = fileName.replaceAll("%", "=");
+      fileName = fileName.replaceAll("?alt", "*");
+      fileName = fileName.replaceAll("=2C=20", ", ");
+      fileName = fileName.replaceAll("3D", "");
+      fileName = fileName.split("*")[1];
 
-      await storageReference.delete();
+      List<String> imageFiles = [];
+      imageFiles.add(fileName);
+
+      for (int j = 0; j < imageFiles.length; j++) {
+        print('/images/' + imageFiles[j]);
+
+        FirebaseFirestore.instance
+            .collection('apartments')
+            .doc(personalApartment.id)
+            .delete()
+            .then((value) => print('apartment deleted'));
+        apartmentDeleted(personalApartment);
+
+        Reference storageReference =
+            FirebaseStorage.instance.ref('/images/' + imageFiles[j]);
+        await storageReference
+            .delete()
+            .then((value) => print('images deleted'));
+      }
     }
   } else {
     FirebaseFirestore.instance
         .collection('apartments')
         .doc(personalApartment.id)
-        .delete();
+        .delete()
+        .then((value) => print('apartment deleted'));
     apartmentDeleted(personalApartment);
   }
-
-  FirebaseFirestore.instance
-      .collection('apartments')
-      .doc(personalApartment.id)
-      .delete();
-  apartmentDeleted(personalApartment);
-  print('images deleted');
 }

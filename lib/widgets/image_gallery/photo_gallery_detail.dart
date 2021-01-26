@@ -124,13 +124,18 @@ class _PhotoGalleryDetailState extends State<PhotoGalleryDetail> {
           print("success!");
         });
 
-        // Reference storageReference =  FirebaseStorage.instance
-        //     .ref(imageList[_currentIndex]);
-          Reference storageReference =  FirebaseStorage.instance
-          .ref().child('apartment_images').child(imageList[_currentIndex]);
-            
-        await storageReference.delete();
-        debugPrint('Image removed from the storage');
+        String fileName =
+            imageList[_currentIndex].replaceAll("/o/images%2F", "*");
+        fileName = fileName.replaceAll("%", "=");
+        fileName = fileName.replaceAll("?alt", "*");
+        fileName = fileName.replaceAll("=2C=20", ", ");
+        fileName = fileName.replaceAll("3D", "");
+        fileName = fileName.split("*")[1];
+
+        Reference storageReference =
+            FirebaseStorage.instance.ref('/images/' + fileName);
+        await storageReference.delete().then((value) => print('image deleted'));
+
         imageCache.clear();
         setState(() {
           loadedApartment.currentApartment.imageUrl.removeAt(_currentIndex);

@@ -106,7 +106,7 @@ class _AddImagesState extends State<AddImages> {
   Future<dynamic> postImage(Asset imageFile) async {
     final ref = FirebaseStorage.instance
         .ref()
-        .child('/apartment_images')
+        .child('/images')
         .child(Timestamp.now().toString() + '.jpg');
     UploadTask uploadTask =
         ref.putData((await imageFile.getByteData()).buffer.asUint8List());
