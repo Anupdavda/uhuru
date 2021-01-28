@@ -10,7 +10,7 @@ class PhotoGalleryDetail extends StatefulWidget {
   final List imagePaths;
   final int currentIndex;
 
-  PhotoGalleryDetail(
+  const PhotoGalleryDetail(
       {Key key, @required this.imagePaths, @required this.currentIndex})
       : super(key: key);
 
@@ -35,11 +35,11 @@ class _PhotoGalleryDetailState extends State<PhotoGalleryDetail> {
         context: context,
         builder: (BuildContext bc) {
           return Container(
-            child: new Wrap(
+            child: Wrap(
               children: <Widget>[
-                new ListTile(
-                    leading: new Icon(Icons.delete),
-                    title: new Text(
+                ListTile(
+                    leading: const Icon(Icons.delete),
+                    title: const Text(
                       'Delete',
                       style: TextStyle(color: Colors.red),
                     ),
@@ -47,9 +47,9 @@ class _PhotoGalleryDetailState extends State<PhotoGalleryDetail> {
                           deleteSelectedPicture(),
                           Navigator.of(context).pop(),
                         }),
-                new ListTile(
-                  leading: new Icon(Icons.cancel),
-                  title: new Text('Cancel'),
+                ListTile(
+                  leading: const Icon(Icons.cancel),
+                  title: const Text('Cancel'),
                   onTap: () => Navigator.of(context).pop(),
                 ),
               ],
@@ -66,7 +66,7 @@ class _PhotoGalleryDetailState extends State<PhotoGalleryDetail> {
         backgroundColor: Colors.black,
         actions: [
           IconButton(
-              icon: Icon(Icons.more_vert_rounded),
+              icon: const Icon(Icons.more_vert_rounded),
               onPressed: () {
                 displayModalBottomSheet(context);
               })

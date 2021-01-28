@@ -3,7 +3,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 //import 'package:flutter/services.dart';
 import 'dart:async';
-
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:provider/provider.dart';
 //import 'package:uhuru/helper/apartment_api.dart';
@@ -14,7 +13,7 @@ class AddImages extends StatefulWidget {
   final PersonalApartment personalApartment;
   final bool isUpdating;
 
-  AddImages(this.personalApartment, {@required this.isUpdating});
+  const AddImages(this.personalApartment, {@required this.isUpdating});
 
   @override
   _AddImagesState createState() => _AddImagesState();
@@ -31,7 +30,7 @@ class _AddImagesState extends State<AddImages> {
     super.initState();
     PersonalHomeList personalHomeList =
         Provider.of<PersonalHomeList>(context, listen: false);
-    if (personalHomeList.currentApartment != null) {
+    if (personalHomeList.currentApartment != null && widget.isUpdating) {
       _currentApartment = personalHomeList.currentApartment;
     } else {
       _currentApartment = PersonalApartment(
@@ -116,7 +115,6 @@ class _AddImagesState extends State<AddImages> {
     return storageTaskSnapshot.ref.getDownloadURL();
   }
 
-  
   void uploadImages() async {
     CollectionReference apartmentRef =
         FirebaseFirestore.instance.collection('apartments');
@@ -144,7 +142,8 @@ class _AddImagesState extends State<AddImages> {
                   await apartmentRef.add(_currentApartment.toMap());
               _currentApartment.id = documentRef.id;
               _currentApartment.imageUrl = imageUrls;
-              await documentRef.set(_currentApartment.toMap(), SetOptions(merge:true));
+              await documentRef.set(
+                  _currentApartment.toMap(), SetOptions(merge: true));
               _apartmentUploaded(_currentApartment);
               print(
                   'uploaded apartment successfully: ${_currentApartment.toString()}');
@@ -177,7 +176,8 @@ class _AddImagesState extends State<AddImages> {
             await apartmentRef.add(_currentApartment.toMap());
         _currentApartment.id = documentRef.id;
 
-        await documentRef.set(_currentApartment.toMap(),SetOptions( merge: true));
+        await documentRef.set(
+            _currentApartment.toMap(), SetOptions(merge: true));
         _apartmentUploaded(_currentApartment);
       }
     }
@@ -202,10 +202,10 @@ class _AddImagesState extends State<AddImages> {
         preferredSize: Size.fromHeight(50.0),
         child: AppBar(
           backgroundColor: Theme.of(context).accentColor,
-          title: Text('Add Images'),
+          title: const Text('Add Images'),
           actions: <Widget>[
             IconButton(
-                icon: Icon(Icons.save_alt, color: Colors.white),
+                icon: const Icon(Icons.save_alt, color: Colors.white),
                 onPressed: () {
                   _saveImages();
                 }),
@@ -214,9 +214,9 @@ class _AddImagesState extends State<AddImages> {
       ),
       body: Column(
         children: <Widget>[
-          Center(child: Text('Add your apartment images.')),
+          Center(child: const Text('Add your apartment images.')),
           ElevatedButton(
-            child: Text("Pick images"),
+            child: const Text("Pick images"),
             onPressed: loadAssets,
           ),
           Expanded(

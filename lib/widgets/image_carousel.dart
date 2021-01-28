@@ -37,8 +37,8 @@ class _ImageCarouselState extends State<ImageCarousel> {
 
     return imageList.isEmpty
         ? Container(
-            child: Center(
-                child: Text(
+            child: const Center(
+                child: const Text(
               'No Images',
               style: TextStyle(color: Colors.white, fontSize: 20.0),
             )),
@@ -53,8 +53,8 @@ class _ImageCarouselState extends State<ImageCarousel> {
                     return Builder(
                       builder: (BuildContext context) {
                         return Container(
-                          width: MediaQuery.of(context).size.width,
-                          margin: EdgeInsets.symmetric(horizontal: 1.0),
+                          width:  MediaQuery.of(context).size.width,
+                          margin: const EdgeInsets.symmetric(horizontal: 1.0),
                           child: Ink(
                             child: InkWell(
                               child: Image.network(imageUrl, fit: BoxFit.fill),
@@ -85,17 +85,17 @@ class _ImageCarouselState extends State<ImageCarousel> {
                     },
                   ),
                 ),
-                SizedBox(height: 10),
+              const  SizedBox(height: 10),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: map<Widget>(imageList, (index, imageUrl) {
                       return Container(
                         width: 10.0,
                         height: 10.0,
-                        margin: EdgeInsets.symmetric(
+                        margin: const EdgeInsets.symmetric(
                             vertical: 10.0, horizontal: 2.0),
                         decoration: BoxDecoration(
-                            shape: BoxShape.circle,
+                            shape:  BoxShape.circle,
                             color: _current == index
                                 ? Colors.black
                                 : Colors.black54),

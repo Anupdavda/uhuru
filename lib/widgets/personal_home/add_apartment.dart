@@ -12,7 +12,7 @@ import 'package:uhuru/screens/amenities_screen.dart';
 class AddApartment extends StatefulWidget {
   final bool isUpdating;
 
-  AddApartment({@required this.isUpdating});
+  const AddApartment({@required this.isUpdating});
 
   static const routeName = '/add-apartment';
 
@@ -42,29 +42,24 @@ class _AddApartmentState extends State<AddApartment> {
     if (personalHomeList.currentApartment != null &&
         widget.isUpdating == true) {
       _currentApartment = personalHomeList.currentApartment;
-    }
-     else {
+    } else {
       _currentApartment = PersonalApartment(
         id: '',
-        amenities: _amenities ,
+        amenities: _amenities,
         area: 0.0,
         bathroom: 0.0,
         bedroom: 0,
         city: '',
-        
         description: '',
         imageUrl: [],
         price: 0.0,
         streetName: '',
-       
         zipcode: 0.0,
       );
-     
     }
-  
   }
 
-   Map<String, bool> _amenities = {
+  Map<String, bool> _amenities = {
     'air condition': false,
     'ceiling fan': false,
     'ceramic tiles': false,
@@ -78,8 +73,6 @@ class _AddApartmentState extends State<AddApartment> {
     'swimmingPool': false,
     'hardwoodFloor': false,
   };
-  
- 
 
   Future<void> _saveForm() async {
     final isValid = _form.currentState.validate();
@@ -115,10 +108,22 @@ class _AddApartmentState extends State<AddApartment> {
     }
   }
 
+  @override
+  void dispose() {
+    _areaFocusNode.dispose();
+    _descriptionFocusNode.dispose();
+    _bedroomFocusNode.dispose();
+    _bathroomFocusNode.dispose();
+    _streetFocusNode.dispose();
+    _cityFocusNode.dispose();
+    _zipFocusNode.dispose();
+    super.dispose();
+  }
+
   Widget _priceTextFormField() {
     return TextFormField(
-      initialValue:  //_initValues['price'],
-      _currentApartment.price.toString(),
+      initialValue: //_initValues['price'],
+          _currentApartment.price.toString(),
       keyboardType: TextInputType.number,
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -149,8 +154,8 @@ class _AddApartmentState extends State<AddApartment> {
 
   Widget _areaTextFormField() {
     return TextFormField(
-      initialValue:// _initValues['area'],
-       _currentApartment.area.toString(),
+      initialValue: // _initValues['area'],
+          _currentApartment.area.toString(),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         labelText: 'Sqaure-Space',
@@ -181,8 +186,8 @@ class _AddApartmentState extends State<AddApartment> {
 
   Widget _bedroomTextFormField() {
     return TextFormField(
-      initialValue://  _initValues['bedroom'],
-      _currentApartment.bedroom.toString(),
+      initialValue: //  _initValues['bedroom'],
+          _currentApartment.bedroom.toString(),
       keyboardType: TextInputType.number,
       textInputAction: TextInputAction.next,
       focusNode: _bedroomFocusNode,
@@ -213,8 +218,8 @@ class _AddApartmentState extends State<AddApartment> {
 
   Widget _bathroomTextFormField() {
     return TextFormField(
-      initialValue:// _initValues['bathroom'],
-      _currentApartment.bathroom.toString(),
+      initialValue: // _initValues['bathroom'],
+          _currentApartment.bathroom.toString(),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         labelText: 'Bathrooms',
@@ -246,7 +251,7 @@ class _AddApartmentState extends State<AddApartment> {
   Widget _cityTextFormField() {
     return TextFormField(
       initialValue: //_initValues['city'],
-       _currentApartment.city,
+          _currentApartment.city,
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -275,8 +280,8 @@ class _AddApartmentState extends State<AddApartment> {
 
   Widget _streetnameTextFormField() {
     return TextFormField(
-      initialValue:// _initValues['streetName'],
-      _currentApartment.streetName,
+      initialValue: // _initValues['streetName'],
+          _currentApartment.streetName,
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
@@ -306,7 +311,7 @@ class _AddApartmentState extends State<AddApartment> {
   Widget _zipcodeTextFormField() {
     return TextFormField(
       initialValue: //_initValues['zipcode'],
-      _currentApartment.zipcode.toString(),
+          _currentApartment.zipcode.toString(),
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         labelText: 'Zip Code/P.O.Box',
@@ -337,8 +342,8 @@ class _AddApartmentState extends State<AddApartment> {
 
   Widget _descriptionTextFormField() {
     return TextFormField(
-      initialValue:// _initValues['description'],
-      _currentApartment.description,
+      initialValue: // _initValues['description'],
+          _currentApartment.description,
       textInputAction: TextInputAction.done,
       maxLines: null,
       decoration: InputDecoration(
@@ -366,7 +371,7 @@ class _AddApartmentState extends State<AddApartment> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50.0),
+        preferredSize: const Size.fromHeight(50.0),
         child: AppBar(
           backgroundColor: Theme.of(context).accentColor,
           title: Text(widget.isUpdating ? 'Edit Apartment' : 'Add Apartment'),
@@ -374,7 +379,7 @@ class _AddApartmentState extends State<AddApartment> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Form(
             key: _form,
             child: Column(
@@ -383,9 +388,9 @@ class _AddApartmentState extends State<AddApartment> {
                 //_showImage(),
                 Container(
                   alignment: Alignment.topLeft,
-                  child: Text("Details", textAlign: TextAlign.left),
+                  child: const Text("Details", textAlign: TextAlign.left),
                 ),
-                SizedBox(height: 15.0),
+                const SizedBox(height: 15.0),
                 Row(
                   children: <Widget>[
                     Flexible(
@@ -402,49 +407,49 @@ class _AddApartmentState extends State<AddApartment> {
                   children: <Widget>[
                     //Bedrooms
                     Flexible(child: _bedroomTextFormField()),
-                    SizedBox(width: 12),
+                    const SizedBox(width: 12),
                     //Bathrooms
                     Flexible(child: _bathroomTextFormField()),
                   ],
                 ),
                 // Address
-                SizedBox(height: 15),
+                const SizedBox(height: 15),
                 Container(
                   alignment: Alignment.topLeft,
-                  child: Text("Address", textAlign: TextAlign.left),
+                  child: const Text("Address", textAlign: TextAlign.left),
                 ),
-                SizedBox(height: 15.0),
+                const SizedBox(height: 15.0),
                 // street name
                 _streetnameTextFormField(),
-                SizedBox(height: 5.0),
+                const SizedBox(height: 5.0),
                 //City
                 Row(
                   children: <Widget>[
                     Flexible(child: _cityTextFormField()),
-                    SizedBox(width: 12),
+                    const SizedBox(width: 12),
                     Flexible(child: _zipcodeTextFormField())
                   ],
                 ),
-                SizedBox(height: 15.0),
+                const SizedBox(height: 15.0),
                 Container(
                   alignment: Alignment.topLeft,
-                  child: Text("Description", textAlign: TextAlign.left),
+                  child: const Text("Description", textAlign: TextAlign.left),
                 ),
-                SizedBox(height: 15.0),
+                const SizedBox(height: 15.0),
                 _descriptionTextFormField(),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 Container(
                   alignment: Alignment.bottomRight,
                   child: ElevatedButton(
-                    child: Text(
+                    child: const Text(
                       'Next',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
                       ),
                     ),
-                     style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColor),
-                    
+                    style: ElevatedButton.styleFrom(
+                        primary: Theme.of(context).primaryColor),
                     onPressed: () {
                       widget.isUpdating ? _updatingForm() : _saveForm();
 

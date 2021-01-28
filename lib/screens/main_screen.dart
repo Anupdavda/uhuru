@@ -49,14 +49,14 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50.0),
+        preferredSize:const Size.fromHeight(50.0),
         child: AppBar(
-          title: Text('Uhuru'),
+          title: const Text('Uhuru'),
           backgroundColor: Theme.of(context).accentColor,
           elevation: 10,
           actions: [
             IconButton(
-              icon: Icon(Icons.sort_rounded),
+              icon: const Icon(Icons.sort_rounded),
               onPressed: () {
                
               },
@@ -77,23 +77,23 @@ class _MainScreenState extends State<MainScreen> {
           items: [
             BottomNavigationBarItem(
               backgroundColor: Theme.of(context).accentColor,
-              icon: Icon(Icons.search),
+              icon: const Icon(Icons.search),
               // ignore: deprecated_member_use
-              label : 'Listings',
+              label :  'Listings',
             ),
             BottomNavigationBarItem(
               backgroundColor: Theme.of(context).accentColor,
-              icon: Icon(Icons.bookmark_border),
+              icon: const Icon(Icons.bookmark_border),
               label : 'Saved Homes',
             ),
             BottomNavigationBarItem(
               backgroundColor: Theme.of(context).accentColor,
-              icon: Icon(Icons.home),
+              icon: const Icon(Icons.home),
             label : 'Your Home',
             ),
             BottomNavigationBarItem(
               backgroundColor: Theme.of(context).accentColor,
-              icon: Icon(Icons.person),
+              icon: const Icon(Icons.person),
               label: 'Profile',
             ),
           ],

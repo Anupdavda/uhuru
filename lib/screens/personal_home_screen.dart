@@ -24,7 +24,7 @@ class _PersonalHomeScreenState extends State<PersonalHomeScreen> {
             }),
           );
         },
-        child: Icon(
+        child:const Icon(
           Icons.add,
           color: Colors.white,
         ),

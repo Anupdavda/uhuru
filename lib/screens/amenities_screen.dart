@@ -10,7 +10,7 @@ class AmenitiesScreen extends StatefulWidget {
   final PersonalApartment personalApartment;
   final bool isUpdating;
 
-  AmenitiesScreen(this.personalApartment, {@required this.isUpdating});
+ const AmenitiesScreen(this.personalApartment, {@required this.isUpdating});
 
   @override
   _AmenitiesScreenState createState() => _AmenitiesScreenState();
@@ -39,7 +39,7 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
     super.initState();
     PersonalHomeList personalHomeList =
         Provider.of<PersonalHomeList>(context, listen: false);
-    if (personalHomeList.currentApartment != null) {
+    if (personalHomeList.currentApartment != null && widget.isUpdating) {
       _currentApartment = personalHomeList.currentApartment;
     } else {
       _currentApartment = PersonalApartment(
@@ -65,7 +65,7 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
         shrinkWrap: false,
         children: _currentApartment.amenities.keys.map((String key) {
           return CheckboxListTile(
-            title: Text(key),
+            title:  Text(key),
             value: widget.isUpdating
                 ? _currentApartment.amenities[key]
                 : _amenities[key],
@@ -125,13 +125,13 @@ class _AmenitiesScreenState extends State<AmenitiesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50.0),
+        preferredSize: const Size.fromHeight(50.0),
         child: AppBar(
           backgroundColor: Theme.of(context).accentColor,
-          title: Text('Amenities'),
+          title: const Text('Amenities'),
           actions: <Widget>[
             IconButton(
-              icon: Icon(Icons.save_alt, color: Colors.white),
+              icon: const Icon(Icons.save_alt, color: Colors.white),
               onPressed: _saveAmenities,
             ),
           ],

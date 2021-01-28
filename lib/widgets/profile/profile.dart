@@ -53,7 +53,7 @@ class _ProfileState extends State<Profile> {
             children: <Widget>[
               Container(
                 alignment: Alignment.topLeft,
-                child: Text(
+                child: const Text(
                   'Feedback',
                   style: TextStyle(
                     color: Colors.green,
@@ -64,7 +64,7 @@ class _ProfileState extends State<Profile> {
               Container(
                 height: 30,
                 child: ListTile(
-                  title: Text(
+                  title: const Text(
                     'Help Support',
                     style: TextStyle(color: Colors.green),
                   ),
@@ -74,7 +74,7 @@ class _ProfileState extends State<Profile> {
               Container(
                 height: 30,
                 child: ListTile(
-                  title: Text(
+                  title: const Text(
                     'Customer Support',
                     style: TextStyle(color: Colors.green),
                   ),
@@ -84,7 +84,7 @@ class _ProfileState extends State<Profile> {
               Container(
                 height: 30,
                 child: ListTile(
-                  title: Text(
+                  title: const Text(
                     'Rate',
                     style: TextStyle(color: Colors.green),
                   ),
@@ -93,10 +93,8 @@ class _ProfileState extends State<Profile> {
               ),
             ],
           ),
-          SizedBox(
-            height: 10.0,
-          ),
-          Divider(
+          const SizedBox(height: 10.0),
+          const Divider(
             color: Colors.grey,
           ),
           Column(
@@ -110,20 +108,19 @@ class _ProfileState extends State<Profile> {
                           isChecked = value;
                         });
                       }),
-                  Text('Read and accept terms and agreements'),
-                  SizedBox(height: 16.0),
+                  const Text('Read and accept terms and agreements'),
+                  const SizedBox(height: 16.0),
                 ],
               ),
               Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: ElevatedButton(
-                  child: Text('Logout',
+                  child: const Text('Logout',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 20,
                       )),
-                      style: ElevatedButton.styleFrom(primary: Colors.blue),
-                 
+                  style: ElevatedButton.styleFrom(primary: Colors.blue),
                   onPressed: () {
                     FirebaseAuth.instance.signOut();
                   },

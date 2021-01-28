@@ -89,7 +89,7 @@ _uploadNewApartment(PersonalApartment personalApartment, bool isUpdating,
 
 deleteApartments(
     PersonalApartment personalApartment, Function apartmentDeleted) async {
-  if (personalApartment.imageUrl != null) {
+  if (personalApartment.imageUrl.isNotEmpty) {
     for (int i = 0; i < personalApartment.imageUrl.length; i++) {
       String fileName =
           personalApartment.imageUrl[i].replaceAll("/o/images%2F", "*");

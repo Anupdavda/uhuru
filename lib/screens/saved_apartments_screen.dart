@@ -7,7 +7,7 @@ import '../widgets/apartment_card.dart';
 class SavedApartmentScreen extends StatelessWidget {
   final bool showFavs;
 
-  SavedApartmentScreen(this.showFavs);
+ const SavedApartmentScreen(this.showFavs);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class SavedApartmentScreen extends StatelessWidget {
     final savedApartment = showFavs ? apartmentData.favoriteItems : null;
     if (apartmentData.favoriteItems.isEmpty) {
       return Center(
-        child: Text('You have not saved any listing yet.'),
+        child: const Text('You have not saved any listing yet.'),
       );
     } else {
       return ListView.builder(
@@ -24,7 +24,7 @@ class SavedApartmentScreen extends StatelessWidget {
         itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
           value: savedApartment[i],
           child: ApartmentCard(
-             savedApartment[i].id !=   savedApartment[i].id ,
+             savedApartment[i].id !=  savedApartment[i].id ,
           ),
         ),
       );

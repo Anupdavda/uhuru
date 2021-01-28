@@ -36,23 +36,22 @@ class ApartmentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final apartment = Provider.of<PersonalApartment>(context, listen: false);
-   // bool isMe = true;
+    // bool isMe = true;
 
     return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      elevation: 8,
-      margin: EdgeInsets.all(4),
-      
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        elevation: 8,
+        margin: const EdgeInsets.all(4),
         child: Column(
           children: <Widget>[
             ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
               child: apartment.imageUrl.isEmpty
                   ? Container(
-                      child: Center(
-                          child: Text(
+                      child: const Center(
+                          child: const Text(
                         'No Images',
                         style: TextStyle(color: Colors.white, fontSize: 20.0),
                       )),
@@ -68,7 +67,7 @@ class ApartmentCard extends StatelessWidget {
                     ),
             ),
             Padding(
-              padding: EdgeInsets.all(5),
+              padding: const EdgeInsets.all(5),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -77,16 +76,14 @@ class ApartmentCard extends StatelessWidget {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          Icon(
+                          const Icon(
                             Icons.monetization_on,
                           ),
-                          SizedBox(
-                            width: 6,
-                          ),
+                          const SizedBox(width: 6),
                           Text(
                             // apartment.price.toString()
                             apartment.price.toString().replaceAllMapped(
-                                new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                                RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
                                 (Match m) => '${m[1]},'),
                             style: TextStyle(
                               fontSize: 20,
@@ -125,21 +122,17 @@ class ApartmentCard extends StatelessWidget {
                                   ),
                                 )
                               : Container(),
-                          SizedBox(
-                            width: 6,
-                          ),
+                          const SizedBox(width: 6),
                         ],
                       ),
                     ],
                   ),
                   Row(
                     children: <Widget>[
-                      Icon(
+                      const Icon(
                         Icons.location_city,
                       ),
-                      SizedBox(
-                        width: 6,
-                      ),
+                      const SizedBox(width: 6),
                       Text(apartment.streetName +
                               //  streetName +
                               ", " +
@@ -155,8 +148,6 @@ class ApartmentCard extends StatelessWidget {
               ),
             ),
           ],
-        
-      )
-    );
+        ));
   }
 }

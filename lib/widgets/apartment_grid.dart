@@ -32,7 +32,7 @@ class _ApartmentGridState extends State<ApartmentGrid> {
     var user = FirebaseAuth.instance.currentUser;
 
     if (personalApartments.length == 0) {
-      return Center(child: CircularProgressIndicator());
+      return const Center(child:  CircularProgressIndicator());
     } else {
    
             return Consumer<PersonalHomeList>(

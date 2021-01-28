@@ -7,10 +7,9 @@ import 'package:provider/provider.dart';
 class PersonalDetailScreen extends StatelessWidget {
   static const routeName = '/personal-apartment-detail';
 
- final bool isMe;
+  final bool isMe;
 
-  const PersonalDetailScreen(this.isMe,
-   {Key key}) : super(key: key);
+  const PersonalDetailScreen(this.isMe, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +21,7 @@ class PersonalDetailScreen extends StatelessWidget {
     var _amenitiesValues = _amenities.values.toList();
     List _trueAmenitiesValues = [];
     List _trueAmenitiesKeys = [];
-  
+
     for (int i = 0; i < _amenitiesValues.length; i++) {
       if (_amenitiesValues[i] == true) {
         _trueAmenitiesValues.add(_amenitiesValues[i]);
@@ -32,12 +31,12 @@ class PersonalDetailScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(50.0),
+        preferredSize: const Size.fromHeight(50.0),
         child: AppBar(
           backgroundColor: Theme.of(context).accentColor,
           actions: <Widget>[
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.edit,
                 color: Colors.white,
               ),
@@ -58,11 +57,9 @@ class PersonalDetailScreen extends StatelessWidget {
         child: Column(
           children: <Widget>[
             ImageCarousel(),
-            SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Padding(
-              padding: EdgeInsets.all(15),
+              padding: const EdgeInsets.all(15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -71,7 +68,7 @@ class PersonalDetailScreen extends StatelessWidget {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          Icon(
+                          const Icon(
                             Icons.monetization_on,
                           ),
                           SizedBox(
@@ -90,9 +87,7 @@ class PersonalDetailScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(
-                        width: 15,
-                      ),
+                      const SizedBox(width: 15),
                       Row(
                         children: <Widget>[
                           Text(
@@ -109,15 +104,13 @@ class PersonalDetailScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  const SizedBox(height: 10),
                   Row(
                     children: <Widget>[
-                      Icon(
+                      const Icon(
                         Icons.location_city,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 6,
                       ),
                       Text(loadedApartment.currentApartment.streetName +
@@ -131,16 +124,16 @@ class PersonalDetailScreen extends StatelessWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
               child: Text(loadedApartment.currentApartment.description),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Container(
               alignment: Alignment.topLeft,
-              padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-              child: Text("Amenities", textAlign: TextAlign.left),
+              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+              child: const Text("Amenities", textAlign: TextAlign.left),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.fromLTRB(54, 0, 54, 0),
               child: GridView.count(
@@ -152,19 +145,19 @@ class PersonalDetailScreen extends StatelessWidget {
                   children: List.generate(_trueAmenitiesKeys.length,
                       (index) => Text(_trueAmenitiesKeys[index]))),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             isMe
                 ? Container()
                 : Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: ElevatedButton(
-                      child: Text('Contact Seller',
+                      child: const Text('Contact Seller',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,
                           )),
-                          style: TextButton.styleFrom(primary: Theme.of(context).primaryColor),
-                     
+                      style: TextButton.styleFrom(
+                          primary: Theme.of(context).primaryColor),
                       onPressed: () {},
                     ),
                   ),
