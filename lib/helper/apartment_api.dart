@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 //import 'package:flutter/material.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import '../model/personal_apartment.dart';
@@ -15,6 +16,7 @@ Future<void> getApartment(PersonalHomeList personalApartmentList) async {
   snapshot.docChanges.forEach((result) {
     PersonalApartment personalApartment = new PersonalApartment(
       id: result.doc['id'],
+      userId: result.doc['userId'],
       amenities: result.doc['amenities'],
       area: result.doc['area'],
       bathroom: result.doc['bathroom'],
@@ -31,6 +33,34 @@ Future<void> getApartment(PersonalHomeList personalApartmentList) async {
     _loadedPersonalApartment.add(personalApartment);
   });
   personalApartmentList.apartmentList = _loadedPersonalApartment;
+}   
+
+Future<void> getApartmentbyUserId(PersonalHomeList personalApartmentList) async {
+     var user = FirebaseAuth.instance.currentUser;
+  QuerySnapshot snapshot =
+      await FirebaseFirestore.instance.collection('apartments').where("userId", isEqualTo: user.uid).get();
+
+  List<PersonalApartment> _loadedPersonalApartment = [];
+  snapshot.docChanges.forEach((result) {
+    PersonalApartment personalApartment = new PersonalApartment(
+      id: result.doc['id'],
+      userId: result.doc['userId'],
+      amenities: result.doc['amenities'],
+      area: result.doc['area'],
+      bathroom: result.doc['bathroom'],
+      bedroom: result.doc['bedroom'],
+      city: result.doc['city'],
+      createdAt: result.doc['createdAt'],
+      description: result.doc['description'],
+      imageUrl: result.doc['imageUrl'],
+      price: result.doc['price'],
+      streetName: result.doc['streetName'],
+      updatedAt: result.doc['updatedAt'],
+      zipcode: result.doc['zipcode'],
+    );
+    _loadedPersonalApartment.add(personalApartment);
+  });
+  personalApartmentList.apartmentListByUserId = _loadedPersonalApartment;
 }
 
 uploadApartment(PersonalApartment personalApartment, bool isUpdating,
@@ -92,18 +122,19 @@ deleteApartments(
   if (personalApartment.imageUrl.isNotEmpty) {
     for (int i = 0; i < personalApartment.imageUrl.length; i++) {
       String fileName =
-          personalApartment.imageUrl[i].replaceAll("/o/images%2F", "*");
+          personalApartment.imageUrl[i].replaceAll("%2F", "*");
       fileName = fileName.replaceAll("%", "=");
       fileName = fileName.replaceAll("?alt", "*");
       fileName = fileName.replaceAll("=2C=20", ", ");
       fileName = fileName.replaceAll("3D", "");
       fileName = fileName.split("*")[1];
-
+ 
       List<String> imageFiles = [];
       imageFiles.add(fileName);
+        var user = FirebaseAuth.instance.currentUser;
 
       for (int j = 0; j < imageFiles.length; j++) {
-        print('/images/' + imageFiles[j]);
+        print('/'+ user.uid+ '/' + imageFiles[j]);
 
         FirebaseFirestore.instance
             .collection('apartments')
@@ -113,11 +144,11 @@ deleteApartments(
         apartmentDeleted(personalApartment);
 
         Reference storageReference =
-            FirebaseStorage.instance.ref('/images/' + imageFiles[j]);
+            FirebaseStorage.instance.ref('/'+ user.uid+ '/' + imageFiles[j]);
         await storageReference
             .delete()
             .then((value) => print('images deleted'));
-      }
+     }
     }
   } else {
     FirebaseFirestore.instance

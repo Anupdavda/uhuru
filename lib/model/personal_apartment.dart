@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 class PersonalApartment with ChangeNotifier {
   String id;
+  String userId;
   String description;
   double price;
   List imageUrl = [];
@@ -21,6 +22,7 @@ class PersonalApartment with ChangeNotifier {
 
   PersonalApartment(
       {this.id,
+      this.userId,
       @required this.description,
       @required this.price,
       @required this.imageUrl,
@@ -69,6 +71,7 @@ class PersonalApartment with ChangeNotifier {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
+      'userId':userId,
       'description': description,
       'price': price,
       'imageUrl': imageUrl,

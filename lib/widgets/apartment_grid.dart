@@ -42,7 +42,7 @@ class _ApartmentGridState extends State<ApartmentGrid> {
                   value: personalApartments[i],
                   child: GestureDetector(
                       child: ApartmentCard(
-                        personalApartments[i].id == user.uid,
+                        personalApartments[i].userId == user.uid,
                       ),
                       onTap: () {
                         personalHomeList.currentApartment =
@@ -50,7 +50,7 @@ class _ApartmentGridState extends State<ApartmentGrid> {
                         Navigator.of(context).push(
                             MaterialPageRoute(builder: (BuildContext context) {
                           return PersonalDetailScreen(
-                            personalApartments[i].id == user.uid,
+                            personalApartments[i].userId == user.uid,
                           );
                         }));
                       }),

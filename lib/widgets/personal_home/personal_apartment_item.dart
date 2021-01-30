@@ -18,16 +18,17 @@ class _PersonalApartmentItemState extends State<PersonalApartmentItem> {
   void initState() {
     PersonalHomeList personalApartmentList =
         Provider.of<PersonalHomeList>(context, listen: false);
-    getApartment(personalApartmentList);
+    getApartmentbyUserId(personalApartmentList);
     print('Length: ' +
-        personalApartmentList.loadedPersonalApartment.length.toString());
+        personalApartmentList.loadedPersonalApartmentByUserId.length
+            .toString());
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     PersonalHomeList personalHomeList = Provider.of<PersonalHomeList>(context);
-    final personalApartments = personalHomeList.loadedPersonalApartment;
+    final personalApartments = personalHomeList.loadedPersonalApartmentByUserId;
     var user = FirebaseAuth.instance.currentUser;
 
     _apartmentDeleted(PersonalApartment personalApartment) {
@@ -42,7 +43,6 @@ class _PersonalApartmentItemState extends State<PersonalApartmentItem> {
           itemCount: personalApartments.length,
           itemBuilder: (ctx, i) => ChangeNotifierProvider.value(
               value: personalApartments[i],
-              
               child: ListTile(
                 leading: personalApartments[i].imageUrl.isEmpty
                     ? CircleAvatar(backgroundColor: Colors.blueAccent)
@@ -50,7 +50,7 @@ class _PersonalApartmentItemState extends State<PersonalApartmentItem> {
                         backgroundImage:
                             NetworkImage(personalApartments[i].imageUrl[0])),
                 trailing: IconButton(
-                    icon:const Icon(Icons.delete, color: Colors.redAccent),
+                    icon: const Icon(Icons.delete, color: Colors.redAccent),
                     onPressed: () {
                       deleteApartments(
                           personalApartments[i], _apartmentDeleted);
@@ -74,11 +74,13 @@ class _PersonalApartmentItemState extends State<PersonalApartmentItem> {
                   Navigator.of(context)
                       .push(MaterialPageRoute(builder: (BuildContext context) {
                     return PersonalDetailScreen(
-                      personalApartments[i].id == user.uid,
+                      personalApartments[i].userId == user.uid,
                     );
                   }));
                 },
-              )),
+              )
+              //  : AddHome(),
+              ),
         ),
       );
     }
@@ -106,9 +108,7 @@ class AddHome extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         ),
-     const   SizedBox(
-          height: 7
-        ),
+        const SizedBox(height: 7),
         Container(
           margin: const EdgeInsets.fromLTRB(50, 0, 50, 0),
           child: const Text(
@@ -120,9 +120,7 @@ class AddHome extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         ),
-      const  SizedBox(
-          height: 15
-        ),
+        const SizedBox(height: 15),
         ElevatedButton(
           //elevation: 10,
           child: const Text(

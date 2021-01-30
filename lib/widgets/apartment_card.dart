@@ -1,42 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:uhuru/model/personal_apartment.dart';
 import 'package:provider/provider.dart';
-//import 'package:uhuru/screens/personal_detail_screen.dart';
 
 class ApartmentCard extends StatelessWidget {
-  //  final String id;
-  // final String description;
-  // final double price;
-  // final List imageUrl;
-  // final String streetName;
-  // final int bedroom;
-  // final double bathroom;
-  // final String city;
-  // final double zipcode;
-  // final double area;
-  // final List amenities;
   final bool isMe;
 
-  const ApartmentCard(
-      // this.id,
-      // this.description,
-      // this.price,
-      // this.imageUrl,
-      // this.streetName,
-      // this.bedroom,
-      // this.bathroom,
-      // this.city,
-      // this.zipcode,
-      // this.area,
-      // this.amenities,
-      this.isMe,
-      {Key key})
-      : super(key: key);
+  const ApartmentCard(this.isMe, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final apartment = Provider.of<PersonalApartment>(context, listen: false);
-    // bool isMe = true;
 
     return Card(
         shape: RoundedRectangleBorder(
@@ -59,7 +32,6 @@ class ApartmentCard extends StatelessWidget {
                       width: double.infinity,
                       color: Colors.black54)
                   : Image.network(
-                      //  imageUrl[0],
                       apartment.imageUrl[0],
                       height: 250,
                       width: double.infinity,
@@ -72,7 +44,7 @@ class ApartmentCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Row(
                         children: <Widget>[
@@ -81,13 +53,12 @@ class ApartmentCard extends StatelessWidget {
                           ),
                           const SizedBox(width: 6),
                           Text(
-                            // apartment.price.toString()
                             apartment.price.toString().replaceAllMapped(
                                 RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
                                 (Match m) => '${m[1]},'),
                             style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w800,
                             ),
                           ),
                         ],
@@ -95,13 +66,10 @@ class ApartmentCard extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           Text(apartment.bedroom.toString() +
-                              //  bedroom.toString() +
                               " bd | " +
                               apartment.bathroom.toString() +
-                              //  bathroom.toString() +
                               " ba | " +
                               apartment.area.toString() +
-                              //area.toString() +
                               " sq-ft"),
                         ],
                       ),
@@ -134,14 +102,10 @@ class ApartmentCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 6),
                       Text(apartment.streetName +
-                              //  streetName +
-                              ", " +
-                              apartment.city +
-                              // city +
-                              ", " +
-                              apartment.zipcode.toString()
-                          //   zipcode.toString()
-                          ),
+                          ", " +
+                          apartment.city +
+                          ", " +
+                          apartment.zipcode.toString()),
                     ],
                   ),
                 ],

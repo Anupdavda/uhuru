@@ -4,10 +4,15 @@ import '../model/personal_apartment.dart';
 
 class PersonalHomeList with ChangeNotifier {
   List<PersonalApartment> _loadedPersonalApartment = [];
+  List<PersonalApartment> _loadedPersonalApartmentByUserId = [];
   PersonalApartment _currentApartment;
 
   List<PersonalApartment> get loadedPersonalApartment {
     return [..._loadedPersonalApartment];
+  }
+
+  List<PersonalApartment> get loadedPersonalApartmentByUserId {
+    return [..._loadedPersonalApartmentByUserId];
   }
 
   PersonalApartment get currentApartment => _currentApartment;
@@ -16,6 +21,12 @@ class PersonalHomeList with ChangeNotifier {
     _loadedPersonalApartment = personalApartment;
     notifyListeners();
   }
+
+  set apartmentListByUserId(List<PersonalApartment> personalApartment) {
+    _loadedPersonalApartmentByUserId = personalApartment;
+    notifyListeners();
+  }
+
 
   set currentApartment(PersonalApartment personalApartment) {
     _currentApartment = personalApartment;

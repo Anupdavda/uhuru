@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 //import 'package:flutter/services.dart';
@@ -24,6 +25,8 @@ class _AddImagesState extends State<AddImages> {
   List imageUrls = [];
   String _error = 'No Error Dectected';
   PersonalApartment _currentApartment;
+
+  final user = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
@@ -105,7 +108,7 @@ class _AddImagesState extends State<AddImages> {
   Future<dynamic> postImage(Asset imageFile) async {
     final ref = FirebaseStorage.instance
         .ref()
-        .child('/images')
+        .child(user.uid)
         .child(Timestamp.now().toString() + '.jpg');
     UploadTask uploadTask =
         ref.putData((await imageFile.getByteData()).buffer.asUint8List());
@@ -118,6 +121,7 @@ class _AddImagesState extends State<AddImages> {
   void uploadImages() async {
     CollectionReference apartmentRef =
         FirebaseFirestore.instance.collection('apartments');
+
     if (images.isNotEmpty) {
       for (var imageFile in images) {
         postImage(imageFile).then((downloadUrl) async {
@@ -137,6 +141,8 @@ class _AddImagesState extends State<AddImages> {
             } else {
               _currentApartment = widget.personalApartment;
               _currentApartment.createdAt = Timestamp.now();
+
+              _currentApartment.userId = user.uid;
 
               DocumentReference documentRef =
                   await apartmentRef.add(_currentApartment.toMap());
@@ -174,7 +180,7 @@ class _AddImagesState extends State<AddImages> {
 
         DocumentReference documentRef =
             await apartmentRef.add(_currentApartment.toMap());
-        _currentApartment.id = documentRef.id;
+        _currentApartment.id = user.uid;
 
         await documentRef.set(
             _currentApartment.toMap(), SetOptions(merge: true));
