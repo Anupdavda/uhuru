@@ -3,6 +3,8 @@ import 'package:uhuru/widgets/image_carousel.dart';
 import 'package:uhuru/widgets/personal_home/add_apartment.dart';
 import 'package:uhuru/provider/personal_apartment_list.dart';
 import 'package:provider/provider.dart';
+import 'package:uhuru/utils/constants.dart';
+import 'package:uhuru/utils/custom_functions.dart';
 
 class PersonalDetailScreen extends StatelessWidget {
   static const routeName = '/personal-apartment-detail';
@@ -16,6 +18,7 @@ class PersonalDetailScreen extends StatelessWidget {
     PersonalHomeList loadedApartment =
         Provider.of<PersonalHomeList>(context, listen: true);
 
+    //final ThemeData themeData = Theme.of(context);
     final _amenities = loadedApartment.currentApartment.amenities;
     var _amenitiesKeys = _amenities.keys.toList();
     var _amenitiesValues = _amenities.values.toList();
@@ -38,7 +41,7 @@ class PersonalDetailScreen extends StatelessWidget {
             IconButton(
               icon: const Icon(
                 Icons.edit,
-                color: Colors.white,
+                color: COLOR_WHITE,
               ),
               onPressed: () {
                 Navigator.of(context).push(
@@ -68,22 +71,25 @@ class PersonalDetailScreen extends StatelessWidget {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          const Icon(
-                            Icons.monetization_on,
-                          ),
-                          SizedBox(
-                            width: 6,
-                          ),
+                          // const Icon(
+                          //   Icons.monetization_on,
+                          // ),
+                          // SizedBox(
+                          //   width: 6,
+                          // ),
                           Text(
-                            loadedApartment.currentApartment.price
-                                .toString()
-                                .replaceAllMapped(
-                                    new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                                    (Match m) => '${m[1]},'),
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            "${formatCurrency(loadedApartment.currentApartment.price)}",
+
+                            style: TEXT_THEME_DEFAULT.headline3,
+                            // loadedApartment.currentApartment.price
+                            //     .toString()
+                            //     .replaceAllMapped(
+                            //         new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                            //         (Match m) => '${m[1]},'),
+                            // style: TextStyle(
+                            //   fontSize: 20,
+                            //   fontWeight: FontWeight.bold,
+                            // ),
                           ),
                         ],
                       ),
@@ -99,7 +105,8 @@ class PersonalDetailScreen extends StatelessWidget {
                                   " ba | " +
                                   loadedApartment.currentApartment.area
                                       .toString() +
-                                  " sq-ft"),
+                                  " sq-ft",
+                              style:TEXT_THEME_DEFAULT.headline5),
                         ],
                       ),
                     ],
@@ -113,11 +120,14 @@ class PersonalDetailScreen extends StatelessWidget {
                       const SizedBox(
                         width: 6,
                       ),
-                      Text(loadedApartment.currentApartment.streetName +
-                          ", " +
-                          loadedApartment.currentApartment.city +
-                          ", " +
-                          loadedApartment.currentApartment.zipcode.toString()),
+                      Text(
+                          loadedApartment.currentApartment.streetName +
+                              ", " +
+                              loadedApartment.currentApartment.city +
+                              ", " +
+                              loadedApartment.currentApartment.zipcode
+                                  .toString(),
+                          style: TEXT_THEME_DEFAULT.headline5),
                     ],
                   ),
                 ],
@@ -125,13 +135,19 @@ class PersonalDetailScreen extends StatelessWidget {
             ),
             Container(
               padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-              child: Text(loadedApartment.currentApartment.description),
+              child: Text(loadedApartment.currentApartment.description,
+                  style: TEXT_THEME_DEFAULT.headline4),
             ),
             const SizedBox(height: 16),
             Container(
               alignment: Alignment.topLeft,
               padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-              child: const Text("Amenities", textAlign: TextAlign.left),
+              child: const Text("Amenities",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    color: COLOR_BLACK,
+                    fontSize: 16,
+                  )),
             ),
             const SizedBox(height: 16),
             Padding(
@@ -142,8 +158,10 @@ class PersonalDetailScreen extends StatelessWidget {
                   childAspectRatio: 5 / 1,
                   crossAxisSpacing: 80,
                   mainAxisSpacing: 10,
-                  children: List.generate(_trueAmenitiesKeys.length,
-                      (index) => Text(_trueAmenitiesKeys[index]))),
+                  children: List.generate(
+                      _trueAmenitiesKeys.length,
+                      (index) => Text(_trueAmenitiesKeys[index],
+                          style: TEXT_THEME_DEFAULT.headline4))),
             ),
             const SizedBox(height: 16),
             isMe

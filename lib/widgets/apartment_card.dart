@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:uhuru/model/personal_apartment.dart';
 import 'package:provider/provider.dart';
+import 'package:uhuru/utils/constants.dart';
+import 'package:uhuru/utils/custom_functions.dart';
 
 class ApartmentCard extends StatelessWidget {
   final bool isMe;
@@ -10,7 +12,7 @@ class ApartmentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final apartment = Provider.of<PersonalApartment>(context, listen: false);
-
+     
     return Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
@@ -48,18 +50,20 @@ class ApartmentCard extends StatelessWidget {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          const Icon(
-                            Icons.monetization_on,
-                          ),
+                          // const Icon(
+                          //   Icons.monetization_on,
+                          // ),
                           const SizedBox(width: 6),
                           Text(
-                            apartment.price.toString().replaceAllMapped(
-                                RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-                                (Match m) => '${m[1]},'),
-                            style: TextStyle(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.w800,
-                            ),
+                            // apartment.price.toString().replaceAllMapped(
+                            //     RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
+                            //     (Match m) => '${m[1]},'),
+                             "${formatCurrency(apartment.price)}",
+                            // style: TextStyle(
+                            //   fontSize: 18.0,
+                            //   fontWeight: FontWeight.w800,
+                            // ),
+                            style: TEXT_THEME_DEFAULT.headline3,
                           ),
                         ],
                       ),
@@ -70,7 +74,8 @@ class ApartmentCard extends StatelessWidget {
                               apartment.bathroom.toString() +
                               " ba | " +
                               apartment.area.toString() +
-                              " sq-ft"),
+                              " sq-ft"
+                              , style: TEXT_THEME_DEFAULT.bodyText1),
                         ],
                       ),
                       Row(
@@ -83,7 +88,7 @@ class ApartmentCard extends StatelessWidget {
                                           ? Icons.bookmark
                                           : Icons.bookmark_border,
                                     ),
-                                    color: Colors.redAccent,
+                                    color: COLOR_REDACCENT,
                                     onPressed: () {
                                       apartment.toggleFavoriteStatus();
                                     },
@@ -105,7 +110,8 @@ class ApartmentCard extends StatelessWidget {
                           ", " +
                           apartment.city +
                           ", " +
-                          apartment.zipcode.toString()),
+                          apartment.zipcode.toString(),
+                            style: TEXT_THEME_DEFAULT.bodyText1,),
                     ],
                   ),
                 ],
