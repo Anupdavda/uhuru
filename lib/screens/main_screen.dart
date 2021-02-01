@@ -5,7 +5,6 @@ import '../screens/apartment_list_screen.dart';
 import '../screens/saved_apartments_screen.dart';
 import '../screens/profile_screen.dart';
 
-
 class MainScreen extends StatefulWidget {
   @override
   _MainScreenState createState() => _MainScreenState();
@@ -48,22 +47,15 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize:const Size.fromHeight(50.0),
-        child: AppBar(
-          title: const Text('Uhuru'),
-          backgroundColor: Theme.of(context).accentColor,
-          elevation: 10,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.sort_rounded),
-              onPressed: () {
-               
-              },
-            )
-          ],
-        ),
-      ),
+      // appBar: PreferredSize(
+      //   preferredSize:const Size.fromHeight(50.0),
+      //   child: AppBar(
+      //     title: const Text('Uhuru'),
+      //     backgroundColor: Theme.of(context).accentColor,
+      //     elevation: 10,
+
+      //   ),
+      // ),
       body: _pages[_selectedPageIndex]['page'],
       bottomNavigationBar: PreferredSize(
         preferredSize: Size.fromHeight(20.0),
@@ -79,17 +71,17 @@ class _MainScreenState extends State<MainScreen> {
               backgroundColor: Theme.of(context).accentColor,
               icon: const Icon(Icons.search),
               // ignore: deprecated_member_use
-              label :  'Listings',
+              label: 'Listings',
             ),
             BottomNavigationBarItem(
               backgroundColor: Theme.of(context).accentColor,
               icon: const Icon(Icons.bookmark_border),
-              label : 'Saved Homes',
+              label: 'Saved Homes',
             ),
             BottomNavigationBarItem(
               backgroundColor: Theme.of(context).accentColor,
               icon: const Icon(Icons.home),
-            label : 'Your Home',
+              label: 'Your Home',
             ),
             BottomNavigationBarItem(
               backgroundColor: Theme.of(context).accentColor,

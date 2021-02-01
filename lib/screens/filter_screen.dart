@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import '../widgets/profile/profile.dart';
+import 'package:uhuru/widgets/filter.dart';
 
-class ProfileScreen extends StatefulWidget {
-  @override
-  _ProfileScreenState createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
+class FilterScreen extends StatelessWidget {
+  static const routeName = '/filter-screen';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,10 +10,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
         preferredSize: const Size.fromHeight(50.0),
         child: AppBar(
           backgroundColor: Theme.of(context).accentColor,
-          title: const Text('Profile'),
+          title: const Text('Apply Filter'),
         ),
       ),
-      body: Profile(),
+      body: Filter(),
     );
   }
 }

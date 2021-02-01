@@ -42,11 +42,11 @@ class _AuthScreenState extends State<AuthScreen> {
         });
       }
     } on PlatformException catch (err) {
-      var message =  'An error occurred, please check your credential!';
+      var message = 'An error occurred, please check your credential!';
       if (err.message != null) {
         message = err.message;
       }
-     SnackBar(
+      SnackBar(
         content: Text(message),
         backgroundColor: Theme.of(ctx).errorColor,
       );
