@@ -18,18 +18,18 @@ class AmenitiesScreen extends StatefulWidget {
 
 class _AmenitiesScreenState extends State<AmenitiesScreen> {
   Map<String, dynamic> _amenities = {
-    'air condition': false,
-    'ceiling fan': false,
-    'ceramic tiles': false,
-    'carpet': false,
-    'furnished': false,
-    'closet': false,
-    'elevator': false,
-    'laundry': false,
-    'security': false,
-    'parking': false,
-    'swimmingPool': false,
-    'hardwoodFloor': false,
+    'Air condition': false,
+    'Ceiling Fan': false,
+    'Ceramic Tiles': false,
+    'Carpet': false,
+    'Furnished': false,
+    'Closet': false,
+    'Elevator': false,
+    'Laundry': false,
+    'Security': false,
+    'Parking': false,
+    'Swimming Pool': false,
+    'Hardwood Floor': false,
   };
 
   PersonalApartment _currentApartment;

@@ -14,12 +14,11 @@ class _PersonalHomeScreenState extends State<PersonalHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: PreferredSize(
+      appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50.0),
         child: AppBar(
           backgroundColor: Theme.of(context).accentColor,
           title: const Text('Your Home'),
-          
         ),
       ),
       body: PersonalApartmentItem(),
@@ -33,7 +32,7 @@ class _PersonalHomeScreenState extends State<PersonalHomeScreen> {
             }),
           );
         },
-        child:const Icon(
+        child: const Icon(
           Icons.add,
           color: COLOR_WHITE,
         ),

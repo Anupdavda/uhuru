@@ -106,7 +106,7 @@ class PersonalDetailScreen extends StatelessWidget {
                                   loadedApartment.currentApartment.area
                                       .toString() +
                                   " sq-ft",
-                              style:TEXT_THEME_DEFAULT.headline5),
+                              style: TEXT_THEME_DEFAULT.headline5),
                         ],
                       ),
                     ],
@@ -117,9 +117,7 @@ class PersonalDetailScreen extends StatelessWidget {
                       const Icon(
                         Icons.location_city,
                       ),
-                      const SizedBox(
-                        width: 6,
-                      ),
+                      const SizedBox(width: 6),
                       Text(
                           loadedApartment.currentApartment.streetName +
                               ", " +
