@@ -17,10 +17,14 @@ class SavedApartmentScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(50.0),
+        preferredSize: const Size.fromHeight(40.0),
         child: AppBar(
-          backgroundColor: Theme.of(context).accentColor,
-          title: const Text('Saved Apartment'),
+          elevation: 0,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          title: const Text(
+            'Saved Apartment',
+            style: TextStyle(color: COLOR_INDIGO),
+          ),
         ),
       ),
       body: apartmentData.favoriteItems.isEmpty

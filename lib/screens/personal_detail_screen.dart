@@ -173,7 +173,7 @@ class PersonalDetailScreen extends StatelessWidget {
                             fontSize: 20,
                           )),
                       style: TextButton.styleFrom(
-                          primary: Theme.of(context).primaryColor),
+                          primary: COLOR_INDIGO),
                       onPressed: () {},
                     ),
                   ),

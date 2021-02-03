@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uhuru/utils/constants.dart';
 import '../widgets/profile/profile.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -13,8 +14,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50.0),
         child: AppBar(
-          backgroundColor: Theme.of(context).accentColor,
-          title: const Text('Profile'),
+          elevation: 0,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          title: const Text('Profile', style: TextStyle(color: COLOR_INDIGO)),
         ),
       ),
       body: Profile(),

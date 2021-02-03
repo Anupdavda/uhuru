@@ -15,11 +15,18 @@ class _PersonalHomeScreenState extends State<PersonalHomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(50.0),
+        preferredSize: const Size.fromHeight(40.0),
         child: AppBar(
-          backgroundColor: Theme.of(context).accentColor,
-          title: const Text('Your Home'),
+          iconTheme: IconThemeData(
+            color: COLOR_INDIGO, //change your color here
+          ),
+          elevation: 0,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          title: const Text(
+            'Your Home',
+            style: TextStyle(color: COLOR_INDIGO),
         ),
+      ),
       ),
       body: PersonalApartmentItem(),
       floatingActionButton: FloatingActionButton(

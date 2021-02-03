@@ -8,6 +8,9 @@ const COLOR_DARK_BLUE = Color.fromRGBO(20, 25, 45, 1.0);
 const COLOR_GREEN = Colors.green;
 const COLOR_GREENACCENT = Colors.greenAccent;
 const COLOR_REDACCENT = Colors.redAccent;
+const COLOR_INDIGO =  Colors.indigo;
+// const COLOR_BLUE = Colors.blue;
+
 
 const TextTheme TEXT_THEME_DEFAULT = TextTheme(
     headline1: TextStyle(

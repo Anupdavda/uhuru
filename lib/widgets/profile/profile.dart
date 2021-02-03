@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:uhuru/utils/constants.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -57,7 +58,7 @@ class _ProfileState extends State<Profile> {
                 child: const Text(
                   'Feedback',
                   style: TextStyle(
-                    color: Colors.green,
+                    color: COLOR_BLACK,
                     fontSize: 20.0,
                   ),
                 ),
@@ -67,7 +68,7 @@ class _ProfileState extends State<Profile> {
                 child: ListTile(
                   title: const Text(
                     'Help Support',
-                    style: TextStyle(color: Colors.green),
+                    style: TextStyle(color: COLOR_BLACK),
                   ),
                   onTap: () {},
                 ),
@@ -77,7 +78,7 @@ class _ProfileState extends State<Profile> {
                 child: ListTile(
                   title: const Text(
                     'Customer Support',
-                    style: TextStyle(color: Colors.green),
+                    style: TextStyle(color: COLOR_BLACK),
                   ),
                   onTap: () {},
                 ),
@@ -87,7 +88,7 @@ class _ProfileState extends State<Profile> {
                 child: ListTile(
                   title: const Text(
                     'Rate',
-                    style: TextStyle(color: Colors.green),
+                    style: TextStyle(color: COLOR_BLACK),
                   ),
                   onTap: () {},
                 ),

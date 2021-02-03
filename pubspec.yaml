@@ -89,6 +89,8 @@ flutter:
           weight: 700
     - family: Anton
       fonts:
+        - asset: assets/fonts/OpenSans-Regular.ttf
+        - asset: assets/fonts/OpenSans-Bold.ttf
         - asset: assets/fonts/Anton-Regular.ttf
   #   - family: Trajan Pro
   #     fonts:

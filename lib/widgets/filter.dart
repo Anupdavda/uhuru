@@ -9,58 +9,54 @@ class Filter extends StatefulWidget {
 }
 
 class _FilterState extends State<Filter> {
-  var selectedPriceRange = RangeValues(1, 100);
-  var selectedAreaRange = RangeValues(2000, 23651);
-  RangeLabels priceLabels = RangeLabels('1', "100");
-  RangeLabels areaLabels = RangeLabels('2000', "23651");
+  RangeValues selectedPriceRange = RangeValues(10000, 20000000);
+  RangeValues selectedAreaRange = RangeValues(500, 20000);
+  RangeLabels priceLabels = RangeLabels("10000", "20000000");
+  RangeLabels areaLabels = RangeLabels("500", "20000");
 
   @override
   Widget build(BuildContext context) {
-    Widget sliderOption(
-        RangeValues selectedRange, RangeLabels labels, double min, double max) {
+    Widget priceSliderOption() {
       return RangeSlider(
-        divisions: 1,
-        values: selectedRange,
-        labels: labels,
-        onChanged: (RangeValues newRange) {
-          print("START: ${selectedRange.start}, End: ${selectedRange.end}");
+        divisions: 5,
+        values: selectedPriceRange,
+        labels: priceLabels,
+        onChanged: (newRange) {
+          print(
+              "START: ${selectedPriceRange.start}, End: ${selectedPriceRange.end}");
           setState(() {
-            selectedRange = newRange;
-            labels = RangeLabels("${selectedRange.start.toInt().toString()}\$",
-                "${selectedRange.start.toInt().toString()}\$");
+            selectedPriceRange = newRange;
+            priceLabels = RangeLabels('${newRange.start.toInt().toString()}\$',
+                '${newRange.end.toInt().toString()}\$');
           });
         },
-        min: min,
-        max: max,
+        min: 10000,
+        max: 20000000,
         activeColor: Colors.blue[900],
         inactiveColor: Colors.grey[300],
       );
     }
 
-    // Widget buildOption(String text) {
-    //   return Container(
-    //     height: 45,
-    //     width: 60,
-    //     decoration: BoxDecoration(
-    //         color: selected ? Colors.blue[900] : Colors.transparent,
-    //         borderRadius: BorderRadius.all(
-    //           Radius.circular(5),
-    //         ),
-    //         border: Border.all(
-    //           width: selected ? 0 : 1,
-    //           color: Colors.grey,
-    //         )),
-    //     child: Center(
-    //       child: Text(
-    //         text,
-    //         style: TextStyle(
-    //           color: selected ? Colors.white : Colors.black,
-    //           fontSize: 14,
-    //         ),
-    //       ),
-    //     ),
-    //   );
-    // }
+    Widget areaSliderOption() {
+      return RangeSlider(
+          divisions: 20,
+        values: selectedAreaRange,
+        labels: areaLabels,
+        onChanged: (newRange) {
+          print("START: ${newRange.start}, End: ${newRange.end}");
+          setState(() {
+            selectedAreaRange = newRange;
+            areaLabels = RangeLabels(
+                "${selectedAreaRange.start.toInt().toString()}\ sq-ft",
+                "${selectedAreaRange.end.toInt().toString()}\ sq-ft");
+          });
+        },
+        min: 500,
+        max: 20000,
+        activeColor: Colors.blue[900],
+        inactiveColor: Colors.grey[300],
+      );
+    }
 
     Widget _cityTextFormField() {
       return TextFormField(
@@ -120,7 +116,7 @@ class _FilterState extends State<Filter> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("Price range", style: TEXT_THEME_DEFAULT.headline1),
-            sliderOption(selectedPriceRange, priceLabels, 1, 100),
+            priceSliderOption(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -132,7 +128,7 @@ class _FilterState extends State<Filter> {
             ),
             const SizedBox(height: 16),
             Text("Area", style: TEXT_THEME_DEFAULT.headline1),
-            sliderOption(selectedAreaRange, areaLabels, 2000, 23651),
+            areaSliderOption(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

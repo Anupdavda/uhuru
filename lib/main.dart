@@ -9,9 +9,8 @@ import './screens/main_screen.dart';
 import './screens/auth_screen.dart';
 import 'provider/personal_apartment_list.dart';
 
-
-void main()async {
-   WidgetsFlutterBinding.ensureInitialized();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitUp,
@@ -23,7 +22,6 @@ void main()async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-   
     return MultiProvider(
       providers: [
         // ChangeNotifierProvider.value(
@@ -50,13 +48,23 @@ class MyApp extends StatelessWidget {
         //     ),
         //   ),
         // ),
-         theme: ThemeData(
-          primarySwatch: COLOR_GREEN,
-          accentColor: COLOR_GREENACCENT[400],
-          fontFamily: 'Ubuntu',
-         // textSelectionTheme: ,
-         // textTheme: screenWidth < 500 ? TEXT_THEME_SMALL : TEXT_THEME_DEFAULT,
-         
+
+        theme: ThemeData(
+          //primaryColor: COLOR_GREEN,
+          accentColor: COLOR_INDIGO[900],
+          fontFamily: 'OpenSans',
+          appBarTheme: AppBarTheme(
+            textTheme: ThemeData.light().textTheme.copyWith(
+                  headline6: TextStyle(
+                    fontFamily: 'OpenSans',
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+          ),
+          // textSelectionTheme: ,
+
+          // textTheme: screenWidth < 500 ? TEXT_THEME_SMALL : TEXT_THEME_DEFAULT,
         ),
         home: StreamBuilder(
             stream: FirebaseAuth.instance.authStateChanges(),
@@ -67,7 +75,6 @@ class MyApp extends StatelessWidget {
                 return AuthScreen();
               }
             }),
-      
       ),
     );
   }
