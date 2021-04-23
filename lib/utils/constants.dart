@@ -9,7 +9,8 @@ const COLOR_GREEN = Colors.green;
 const COLOR_GREENACCENT = Colors.greenAccent;
 const COLOR_REDACCENT = Colors.redAccent;
 const COLOR_INDIGO =  Colors.indigo;
-// const COLOR_BLUE = Colors.blue;
+const COLOR_BLUEACCENT = Colors.blueAccent;
+const COLOR_BLUE = Colors.blue;
 
 
 const TextTheme TEXT_THEME_DEFAULT = TextTheme(
@@ -59,10 +60,9 @@ const TextTheme TEXT_THEME_SMALL = TextTheme(
         fontWeight: FontWeight.w500,
         height: 1.5),
     bodyText2: TextStyle(
-        color: COLOR_GREY,
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-        height: 1.5),
+        color: COLOR_WHITE,
+        fontSize: 20,
+        ),
     subtitle1: TextStyle(
         color: COLOR_BLACK, fontSize: 10, fontWeight: FontWeight.w400),
     subtitle2: TextStyle(

@@ -1,6 +1,7 @@
 //import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uhuru/screens/personal_home_screen.dart';
+import 'package:uhuru/utils/constants.dart';
 import '../screens/apartment_list_screen.dart';
 import '../screens/saved_apartments_screen.dart';
 import '../screens/profile_screen.dart';
@@ -62,29 +63,29 @@ class _MainScreenState extends State<MainScreen> {
         child: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           onTap: _selectPage,
-          backgroundColor: Theme.of(context).accentColor,
+          backgroundColor: COLOR_BLUE[700],
           unselectedItemColor: Colors.black,
           selectedItemColor: Colors.white,
           currentIndex: _selectedPageIndex,
           items: [
             BottomNavigationBarItem(
-              backgroundColor: Theme.of(context).accentColor,
+              backgroundColor:  COLOR_BLUEACCENT,
               icon: const Icon(Icons.search),
               // ignore: deprecated_member_use
               label: 'Listings',
             ),
             BottomNavigationBarItem(
-              backgroundColor: Theme.of(context).accentColor,
+              backgroundColor: COLOR_BLUEACCENT,
               icon: const Icon(Icons.bookmark_border),
               label: 'Saved Homes',
             ),
             BottomNavigationBarItem(
-              backgroundColor: Theme.of(context).accentColor,
+              backgroundColor:  COLOR_BLUEACCENT,
               icon: const Icon(Icons.home),
               label: 'Your Home',
             ),
             BottomNavigationBarItem(
-              backgroundColor: Theme.of(context).accentColor,
+              backgroundColor:  COLOR_BLUEACCENT,
               icon: const Icon(Icons.person),
               label: 'Profile',
             ),

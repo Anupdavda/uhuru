@@ -22,12 +22,12 @@ class PersonalDetailScreen extends StatelessWidget {
     final _amenities = loadedApartment.currentApartment.amenities;
     var _amenitiesKeys = _amenities.keys.toList();
     var _amenitiesValues = _amenities.values.toList();
-    List _trueAmenitiesValues = [];
+    // List _trueAmenitiesValues = [];
     List _trueAmenitiesKeys = [];
 
     for (int i = 0; i < _amenitiesValues.length; i++) {
       if (_amenitiesValues[i] == true) {
-        _trueAmenitiesValues.add(_amenitiesValues[i]);
+      //  _trueAmenitiesValues.add(_amenitiesValues[i]);
         _trueAmenitiesKeys.add(_amenitiesKeys[i]);
       }
     }

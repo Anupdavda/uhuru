@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:uhuru/utils/constants.dart';
+import 'package:uhuru/provider/filter_provider.dart';
 //import 'dart:ui';
 import './screens/main_screen.dart';
 import './screens/auth_screen.dart';
@@ -27,31 +27,19 @@ class MyApp extends StatelessWidget {
         // ChangeNotifierProvider.value(
         //   value: ApartmentList(),
         // ),
-        // ChangeNotifierProvider.value(
-        //   value: AmenitiesList(),
-        // ),
+        ChangeNotifierProvider.value(
+          value: FilterProvider(),
+        ),
         ChangeNotifierProvider.value(
           value: PersonalHomeList(),
         ),
       ],
       child: MaterialApp(
         title: 'Uhuru',
-        // theme: ThemeData(
-        //   primarySwatch: Colors.green,
-        //   accentColor: Colors.greenAccent[400],
-        //   fontFamily: 'Ubuntu',
-        //   buttonTheme: ButtonTheme.of(context).copyWith(
-        //     buttonColor: Colors.green,
-        //     textTheme: ButtonTextTheme.primary,
-        //     shape: RoundedRectangleBorder(
-        //       borderRadius: BorderRadius.circular(20),
-        //     ),
-        //   ),
-        // ),
-
+  
         theme: ThemeData(
           //primaryColor: COLOR_GREEN,
-          accentColor: COLOR_INDIGO[900],
+         // accentColor: COLOR_BLUEACCENT,
           fontFamily: 'OpenSans',
           appBarTheme: AppBarTheme(
             textTheme: ThemeData.light().textTheme.copyWith(
@@ -62,9 +50,6 @@ class MyApp extends StatelessWidget {
                   ),
                 ),
           ),
-          // textSelectionTheme: ,
-
-          // textTheme: screenWidth < 500 ? TEXT_THEME_SMALL : TEXT_THEME_DEFAULT,
         ),
         home: StreamBuilder(
             stream: FirebaseAuth.instance.authStateChanges(),

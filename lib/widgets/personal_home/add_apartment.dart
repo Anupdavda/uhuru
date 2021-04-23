@@ -1,13 +1,10 @@
-//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:uhuru/model/personal_apartment.dart';
 import 'package:uhuru/provider/personal_apartment_list.dart';
-//import 'package:image_picker/image_picker.dart';
 import 'package:uhuru/screens/amenities_screen.dart';
 
-//import 'dart:io';
 
 class AddApartment extends StatefulWidget {
   final bool isUpdating;
@@ -21,10 +18,8 @@ class AddApartment extends StatefulWidget {
 }
 
 class _AddApartmentState extends State<AddApartment> {
-  //File _apartmentImage;
   PersonalApartment _currentApartment;
-  // String _imageUrl;
-
+ 
   final _form = GlobalKey<FormState>();
   final _areaFocusNode = FocusNode();
   final _bedroomFocusNode = FocusNode();
@@ -78,6 +73,7 @@ class _AddApartmentState extends State<AddApartment> {
     final isValid = _form.currentState.validate();
     if (isValid) {
       _form.currentState.save();
+      debugPrint(_currentApartment.price.toString());
       Navigator.push(
         context,
         MaterialPageRoute(

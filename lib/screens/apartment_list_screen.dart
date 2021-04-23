@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:uhuru/screens/filter_screen.dart';
+//import 'package:uhuru/screens/filter_screen.dart';
 import 'package:uhuru/utils/constants.dart';
+import 'package:uhuru/widgets/filter.dart';
 import '../widgets/apartment_grid.dart';
 
 class ApartmentListScreen extends StatefulWidget {
@@ -27,11 +28,11 @@ class _ApartmentListScreenState extends State<ApartmentListScreen> {
           ),
           actions: [
             IconButton(
-              icon: const Icon(Icons.menu, color: COLOR_INDIGO),
+              icon: const Icon(Icons.tune, color: COLOR_INDIGO),
               onPressed: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (BuildContext context) {
-                  return FilterScreen();
+                  return Filter();
                 }));
               },
             )

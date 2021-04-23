@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uhuru/utils/constants.dart';
-import '../widgets/profile/profile.dart';
+import 'package:uhuru/widgets/image_picker.dart';
+//import '../widgets/profile/profile.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -19,7 +20,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           title: const Text('Profile', style: TextStyle(color: COLOR_INDIGO)),
         ),
       ),
-      body: Profile(),
+     // body: Profile(),
+     body: ImagePickerWidget(),
     );
   }
 }

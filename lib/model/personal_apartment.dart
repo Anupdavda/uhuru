@@ -15,7 +15,7 @@ class PersonalApartment with ChangeNotifier {
   String city;
   double zipcode;
   double area;
-  Map<String, dynamic> amenities ;
+  Map<String, dynamic> amenities;
   Timestamp createdAt;
   Timestamp updatedAt;
   bool isFavorite;
@@ -33,8 +33,8 @@ class PersonalApartment with ChangeNotifier {
       @required this.zipcode,
       @required this.area,
       @required this.amenities,
-       this.createdAt,
-       this.updatedAt,
+      this.createdAt,
+      this.updatedAt,
       this.isFavorite = false});
 
   // Map _amenities = {
@@ -52,26 +52,10 @@ class PersonalApartment with ChangeNotifier {
   //   'hardwoodFloor': Icon(Icons.security),
   // };
 
-  // PersonalApartment.fromMap(Map<String, dynamic> data) {
-  //   id = data['id'];
-  //   description = data['description'];
-  //   price = data['price'];
-  //   imageUrl = data['imageUrl'];
-  //   streetName = data['streetName'];
-  //   bedroom = data['bedroom'];
-  //   bathroom = data['bathroom'];
-  //   city = data['city'];
-  //   zipcode = data['zipcode'];
-  //   area = data['area'];
-  //   amenities = data['amenities'];
-  //   createdAt = data['createdAt'];
-  //   updatedAt = data['updatedAt'];
-  // }
-
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'userId':userId,
+      'userId': userId,
       'description': description,
       'price': price,
       'imageUrl': imageUrl,
@@ -85,6 +69,21 @@ class PersonalApartment with ChangeNotifier {
       'createdAt': createdAt,
       'updatedAt': updatedAt
     };
+  }
+
+  factory PersonalApartment.fromJson(Map<String, dynamic> json) {
+    return PersonalApartment(
+      description: json['description'].toString(),
+      price: json['price'].toDouble(),
+      imageUrl: json['imageUrl'],
+      streetName: json['streetName'],
+      bedroom: json['bedroom'],
+      bathroom: json['bathroom'].toDouble(),
+      city: json['city'],
+      zipcode: json['zipcode'].toDouble(),
+      area:  json['zipcode'].toDouble(),
+      amenities:  json['amebities'],
+    );
   }
 
   void toggleFavoriteStatus() {

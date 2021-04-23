@@ -1,6 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uhuru/utils/constants.dart';
+
+import 'package:trotter/trotter.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -10,6 +12,101 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   final _form = GlobalKey<FormState>();
   bool isChecked = false;
+
+  _onSaved() {
+    final amenities = [
+          'price',
+          'area',
+          'bathroom',
+          'bedroom',
+          'city',
+          'zipcode',
+          'amenities'
+        ],
+        combos1 = Combinations(1, amenities),
+        combos2 = Combinations(2, amenities),
+        combos3 = Combinations(3, amenities),
+        combos4 = Combinations(4, amenities),
+        combos5 = Combinations(5, amenities),
+        combos6 = Combinations(6, amenities),
+        combos7 = Combinations(7, amenities);
+
+    for (final combo in combos1()) {
+      print(combo);
+    }
+    for (final combo in combos2()) {
+      print(combo);
+    }
+    for (final combo in combos3()) {
+      print(combo);
+    }
+    for (final combo in combos4()) {
+      print(combo);
+    }
+    for (final combo in combos5()) {
+      print(combo);
+    }
+    for (final combo in combos6()) {
+      print(combo);
+    }
+    for (final combo in combos7()) {
+      print(combo);
+    }
+  }
+
+  _filterCondition() {
+    final amenities = [
+          'minPrice != null && maxPrice != null',
+          'maxPrice == 0.0 && minPrice == 0.0',
+          'city.isNotEmpty && city != "Any"',
+          'city == "Any"',
+          'area.start = 500 && area.start = 20000',
+          'area.start != null',
+          'area.end != null',
+          'zipcode != null',
+          'zipcode == null'
+        ],
+        combos1 = Combinations(1, amenities),
+        combos2 = Combinations(2, amenities),
+        combos3 = Combinations(3, amenities),
+        combos4 = Combinations(4, amenities),
+        combos5 = Combinations(5, amenities),
+        combos6 = Combinations(6, amenities),
+        combos7 = Combinations(7, amenities),
+        combos8 = Combinations(8, amenities),
+        combos9 = Combinations(9, amenities);
+        
+
+    for (final combo in combos1()) {
+      print(combo);
+    }
+    for (final combo in combos2()) {
+      print(combo);
+    }
+    for (final combo in combos3()) {
+      print(combo);
+    }
+    for (final combo in combos4()) {
+      print(combo);
+    }
+    for (final combo in combos5()) {
+      print(combo);
+    }
+    for (final combo in combos6()) {
+      print(combo);
+    }
+    for (final combo in combos7()) {
+      print(combo);
+    }
+    for (final combo in combos8()) {
+      print(combo);
+    }
+    for (final combo in combos9()) {
+      print(combo);
+    }
+   
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -20,7 +117,6 @@ class _ProfileState extends State<Profile> {
           TextFormField(
             decoration: InputDecoration(
               labelText: 'First Name',
-              
             ),
           ),
           TextFormField(
@@ -124,7 +220,9 @@ class _ProfileState extends State<Profile> {
                       )),
                   style: ElevatedButton.styleFrom(primary: Colors.blue),
                   onPressed: () {
-                    FirebaseAuth.instance.signOut();
+                    // FirebaseAuth.instance.signOut();
+                     _onSaved();
+                    _filterCondition();
                   },
                 ),
               ),
