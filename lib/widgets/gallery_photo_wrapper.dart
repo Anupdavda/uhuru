@@ -7,8 +7,6 @@ import 'package:photo_view/photo_view_gallery.dart';
 import 'package:uhuru/model/gallery_item.dart';
 import 'package:uhuru/widgets/image_picker.dart';
 
-
-
 class GalleryPhotoViewWrapper extends StatefulWidget {
   GalleryPhotoViewWrapper({
     this.backgroundDecoration,
@@ -85,11 +83,13 @@ class _GalleryPhotoViewWrapperState extends State<GalleryPhotoViewWrapper> {
               child: Container(
                 alignment: Alignment.topLeft,
                 margin: EdgeInsets.only(top: 16),
-                child: FlatButton(
-                  shape: CircleBorder(),
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    shape: CircleBorder(),
+                    primary: Colors.white,
+                  ),
                   onPressed: () {},
                   child: BackButton(),
-                  color: Colors.white,
                 ),
               ),
             )

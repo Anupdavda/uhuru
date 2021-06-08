@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+//import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -39,7 +39,7 @@ class _AddImagesState extends State<AddImages> {
       _currentApartment = personalHomeList.currentApartment;
     } else {
       _currentApartment = PersonalApartment(
-        id: '',
+        id: widget.personalApartment.id,
         amenities: widget.personalApartment.amenities,
         area: widget.personalApartment.area,
         bathroom: widget.personalApartment.bathroom,
@@ -53,6 +53,21 @@ class _AddImagesState extends State<AddImages> {
       );
     }
     imageUrls.addAll(_currentApartment.imageUrl);
+  }
+
+  Map<String, dynamic> toMaps() {
+    return {
+      'description': _currentApartment.description,
+      'price': _currentApartment.price,
+      'imageUrl': _currentApartment.imageUrl,
+      'streetName': _currentApartment.streetName,
+      'bedroom': _currentApartment.bedroom,
+      'bathroom': _currentApartment.bathroom,
+      'city': _currentApartment.city,
+      'zipcode': _currentApartment.zipcode,
+      'area': _currentApartment.area,
+      'amenities': _currentApartment.amenities,
+    };
   }
 
   Widget buildGridView() {
@@ -222,7 +237,11 @@ class _AddImagesState extends State<AddImages> {
     //  uploadImages();
     addImageToS3();
 
-    // addApartmentToDynamoDB();
+    if (widget.isUpdating) {
+      updateApartmentInDynamoDB();
+    } else {
+      addApartmentToDynamoDB();
+    }
   }
 
   Future<void> addImageToS3() async {
@@ -231,36 +250,25 @@ class _AddImagesState extends State<AddImages> {
     }
   }
 
-  Future<void> addApartmentToDynamoDB() async {
-    var url = Uri.parse(
-        'https://jgnj8beti2.execute-api.us-east-1.amazonaws.com/dev/todos');
+  Future<void> updateApartmentInDynamoDB() async {
+    String id = _currentApartment.id;
+    var updateUrl =
+        'https://jgnj8beti2.execute-api.us-east-1.amazonaws.com/dev/todos/' +
+            id;
+    var urlUpdate = Uri.parse(updateUrl);
+    print(updateUrl);
 
     if (images.isNotEmpty) {
       for (var imageFile in images) {
         postImage(imageFile).then((downloadUrl) async {
           imageUrls.add(downloadUrl.toString());
-
           if (imageUrls.length == images.length) {
-            // if (widget.isUpdating) {
-            //   _currentApartment.updatedAt = Timestamp.now();
-            //   _currentApartment.imageUrl = imageUrls;
-
-            //   await apartmentRef
-            //       .doc(_currentApartment.id)
-            //       .update(_currentApartment.toMap());
-
-            //   _apartmentUploaded(_currentApartment);
-            //   print('updated apartment with id: ${_currentApartment.id}');
-            //  } else {
-            _currentApartment = widget.personalApartment;
-            // _currentApartment.createdAt = Timestamp.now();
-
-            //  _currentApartment.userId = user.uid;
-
+            _currentApartment.updatedAt = Timestamp.now();
             _currentApartment.imageUrl = imageUrls;
+
             http
-                .post(
-              url,
+                .put(
+              urlUpdate,
               body: jsonEncode(<String, dynamic>{
                 'description': _currentApartment.description,
                 'price': _currentApartment.price,
@@ -277,12 +285,15 @@ class _AddImagesState extends State<AddImages> {
                 .then((http.Response response) {
               final int statusCode = response.statusCode;
               if (statusCode == 200) {
-                print('Success to DynamoDB');
+                print('updated to DynamoDB');
                 return;
               } else {
                 throw new Exception("Error while fetching data");
               }
             });
+            _apartmentUploaded(_currentApartment);
+            print('updated apartment with id: ${_currentApartment.id}');
+
             setState(() {
               images = [];
               imageUrls = [];
@@ -294,9 +305,57 @@ class _AddImagesState extends State<AddImages> {
         });
       }
     } else {
-      _currentApartment = widget.personalApartment;
+      _currentApartment.updatedAt = Timestamp.now();
+      _currentApartment.imageUrl = imageUrls;
+
       http
-          .post(url,
+          .put(
+        urlUpdate,
+        body: jsonEncode(<String, dynamic>{
+          'description': _currentApartment.description,
+          'price': _currentApartment.price,
+          'imageUrl': _currentApartment.imageUrl,
+          'streetName': _currentApartment.streetName,
+          'bedroom': _currentApartment.bedroom,
+          'bathroom': _currentApartment.bathroom,
+          'city': _currentApartment.city,
+          'zipcode': _currentApartment.zipcode,
+          'area': _currentApartment.area,
+          'amenities': _currentApartment.amenities,
+        }),
+      )
+          .then((http.Response response) {
+        final int statusCode = response.statusCode;
+        if (statusCode == 200) {
+          print('updated to DynamoDB');
+          return;
+        } else {
+          throw new Exception("Error while fetching data");
+        }
+      });
+      _apartmentUploaded(_currentApartment);
+      print('updated apartment with id: ${_currentApartment.id}');
+    }
+  }
+
+  Future<void> addApartmentToDynamoDB() async {
+    String id = _currentApartment.id;
+    print(id);
+    var urlCreate = Uri.parse(
+        'https://jgnj8beti2.execute-api.us-east-1.amazonaws.com/dev/todos');
+
+    if (images.isNotEmpty) {
+      for (var imageFile in images) {
+        postImage(imageFile).then((downloadUrl) async {
+          imageUrls.add(downloadUrl.toString());
+
+          if (imageUrls.length == images.length) {
+            _currentApartment = widget.personalApartment;
+
+            _currentApartment.imageUrl = imageUrls;
+            http
+                .post(
+              urlCreate,
               body: jsonEncode(<String, dynamic>{
                 'description': _currentApartment.description,
                 'price': _currentApartment.price,
@@ -307,9 +366,47 @@ class _AddImagesState extends State<AddImages> {
                 'city': _currentApartment.city,
                 'zipcode': _currentApartment.zipcode,
                 'area': _currentApartment.area,
-                'amenities': _currentApartment.amenities,
+                'amenities': _currentApartment.amenities
+              }),
+            )
+                .then((http.Response response) {
+              final int statusCode = response.statusCode;
+              if (statusCode == 200) {
+                print('Success to DynamoDB');
+                return;
+              } else {
+                throw new Exception("Error while fetching data");
+              }
+            });
+            _apartmentUploaded(_currentApartment);
+          }
+          setState(() {
+            images = [];
+            imageUrls = [];
+          });
+        }).catchError((err) {
+          _error = err;
+          print(_error);
+        });
+      }
+    } else {
+      _currentApartment = widget.personalApartment;
+      http
+          .post(urlCreate,
+              body: jsonEncode(<String, dynamic>{
+                'description': _currentApartment.description,
+                'price': _currentApartment.price,
+                'imageUrl': _currentApartment.imageUrl,
+                'streetName': _currentApartment.streetName,
+                'bedroom': _currentApartment.bedroom,
+                'bathroom': _currentApartment.bathroom,
+                'city': _currentApartment.city,
+                'zipcode': _currentApartment.zipcode,
+                'area': _currentApartment.area,
+                'amenities': _currentApartment.amenities
               }))
           .then((http.Response response) {
+        print(response.statusCode);
         final int statusCode = response.statusCode;
         if (statusCode == 200) {
           print('Success to DynamoDB');
@@ -318,6 +415,7 @@ class _AddImagesState extends State<AddImages> {
           throw new Exception("Error while fetching data");
         }
       });
+      _apartmentUploaded(_currentApartment);
     }
   }
 
@@ -327,7 +425,7 @@ class _AddImagesState extends State<AddImages> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
         child: AppBar(
-          backgroundColor: Theme.of(context).accentColor,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
           title: const Text('Add Images'),
           actions: <Widget>[
             IconButton(

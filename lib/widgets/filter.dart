@@ -449,7 +449,7 @@ class _FilterState extends State<Filter> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50.0),
         child: AppBar(
-          backgroundColor: Theme.of(context).accentColor,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
           title: const Text('Apply Filter'),
           actions: [
             TextButton(

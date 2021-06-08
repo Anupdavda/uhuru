@@ -5,14 +5,14 @@ import 'package:uhuru/utils/constants.dart';
 import 'package:uhuru/utils/custom_functions.dart';
 
 class ApartmentCard extends StatelessWidget {
-  final bool isMe;
+  // final bool isMe;
 
-  const ApartmentCard(this.isMe, {Key key}) : super(key: key);
+  // const ApartmentCard(this.isMe, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final apartment = Provider.of<PersonalApartment>(context, listen: false);
-     
+       bool isMe = true;
     return Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),

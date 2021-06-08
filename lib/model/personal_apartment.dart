@@ -73,6 +73,7 @@ class PersonalApartment with ChangeNotifier {
 
   factory PersonalApartment.fromJson(Map<String, dynamic> json) {
     return PersonalApartment(
+      id: json['id'],
       description: json['description'].toString(),
       price: json['price'].toDouble(),
       imageUrl: json['imageUrl'],
@@ -82,7 +83,7 @@ class PersonalApartment with ChangeNotifier {
       city: json['city'],
       zipcode: json['zipcode'].toDouble(),
       area:  json['zipcode'].toDouble(),
-      amenities:  json['amebities'],
+      amenities:  json['amenities'],
     );
   }
 

@@ -13,7 +13,6 @@ import 'package:uhuru/widgets/generate_image_url.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
-
 enum PhotoStatus { LOADING, ERROR, LOADED }
 enum PhotoSource { FILE, NETWORK }
 
@@ -86,7 +85,7 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
       var url = Uri.parse(urls);
 
       try {
-        // var req = http.MultipartRequest('POST', url);
+        // var req = http.MultipartRequest('PUT', url);
 
         // req.files.add(http.MultipartFile.fromBytes(
         //   'file',
@@ -94,9 +93,10 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
         // ));
         // var res = await req.send();
         // print('UPLOAD: ${res.statusCode}');
-        
-       http.put(url, body: image.readAsBytesSync(),  headers: {"Content-Type": "image/jpeg" }).then((response) => print(response.statusCode));
-     
+
+        http.put(url, body: image.readAsBytesSync(), headers: {
+          "Content-Type": "image/jpeg"
+        }).then((response) => print(response.statusCode));
 
         // UploadFile uploadFile;
         // //String urls = 'https://jgnj8beti2.execute-api.us-east-1.amazonaws.com/dev/todos/image-upload';

@@ -29,7 +29,7 @@ class CustomDialog {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -38,7 +38,7 @@ class CustomDialog {
                 style: TextStyle(color: Colors.red),
               ),
             ),
-            FlatButton(
+            TextButton(
               onPressed: onPressedPositive,
               child: Text(positiveButtonText),
             ),
@@ -64,7 +64,7 @@ class CustomDialog {
             ),
           ),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               onPressed: () {
                 if (onPressedNegative != null) {
                   onPressedNegative();
@@ -77,7 +77,7 @@ class CustomDialog {
                 style: TextStyle(color: Colors.red),
               ),
             ),
-            FlatButton(
+            TextButton(
               onPressed: onPressedPositive,
               child: Text(positiveButtonText),
             ),

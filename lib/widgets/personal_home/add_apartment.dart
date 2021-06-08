@@ -369,7 +369,7 @@ class _AddApartmentState extends State<AddApartment> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50.0),
         child: AppBar(
-          backgroundColor: Theme.of(context).accentColor,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
           title: Text(widget.isUpdating ? 'Edit Apartment' : 'Add Apartment'),
         ),
       ),

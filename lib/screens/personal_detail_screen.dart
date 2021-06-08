@@ -9,15 +9,15 @@ import 'package:uhuru/utils/custom_functions.dart';
 class PersonalDetailScreen extends StatelessWidget {
   static const routeName = '/personal-apartment-detail';
 
-  final bool isMe;
+  // final bool isMe;
 
-  const PersonalDetailScreen(this.isMe, {Key key}) : super(key: key);
+  // const PersonalDetailScreen(this.isMe, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     PersonalHomeList loadedApartment =
         Provider.of<PersonalHomeList>(context, listen: true);
-
+    bool isMe = true;
     //final ThemeData themeData = Theme.of(context);
     final _amenities = loadedApartment.currentApartment.amenities;
     var _amenitiesKeys = _amenities.keys.toList();
@@ -36,7 +36,7 @@ class PersonalDetailScreen extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(50.0),
         child: AppBar(
-          backgroundColor: Theme.of(context).accentColor,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
           actions: <Widget>[
             IconButton(
               icon: const Icon(
