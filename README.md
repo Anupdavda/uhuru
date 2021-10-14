@@ -2,7 +2,7 @@
 
 Uhuru Real Estate Application.
 
-Uhuru in swahili means Freedom. Currently there are not many opportunities for the citizens of Tanzania to rent, sell or purchase real estate. These application is in development phase and aim of this platfrom is to bring people closer, despite of their location and allow them to purchase, sell and rent real estate(Apartments, Houses and Condominium).
+Uhuru in swahili means Freedom. Currently there are not many opportunities for the citizens of Tanzania to rent, sell or purchase real estate. This application is in development phase and aim of this platfrom is to bring people closer, despite of their location and allow them to purchase, sell and rent real estate(Apartments, Houses and Condominium).
 
 Features of these platform.
 
